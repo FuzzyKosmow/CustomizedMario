@@ -4,6 +4,9 @@ mario.txt
 coin.txt
 cloud.txt
 brick.txt
+ground.txt
+invisibleBlock.txt
+backgroundItems.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -35,10 +38,23 @@ brick.txt
 
 
 
+#Platform // start x - start y , width and height plaform . length, spriteIDBegin, spriteID Middle, spriteIDEnd 
+5 	20	190	16	15	40	61000	62000	63000
+5 	20	200	16	15	40	64000	65000	66000
+5	140	140	16	15	26	61000	62000	63000
 
-#Platform
-5 	100	180	16	15	32	51000	52000	53000
-5	140	140	16	15	26	51000	52000	53000
+
+##Invisible Wall - Vertical
+6	10	30	16	15	14	999999	999999	999999
+
+##Background item
+##type	x	y	width	height	spriteID
+7	50	145	15	15	70001
+7	65	145	15	15	70000
+7	50	160	15	15	70010
+7	65	160	15	15	70011
+7	50	175	15	15	70010
+7	65	175	15	15	70011
 
 #Portal 
 50	200	160	216	180	1

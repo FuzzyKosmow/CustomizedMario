@@ -19,6 +19,7 @@
 #define MARIO_GRAVITY			0.002f
 
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
+#define MARIO_RACCOON_ATTACK_TIME 600
 
 #define MARIO_STATE_DIE				-10
 #define MARIO_STATE_IDLE			0
@@ -35,6 +36,8 @@
 #define MARIO_STATE_SIT_RELEASE		601
 //RACCON STATE
 #define MARIO_STATE_FLY				700
+#define MARIO_STATE_TAIL_ATTACK_RIGHT	800
+#define MARIO_STATE_TAIL_ATTACK_LEFT	801
 
 #pragma region ANIMATION_ID
 
@@ -136,6 +139,7 @@
 
 #define MARIO_UNTOUCHABLE_TIME 2500
 
+
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
@@ -147,8 +151,11 @@ class CMario : public CGameObject
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
+	/*CMarioTailAttack tailAttack;*/
 	int coin; 
-
+	//Raccoon attack
+	ULONGLONG raccoonAttack_start;
+	bool isRaccoonAttacking = false;
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
@@ -170,7 +177,10 @@ public:
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
+		raccoonAttack_start = -1;
+	
 	}
+	
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
@@ -179,14 +189,39 @@ public:
 	{ 
 		return (state != MARIO_STATE_DIE); 
 	}
-
+	
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);
+	int GetLevel() { return level; };
+	int GetXDirection() { return nx; }; //X > 0: right, X < 0: left
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+};
+
+class CMarioTailAttack : public CGameObject
+{
+	bool isRendered;
+
+	
+public:
+	CMarioTailAttack(float x, float y) : CGameObject(x, y)
+	{
+		
+	}
+	CMarioTailAttack()
+	{
+		
+	}
+	void OnNoCollision(DWORD dt);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void Render();
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom); 
+		bool GetRenderState() { return isRendered; };
+		bool SetRenderState(bool value) { isRendered = value; };
+		
 };

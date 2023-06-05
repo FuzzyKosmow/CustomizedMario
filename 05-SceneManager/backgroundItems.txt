@@ -1,0 +1,10 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#Bush top left, top right, bottom left, bottom right
+70001	137	1	152	16	30
+70000	154	1	169	16	30
+70010	137	19	152	34	30
+70011	154	19	169	34	30
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]

@@ -4,6 +4,7 @@
 #include "Mario.h"
 #include "Game.h"
 
+#include "Brick.h"
 #include "Goomba.h"
 #include "Coin.h"
 #include "Portal.h"
@@ -14,8 +15,27 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-
+	
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
+	
+	//Reset attack timer for raccoon attack
+	if (isRaccoonAttacking)
+	{
+		if (GetTickCount64() - raccoonAttack_start > MARIO_RACCOON_ATTACK_TIME)
+		{
+			raccoonAttack_start = 0;
+			isRaccoonAttacking = false;
+			SetState(MARIO_STATE_IDLE);
+		}
+		else
+		{
+			//Render the attack zone and handle collison
+			
+		}
+
+		
+	}
+
 
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
@@ -247,6 +267,7 @@ int CMario::GetAniIdRaccoon()
 		}
 	}
 	else
+		
 		if (isSitting)
 		{
 			if (nx > 0)
@@ -255,6 +276,20 @@ int CMario::GetAniIdRaccoon()
 				aniId = ID_ANI_MARIO_RACCOON_SIT_LEFT;
 		}
 		else
+		{
+			//Set aniID to raccoon attack accordingly if mario is attacking
+			if (isRaccoonAttacking)
+			{
+				if (nx > 0)
+				{
+					aniId = ID_ANI_MARIO_RACCOON_ATTACK_RIGHT;
+				}
+				else
+				{
+					aniId = ID_ANI_MARIO_RACCOON_ATTACK_LEFT;
+				}	
+			}
+			else
 			if (vx == 0)
 			{
 				if (nx > 0) aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
@@ -278,6 +313,8 @@ int CMario::GetAniIdRaccoon()
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_RACCOON_WALKING_LEFT;
 			}
+		}
+			
 	if (aniId == -1) aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
 	return aniId;
 }
@@ -295,12 +332,12 @@ void CMario::Render()
 	else if (level == MARIO_LEVEL_RACCOON)
 		aniId = GetAniIdRaccoon();
 	
-
+	
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
 	
-	DebugOutTitle(L"Coins: %d", coin);
+	
+	
 }
 
 void CMario::SetState(int state)
@@ -310,6 +347,22 @@ void CMario::SetState(int state)
 
 	switch (state)
 	{
+	case MARIO_STATE_TAIL_ATTACK_RIGHT:
+		if (isSitting) break;
+		vx = 0;
+		ax = 0;
+		nx = 1;
+		raccoonAttack_start = GetTickCount64();
+		isRaccoonAttacking = true;
+		break;
+	case MARIO_STATE_TAIL_ATTACK_LEFT:
+		if (isSitting) break;
+		vx = 0;
+		ax = 0;
+		nx = -1;
+		raccoonAttack_start = GetTickCount64();
+		isRaccoonAttacking = true;
+		break;
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
 		maxVx = MARIO_RUNNING_SPEED;
@@ -328,6 +381,7 @@ void CMario::SetState(int state)
 		ax = MARIO_ACCEL_WALK_X;
 		nx = 1;
 		break;
+	
 	case MARIO_STATE_WALKING_LEFT:
 		if (isSitting) break;
 		maxVx = -MARIO_WALKING_SPEED;
@@ -355,7 +409,7 @@ void CMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
 			vx = 0; vy = 0.0f;
-			y +=MARIO_SIT_HEIGHT_ADJUST;
+			y += MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
 
@@ -382,10 +436,10 @@ void CMario::SetState(int state)
 
 	CGameObject::SetState(state);
 }
-//Basically hitbox/ collision box
-void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
+//Basically hitbox/ collision box.  left, top , right, bottom is basically the cord of the sprite. To modify, + to move it to the right, - to move it to the left
+void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (level==MARIO_LEVEL_BIG)
+	if (level == MARIO_LEVEL_BIG)
 	{
 		if (isSitting)
 		{
@@ -394,10 +448,10 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
 		}
-		else 
+		else
 		{
-			left = x - MARIO_BIG_BBOX_WIDTH/2;
-			top = y - MARIO_BIG_BBOX_HEIGHT/2;
+			left = x - MARIO_BIG_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
 			right = left + MARIO_BIG_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
@@ -422,8 +476,8 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	}
 	else
 	{
-		left = x - MARIO_SMALL_BBOX_WIDTH/2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT/2;
+		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
+		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
 		right = left + MARIO_SMALL_BBOX_WIDTH;
 		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
 	}
@@ -439,3 +493,36 @@ void CMario::SetLevel(int l)
 	level = l;
 }
 
+
+void CMarioTailAttack::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	if (nx >= 0)
+	{
+		//Render on the right side
+		left = 10 + x - MARIO_BIG_BBOX_WIDTH / 2;
+		top =  y - MARIO_BIG_BBOX_HEIGHT / 2;
+		right = 10+left + MARIO_BIG_BBOX_WIDTH;
+		bottom = top + MARIO_BIG_BBOX_HEIGHT;
+	}
+	else
+	{
+		//On the left side
+		left = -10 + x - MARIO_BIG_BBOX_WIDTH / 2;
+		top = y - MARIO_BIG_BBOX_HEIGHT / 2;
+		right = -10 + left + MARIO_BIG_BBOX_WIDTH;
+		bottom = top + MARIO_BIG_BBOX_HEIGHT;
+	}
+}
+
+void CMarioTailAttack::OnNoCollision(DWORD dt)
+{
+	//Do nothing
+}
+
+void CMarioTailAttack::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CBrick*> (e->obj))
+	{
+		e->obj->Delete();
+	}
+}

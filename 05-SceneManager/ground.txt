@@ -1,0 +1,13 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+### Ground 
+###First layer
+61000	223	222	236	237	30
+62000	239	222	256	237	30
+63000	256	222	271	237	30
+###Below layer
+64000	223	230	236	239	30
+65000	239	230	256	239	30
+66000	256	230	371	239	30
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
