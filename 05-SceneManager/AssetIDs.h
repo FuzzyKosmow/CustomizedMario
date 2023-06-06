@@ -16,7 +16,9 @@
 #define OBJECT_TYPE_COIN 4
 #define OBJECT_TYPE_PLATFORM 5
 #define OBJECT_TYPE_VERTICAL_OBJECT 6 //Mostly repeatable item that is similiar to plaform, but vertical
+
 #define OBJECT_TYPE_BACKGROUND_ITEM 7
+#define OBJECT_TYPE_LOOT_BRICK 8 //Breakable/interactable brick that can drop item
 #define OBJECT_TYPE_PORTAL	50
 
 
@@ -103,11 +105,11 @@
 #define ID_SPRITE_GROUND_2_RIGHT (ID_SPRITE_GROUND_2 + 6000)
 //Background items
 // 7 - item - 0 - bottom/top(1/0) - left/right(1/0)
-//Bushes 1 = 0;
+//Bushes 1 = 0;                     
 #define ID_SPRITE_BUSH_TOP_LEFT 70001
 #define ID_SPRITE_BUSH_TOP_RIGHT 70000
-#define ID_SPRITE_BUSH_BOTTOM_LEFT 70010
-#define ID_SPRITE_BUSH_BOTTOM_RIGHT 70011
+#define ID_SPRITE_BUSH_BOTTOM_LEFT 70011
+#define ID_SPRITE_BUSH_BOTTOM_RIGHT 70010
 #define ID_SPRITE_BUSH_ADDITIONAL_1 70100
 
 

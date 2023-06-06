@@ -12,7 +12,45 @@ backgroundItems.txt
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 # See OBJECT_TYPE constants in AssetIDs.h
+## Remember, order after = render on top
+# Background
+# Background item 
+# type	x	y	width	height	length	spriteIdBegin	spriteIdMiddle	SpriteIdEnd
 
+##First bush 
+7	65	130	15	15	2	70000	-1	70001
+7	65	145	15	15	2	70010	-1	70011
+7	65	160	15	15	2	70010	-1	70011
+
+7	50	145	15	15	2	70000	-1	70001
+7	50	160	15	15	2	70010	-1	70011
+7	50	175	15	15	2	70010	-1	70011
+
+7	65	160	15	15	2	70000	-1	70001
+7	65	175	15	15	2	70200	-1	70200
+
+7	95	145	15	15	2	70000	-1	70001
+7	95	160	15	15	2	70200	-1	70011
+7	95	175	15	15	2	70010	-1	70011
+
+7	125	145	15	15	2	70000	-1	70001
+7	125	160	15	15	2	70010	-1	70011
+7	125	175	15	15	2	70010	-1	70011
+
+7	140	160	15	15	2	70000	-1	70001
+7	155	175	15	15	1	70011	-1	-1
+
+7	110	175	15	15	2	70000	-1	70001
+
+## First cloud
+
+7	165	50	14	14	2	71001	-1	71000
+7	165	57	14	14	2	71011	-1	71010
+7	135	50	14	14	2	71001	-1	71000
+7	135	57	14	14	2	71011	-1	71010
+
+## Loot brick 1
+8	130	130	1
 # MARIO
 0	120	10
 
@@ -39,22 +77,16 @@ backgroundItems.txt
 
 
 #Platform // start x - start y , width and height plaform . length, spriteIDBegin, spriteID Middle, spriteIDEnd 
-5 	20	190	16	15	40	61000	62000	63000
-5 	20	200	16	15	40	64000	65000	66000
-5	140	140	16	15	26	61000	62000	63000
+5	15	190	15	15	30	61000	62000	63000
+5	15	200	15	15	30	64000	65000	66000
+
 
 
 ##Invisible Wall - Vertical
 6	10	30	16	15	14	999999	999999	999999
 
-##Background item
-##type	x	y	width	height	spriteID
-7	50	145	15	15	70001
-7	65	145	15	15	70000
-7	50	160	15	15	70010
-7	65	160	15	15	70011
-7	50	175	15	15	70010
-7	65	175	15	15	70011
+
+
 
 #Portal 
 50	200	160	216	180	1

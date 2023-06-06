@@ -1,10 +1,23 @@
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #Bush top left, top right, bottom left, bottom right
-70001	137	1	152	16	30
-70000	154	1	169	16	30
+70000	137	1	152	16	30
+70001	154	1	169	16	30
 70010	137	19	152	34	30
 70011	154	19	169	34	30
+#Bushes additional on top right, left, and middle bush
+70100	154	35	169	52	30
+70101	137	35	152	52	30
+70200	137	52	152	67	30
+
+
+#### CLOUD #####
+71000	205	189	220	204	30
+71001	189	189	204	204	30
+71010	205	205	220	212	30
+71011	189	205	204	212	30
+##Connector under between 2 cloud
+71020	205	205	212	212	30
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]

@@ -8,9 +8,9 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Portal.h"
-
+#include "LootBrick.h"
 #include "Collision.h"
-
+// ny < 0 : mario on top, ny > 0 : mario below
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
@@ -43,7 +43,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-
+	DebugOutTitle(L"%d", coin);
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -57,6 +57,7 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
@@ -67,8 +68,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = 0;
 	}
-
-	if (dynamic_cast<CGoomba*>(e->obj))
+	if (dynamic_cast<CLootBrick*>(e->obj))
+		OnCollisionWithLootBrick(e);
+	else if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
@@ -76,6 +78,24 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 }
 
+void CMario::OnCollisionWithLootBrick(LPCOLLISIONEVENT e)
+{
+	CLootBrick* lootBrick = dynamic_cast<CLootBrick*>(e->obj);
+	//If mario hit it from below, set it to looted state
+	
+	if (e->ny > 0)
+	{
+		if (lootBrick->GetCurrentState() == LOOT_BRICK_STATE_NOT_LOOTED)
+		{
+			lootBrick->SetState(LOOT_BRICK_STATE_LOOTED);
+			lootBrick->SpawnLoot();
+			
+			coin++;
+		}
+		
+	}
+	
+}
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);

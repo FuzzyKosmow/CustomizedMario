@@ -11,7 +11,7 @@
 #include "Platform.h"
 #include "BackgroundObject.h"
 #include "SampleKeyEventHandler.h"
-
+#include "LootBrick.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -142,11 +142,19 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		float cell_width = (float)atof(tokens[3].c_str());
 		float cell_height = (float)atof(tokens[4].c_str());
-		int spriteID = atoi(tokens[5].c_str());
-		obj = new CBackgroundObject(x, y, cell_width, cell_height, spriteID);
+		int length =	atoi(tokens[5].c_str());
+		int sprite_begin = atoi(tokens[6].c_str());
+		int sprite_middle = atoi(tokens[7].c_str());
+		int sprite_end = atoi(tokens[8].c_str());
+		obj = new CBackgroundObject(
+			x, y,
+			cell_width, cell_height, length,
+			sprite_begin, sprite_middle, sprite_end
+		);
+
 		break;
 	}
-
+	
 	case OBJECT_TYPE_VERTICAL_OBJECT:
 	{
 		float cell_width = (float)atof(tokens[3].c_str());
@@ -162,7 +170,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		);
 		break;
 	}
-
+	case OBJECT_TYPE_LOOT_BRICK:
+	{
+		int lootType = atoi(tokens[3].c_str());
+		obj = new CLootBrick(x, y, lootType);
+		break;
+	}
+		
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = (float)atof(tokens[3].c_str());
