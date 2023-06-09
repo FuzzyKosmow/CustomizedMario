@@ -161,11 +161,13 @@ class CMario : public CGameObject
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithLootBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithSchroom(LPCOLLISIONEVENT e);
+	void OnCollisionWithBigColorBrick(LPCOLLISIONEVENT e);
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRaccoon();
 
 public:
+	bool amongUs = false;
 	CMario(float x, float y) : CGameObject(x, y)
 	{
 		isSitting = false;
@@ -188,12 +190,13 @@ public:
 
 	int IsCollidable()
 	{ 
-		return (state != MARIO_STATE_DIE); 
+		return (state != MARIO_STATE_DIE);
 	}
 	
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
 
 	void OnNoCollision(DWORD dt);
+	//All collision is proactive, meaning for this to be called the object must be moving, apparently
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);

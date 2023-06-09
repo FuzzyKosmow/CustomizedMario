@@ -8,6 +8,7 @@ ground.txt
 invisibleBlock.txt
 backgroundItems.txt
 mushroom.txt
+bigColorBrick.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -53,6 +54,12 @@ mushroom.txt
 ## Loot brick 1
 8	150	130	1
 8	165	130	3
+
+8	195	100	3
+8	210	100	3
+
+##Big color brick 1
+9	240	145	2	3	3
 # MARIO
 0	120	10
 
@@ -90,5 +97,5 @@ mushroom.txt
 
 
 #Portal 
-50	200	160	216	180	1
+50	300	160	316	180	1
 

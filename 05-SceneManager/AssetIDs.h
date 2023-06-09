@@ -19,6 +19,7 @@
 
 #define OBJECT_TYPE_BACKGROUND_ITEM 7
 #define OBJECT_TYPE_LOOT_BRICK 8 //Breakable/interactable brick that can drop item
+#define OBJECT_TYPE_BIG_COLOR_BRICK 9 //Brick that you can only jump on top, no collision otherwise
 #define OBJECT_TYPE_PORTAL	50
 
 
@@ -117,6 +118,10 @@
 // LOOOTS
 // mushroom stuffs.
 #define ID_SPRITE_MUSHROOM 80000
+
+
+
+//Some brick stuffs here (color, big brick) - 90000~
 
 
 #define ID_SPRITE_INVISIBLE_BLOCK 999999

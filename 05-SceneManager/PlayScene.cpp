@@ -13,6 +13,7 @@
 #include "SampleKeyEventHandler.h"
 #include "LootBrick.h"
 #include "Mushroom.h"
+#include "BigColorBrick.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -124,7 +125,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int activate = atoi(tokens[3].c_str());
 		obj = new CCoin(x, y, activate); break;
 	}
-
+	case OBJECT_TYPE_BIG_COLOR_BRICK:
+	{
+		int color = atoi(tokens[3].c_str());
+		int width = atoi(tokens[4].c_str());
+		int height = atoi(tokens[5].c_str());
+		obj = new CBigColorBrick(x, y, color, width, height); break;
+		break;
+	}
+		
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -190,7 +199,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			break;
 		case LOOT_TYPE_COIN:
 			loot = new CCoin(x, y, 0);
-			loot->SetPosition(x, y);
+			loot->SetPosition(x, y+1);
 			break;
 		default:
 			break;

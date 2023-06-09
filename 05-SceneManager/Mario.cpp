@@ -11,12 +11,14 @@
 #include "LootBrick.h"
 #include "Collision.h"
 #include "Mushroom.h"
+#include "BigColorBrick.h"
+#include "PlayScene.h"
 // ny < 0 : mario on top, ny > 0 : mario below
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	DebugOutTitle(L"%d", coin);
+	DebugOutTitle(L"isOnPlafrom : %d, brickblocking: %d", isOnPlatform, amongUs);
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 	
 	//Reset attack timer for raccoon attack
@@ -58,17 +60,19 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
+		
 		vy = 0;
-		if (e->ny < 0) isOnPlatform = true;
+		isOnPlatform = true;
 	}
 	else 
 	if (e->nx != 0 && e->obj->IsBlocking())
 	{
 		vx = 0;
 	}
+	
+	
 	if (dynamic_cast<CLootBrick*>(e->obj))
 		OnCollisionWithLootBrick(e);
 	else if (dynamic_cast<CGoomba*>(e->obj))
@@ -80,7 +84,26 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CShroom*>(e->obj))
 		OnCollisionWithSchroom(e);
 	
+	
+	
 		
+}
+void CMario::OnCollisionWithBigColorBrick(LPCOLLISIONEVENT e)
+{
+
+		// If Mario jumps from below, allow mario to be on top of the brick
+	if (e->ny > 0 ) {
+		if (e->obj->IsBlocking())
+		{
+			vy = 0;
+			isOnPlatform = true;
+		}
+	}
+	else if (e->nx != 0 && e->obj->IsBlocking())
+	{
+		vx = 0;
+		
+	}
 }
 void CMario::OnCollisionWithSchroom(LPCOLLISIONEVENT e)
 {
@@ -428,6 +451,7 @@ void CMario::SetState(int state)
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
 			else
 				vy = -MARIO_JUMP_SPEED_Y;
+			
 		}
 		break;
 

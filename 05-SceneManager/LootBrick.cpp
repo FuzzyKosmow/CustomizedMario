@@ -94,9 +94,9 @@ void CLootBrick::EnableLoot() //Enable state of the actual loot
 
 void CLootBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - BRICK_BBOX_WIDTH / 2;
-	t = y - BRICK_BBOX_HEIGHT / 2;
-	r = l + BRICK_BBOX_WIDTH;
-	b = t + BRICK_BBOX_HEIGHT;
+	l = x - LBRICK_BBOX_WIDTH / 2;
+	t = y - LBRICK_BBOX_HEIGHT / 2;
+	r = l + LBRICK_BBOX_WIDTH;
+	b = t + LBRICK_BBOX_HEIGHT;
 }
 
