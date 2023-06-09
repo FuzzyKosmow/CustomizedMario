@@ -23,9 +23,11 @@ void CBigColorBrick::Render()
 					s->Get(this->spriteIDBeginTop)->Draw(xx, yy);
 					xx += COLOR_BRICK_WIDTH;
 				}
-				else if (j == width - 1) //Draw the last one
+				else if (j == width - 1) //Draw the last one + shadow
 				{
+					s->Get(ID_SPRITE_COLOR_BRICK_SHADOW_VERTICAL_1)->Draw(xx + 10, yy + COLOR_BRICK_HEIGHT - 5);
 					s->Get(this->spriteIDEndTop)->Draw(xx, yy);
+					
 					xx += COLOR_BRICK_WIDTH;
 				}
 				else //Draw the middle ones
@@ -43,11 +45,13 @@ void CBigColorBrick::Render()
 				}
 				else if (j == width - 1) //Draw the last one
 				{
+					s->Get(ID_SPRITE_COLOR_BRICK_SHADOW_VERTICAL_2)->Draw(xx + 10, yy + COLOR_BRICK_HEIGHT / 2);
 					s->Get(this->spriteIDEndBottom)->Draw(xx, yy);
 					xx += COLOR_BRICK_WIDTH;
 				}
 				else //Draw the middle ones
 				{
+					
 					s->Get(this->spriteIDMiddleBottom)->Draw(xx, yy);
 					xx += COLOR_BRICK_WIDTH;
 				}
@@ -61,6 +65,7 @@ void CBigColorBrick::Render()
 				}
 				else if (j ==width - 1) //Draw the last one
 				{
+					s->Get(ID_SPRITE_COLOR_BRICK_SHADOW_VERTICAL_2)->Draw(xx + 10, yy + COLOR_BRICK_HEIGHT / 2);
 					s->Get(this->spriteIDEndMiddle)->Draw(xx, yy);
 					xx += COLOR_BRICK_WIDTH;
 				}

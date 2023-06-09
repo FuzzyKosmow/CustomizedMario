@@ -14,6 +14,7 @@
 #include "LootBrick.h"
 #include "Mushroom.h"
 #include "BigColorBrick.h"
+#include "Tunnel.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -195,11 +196,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		{
 		case LOOT_TYPE_MUSHROOM:
 			loot = new CShroom(x, y);
-			loot->SetPosition(x, y);
+			loot->SetPosition(x-1, y-1);
 			break;
 		case LOOT_TYPE_COIN:
 			loot = new CCoin(x, y, 0);
-			loot->SetPosition(x, y+1);
+			loot->SetPosition(x, y-1);
 			break;
 		default:
 			break;
@@ -216,7 +217,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		
 		break;
 	}
-		
+	case OBJECT_TYPE_TUNNEL:
+	{
+		int color = atoi(tokens[3].c_str());
+	
+		int height = atoi(tokens[4].c_str());
+		obj = new CTunnel(x, y, color, height);
+		break;
+	}
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = (float)atof(tokens[3].c_str());
@@ -225,7 +233,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
 	break;
-
+	
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);

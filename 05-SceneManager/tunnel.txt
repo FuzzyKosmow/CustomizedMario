@@ -1,0 +1,13 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+##Tunnel VERTICAL
+## 1-2 TOP, 3-4 MIDDLE
+##mid green one
+100001	325	52	340	67	30
+100002	341	52	356	67	30
+100003	325	70	340	85	30
+100004	341	70	356	85	30
+
+
+##THINGS IN TUNNEL (NO SPOOK) VERTICAL
+##Chomper

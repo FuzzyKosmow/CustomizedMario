@@ -9,6 +9,7 @@ invisibleBlock.txt
 backgroundItems.txt
 mushroom.txt
 bigColorBrick.txt
+tunnel.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -50,18 +51,49 @@ bigColorBrick.txt
 7	165	57	14	14	2	71011	-1	71010
 7	135	50	14	14	2	71001	-1	71000
 7	135	57	14	14	2	71011	-1	71010
-
+##Second cloud
+7	345	50	14	14	2	71001	-1	71000
+7	345	57	14	14	2	71011	-1	71010
+## Three small bushes
+7	195	175	15	15	3	70300	70300	70300
 ## Loot brick 1
-8	150	130	1
-8	165	130	3
+8	195	130	1
+8	210	130	3
 
-8	195	100	3
-8	210	100	3
+8	240	100	3
+8	255	100	3
 
-##Big color brick 1
-9	240	145	2	3	3
+
+##Big color bricks
+9	285	115	4	3	5
+9	255	145	3	3	3
+
+##Tunnel ;mid green = 2. type - x 	y	color 	height
+
+10	375	145	2	3
+## loot brick after tunnel
+8	450	90	3
+
+##Big color brick after tunnel
+9	540	85	1	4	7
+9	495	115	3	4	5
+9	540	160	2	6	2
+9	435	145	2	5	3
+#New plaform after this
+##Third cloud
+7	590	40	14	14	2	71001	-1	71000
+7	590	47	14	14	2	71011	-1	71010
+
+7	690	50	14	14	2	71001	-1	71000
+7	690	57	14	14	2	71011	-1	71010
+##More loot
+8	690	160	1
+8	735	130	1
+
+##Bushes after the 2 loot brick. small bush
+7	705	160	15	15	6	70300	70300	70300
 # MARIO
-0	120	10
+0	660	10
 
 #COIN
 4	100	120	1
@@ -71,31 +103,25 @@ bigColorBrick.txt
 4	180	120	1
 
 
-4	100	100	1
-4	120	100	1
-4	140	100	1
-4	160	100	1
-4	180	100	1
 
-4	100	80	1
-4	120	80	1
-4	140	80	1
-4	160	80	1
-4	180	80	1
 
 
 #Platform // start x - start y , width and height plaform . length, spriteIDBegin, spriteID Middle, spriteIDEnd 
-5	15	190	15	15	30	61000	62000	63000
-5	15	200	15	15	30	64000	65000	66000
+5	15	190	15	15	43	61000	62000	63000
+5	15	197	15	9	43	64000	65000	66000
+
+5	660	175	15	15	43	61000	62000	63000
+5	660	181	15	9	43	64000	65000	66000
+5	660	191	15	9	43	64000	65000	66000
+5	660	201	15	9	43	64000	65000	66000
 
 
-
-##Invisible Wall - Vertical
+##Invisible Wall - Vertical - block at start
 6	10	30	16	15	14	999999	999999	999999
 
 
 
 
 #Portal 
-50	300	160	316	180	1
+#50	300	160	316	180	1
 
