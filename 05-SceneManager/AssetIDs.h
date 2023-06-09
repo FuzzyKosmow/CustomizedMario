@@ -15,7 +15,7 @@
 #define OBJECT_TYPE_KOOPAS	3
 #define OBJECT_TYPE_COIN 4
 #define OBJECT_TYPE_PLATFORM 5
-#define OBJECT_TYPE_VERTICAL_OBJECT 6 //Mostly repeatable item that is similiar to plaform, but vertical
+#define OBJECT_TYPE_VERTICAL_OBJECT 6 //Mostly repeatable item that is similiar to plaform, but vertical !!! BLOCKABLE!!
 
 #define OBJECT_TYPE_BACKGROUND_ITEM 7
 #define OBJECT_TYPE_LOOT_BRICK 8 //Breakable/interactable brick that can drop item
@@ -112,6 +112,11 @@
 #define ID_SPRITE_BUSH_BOTTOM_RIGHT 70010
 #define ID_SPRITE_BUSH_ADDITIONAL_1 70100
 
+// Cloud stuffs
+// in database
+// LOOOTS
+// mushroom stuffs.
+#define ID_SPRITE_MUSHROOM 80000
 
 
 #define ID_SPRITE_INVISIBLE_BLOCK 999999

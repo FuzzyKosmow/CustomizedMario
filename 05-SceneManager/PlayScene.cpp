@@ -12,6 +12,7 @@
 #include "BackgroundObject.h"
 #include "SampleKeyEventHandler.h"
 #include "LootBrick.h"
+#include "Mushroom.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -118,7 +119,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
-	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_COIN: 
+	{
+		int activate = atoi(tokens[3].c_str());
+		obj = new CCoin(x, y, activate); break;
+	}
 
 	case OBJECT_TYPE_PLATFORM:
 	{
@@ -169,11 +174,37 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			sprite_begin, sprite_middle, sprite_end
 		);
 		break;
+
 	}
 	case OBJECT_TYPE_LOOT_BRICK:
 	{
+		
 		int lootType = atoi(tokens[3].c_str());
+
+		LPGAMEOBJECT loot;
+		switch (lootType)
+		{
+		case LOOT_TYPE_MUSHROOM:
+			loot = new CShroom(x, y);
+			loot->SetPosition(x, y);
+			break;
+		case LOOT_TYPE_COIN:
+			loot = new CCoin(x, y, 0);
+			loot->SetPosition(x, y);
+			break;
+		default:
+			break;
+		}
+		if (lootType == LOOT_TYPE_MUSHROOM)
+		{
+			
+			
+		}
+		objects.push_back(loot);
+		
 		obj = new CLootBrick(x, y, lootType);
+		dynamic_cast<CLootBrick*>(obj)->SetLoot(loot);
+		
 		break;
 	}
 		

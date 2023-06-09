@@ -11,10 +11,12 @@
 #define COIN_BBOX_HEIGHT 16
 
 class CCoin : public CGameObject {
+	int activated = 1;
 public:
-	CCoin(float x, float y) : CGameObject(x, y) {}
+	CCoin(float x, float y, int activate) : CGameObject(x, y) { activated = activate; }
 	void Render();
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() { return 0; }
+	void Activate() { activated = 1; }
 };

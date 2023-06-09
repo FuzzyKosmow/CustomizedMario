@@ -160,7 +160,7 @@ class CMario : public CGameObject
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithLootBrick(LPCOLLISIONEVENT e);
-
+	void OnCollisionWithSchroom(LPCOLLISIONEVENT e);
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRaccoon();
@@ -202,6 +202,7 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void AddCoin(int num) { coin+=num; }
 };
 
 class CMarioTailAttack : public CGameObject

@@ -8,6 +8,6 @@
 ###Below layer
 64000	223	230	236	239	30
 65000	239	230	256	239	30
-66000	256	230	371	239	30
+66000	256	230	271	239	30
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]

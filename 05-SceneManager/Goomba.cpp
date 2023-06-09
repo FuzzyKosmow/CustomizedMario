@@ -1,5 +1,5 @@
 #include "Goomba.h"
-
+#include "Mario.h"
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
 	this->ax = 0;
@@ -36,8 +36,7 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return; 
 	if (dynamic_cast<CGoomba*>(e->obj)) return; 
-
-	if (e->ny != 0 )
+	if (e->ny != 0)
 	{
 		vy = 0;
 	}
@@ -45,6 +44,7 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+	
 }
 
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -58,7 +58,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		return;
 	}
 
-	CGameObject::Update(dt, coObjects);
+	
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 

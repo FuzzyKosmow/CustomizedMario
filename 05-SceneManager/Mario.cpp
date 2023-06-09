@@ -10,12 +10,13 @@
 #include "Portal.h"
 #include "LootBrick.h"
 #include "Collision.h"
+#include "Mushroom.h"
 // ny < 0 : mario on top, ny > 0 : mario below
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	
+	DebugOutTitle(L"%d", coin);
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 	
 	//Reset attack timer for raccoon attack
@@ -43,7 +44,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-	DebugOutTitle(L"%d", coin);
+	
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -76,25 +77,36 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CShroom*>(e->obj))
+		OnCollisionWithSchroom(e);
+	
+		
 }
-
+void CMario::OnCollisionWithSchroom(LPCOLLISIONEVENT e)
+{
+	if (state == MARIO_STATE_DIE) return;
+	if ((GetLevel() == MARIO_LEVEL_SMALL || GetLevel() == MARIO_LEVEL_BIG) && dynamic_cast<CShroom*>(e->obj)->GetState() == SHROOM_STATE_WALKING)
+	{
+		SetLevel(MARIO_LEVEL_BIG);
+		e->obj->Delete();
+	}
+}
 void CMario::OnCollisionWithLootBrick(LPCOLLISIONEVENT e)
 {
 	CLootBrick* lootBrick = dynamic_cast<CLootBrick*>(e->obj);
 	//If mario hit it from below, set it to looted state
-	
+
 	if (e->ny > 0)
 	{
 		if (lootBrick->GetCurrentState() == LOOT_BRICK_STATE_NOT_LOOTED)
 		{
-			lootBrick->SetState(LOOT_BRICK_STATE_LOOTED);
-			lootBrick->SpawnLoot();
 			
-			coin++;
+			lootBrick->ShowLoot();
+			
 		}
-		
+
 	}
-	
+
 }
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
