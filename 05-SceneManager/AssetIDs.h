@@ -21,7 +21,7 @@
 #define OBJECT_TYPE_LOOT_BRICK 8 //Breakable/interactable brick that can drop item
 #define OBJECT_TYPE_BIG_COLOR_BRICK 9 //Brick that you can only jump on top, no collision otherwise
 #define OBJECT_TYPE_TUNNEL 10
-#define OBJECT_TYPE_PLANT 11 //Chomper
+#define OBJECT_TYPE_SHOOTING_PLANT 11 //Chomper
 
 
 #define OBJECT_TYPE_PORTAL	50

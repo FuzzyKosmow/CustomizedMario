@@ -30,7 +30,7 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 }
 
-void CSprite::Draw(float x, float y)
+void CSprite::Draw(float x, float y, float angle  )
 {
 	CGame* g = CGame::GetInstance();
 	float cx, cy;
@@ -40,14 +40,19 @@ void CSprite::Draw(float x, float y)
 	cy = (FLOAT)floor(cy);
 
 	D3DXMATRIX matTranslation;
-	
+	D3DXMATRIX matRotation;
+
 	x = (FLOAT)floor(x);
 	y = (FLOAT)floor(y);
 
 	D3DXMatrixTranslation(&matTranslation, x - cx, g->GetBackBufferHeight() - y + cy, 0.1f);
 
-	this->sprite.matWorld = (this->matScaling * matTranslation);
+	if (angle != 0.0f)
+		D3DXMatrixRotationZ(&matRotation, angle * D3DX_PI / 180.0f);
+	else
+		D3DXMatrixIdentity(&matRotation);
+
+	this->sprite.matWorld = this->matScaling * matRotation * matTranslation;
 
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }
-

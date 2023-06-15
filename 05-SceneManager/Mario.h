@@ -147,12 +147,12 @@ class CMario : public CGameObject
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
-	int level; 
-	int untouchable; 
+	int level;
+	int untouchable;
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	/*CMarioTailAttack tailAttack;*/
-	int coin; 
+	int coin;
 	//Raccoon attack
 	ULONGLONG raccoonAttack_start;
 	bool isRaccoonAttacking = false;
@@ -162,6 +162,9 @@ class CMario : public CGameObject
 	void OnCollisionWithLootBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithSchroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithBigColorBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithDetectionBox(LPCOLLISIONEVENT e);
+	void OnCollisionWithPlantBullet(LPCOLLISIONEVENT e);
+	void OnCollisionWithPlant(LPCOLLISIONEVENT e);
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRaccoon();
@@ -173,7 +176,7 @@ public:
 		isSitting = false;
 		maxVx = 0.0f;
 		ax = 0.0f;
-		ay = MARIO_GRAVITY; 
+		ay = MARIO_GRAVITY;
 
 		level = MARIO_LEVEL_BIG;
 		untouchable = 0;
@@ -181,19 +184,19 @@ public:
 		isOnPlatform = false;
 		coin = 0;
 		raccoonAttack_start = -1;
-	
+
 	}
-	
+
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 
 	int IsCollidable()
-	{ 
+	{
 		return (state != MARIO_STATE_DIE);
 	}
-	
-	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
+
+	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable == 0); }
 
 	void OnNoCollision(DWORD dt);
 	//All collision is proactive, meaning for this to be called the object must be moving, apparently
@@ -203,30 +206,31 @@ public:
 	int GetLevel() { return level; };
 	int GetXDirection() { return nx; }; //X > 0: right, X < 0: left
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
-
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	void AddCoin(int num) { coin+=num; }
+	void AddCoin(int num) { coin += num; }
+	void TakeDamage(); // 1 unit of damage = 1 level
 };
 
 class CMarioTailAttack : public CGameObject
 {
-	bool isRendered;
+	bool isRendered = false;
 
-	
+
 public:
 	CMarioTailAttack(float x, float y) : CGameObject(x, y)
 	{
-		
+
 	}
 	CMarioTailAttack()
 	{
-		
+
 	}
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void Render();
-	void GetBoundingBox(float& left, float& top, float& right, float& bottom); 
-		bool GetRenderState() { return isRendered; };
-		bool SetRenderState(bool value) { isRendered = value; };
-		
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	bool GetRenderState() { return isRendered; };
+	bool SetRenderState(bool value) { isRendered = value; };
+	
+
 };

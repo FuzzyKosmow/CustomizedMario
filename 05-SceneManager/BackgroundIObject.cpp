@@ -20,7 +20,7 @@ void CBackgroundObject::Render()
 		}
 	}
 	
-	if (length > 1)
+	if (length > 1 && spriteIdEnd != -1)
 		s->Get(this->spriteIdEnd)->Draw(xx, y);
 
 	

@@ -1,0 +1,3 @@
+enemies3 contains plant shooting with diretion help, 
+
+enemies2 contains the turtle

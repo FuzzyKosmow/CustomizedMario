@@ -15,6 +15,7 @@
 #include "Mushroom.h"
 #include "BigColorBrick.h"
 #include "Tunnel.h"
+#include "ShootingPlant.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -225,6 +226,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CTunnel(x, y, color, height);
 		break;
 	}
+	case OBJECT_TYPE_SHOOTING_PLANT:
+	{
+		obj = new CShootingPlant(x, y);
+		break;
+	}
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = (float)atof(tokens[3].c_str());
@@ -407,4 +413,10 @@ void CPlayScene::PurgeDeletedObjects()
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
+}
+
+
+void CPlayScene::AddObject(LPGAMEOBJECT obj)
+{
+	objects.push_back(obj);
 }

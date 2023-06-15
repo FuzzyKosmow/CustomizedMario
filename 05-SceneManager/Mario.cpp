@@ -13,12 +13,13 @@
 #include "Mushroom.h"
 #include "BigColorBrick.h"
 #include "PlayScene.h"
+#include "ShootingPlant.h"
 // ny < 0 : mario on top, ny > 0 : mario below
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	DebugOutTitle(L"isOnPlafrom : %d, brickblocking: %d", isOnPlatform, amongUs);
+	
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 	
 	//Reset attack timer for raccoon attack
@@ -83,10 +84,67 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CShroom*>(e->obj))
 		OnCollisionWithSchroom(e);
+	else if (dynamic_cast<PlantProjectile*> (e->obj))
+		OnCollisionWithPlantBullet(e);
+	else if (dynamic_cast<CShootingPlant*> (e->obj))
+		OnCollisionWithPlant(e);
 	
 	
 	
 		
+}
+
+void CMario::OnCollisionWithPlant(LPCOLLISIONEVENT e)
+{
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+			
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
+}
+
+void CMario::OnCollisionWithPlantBullet(LPCOLLISIONEVENT e)
+{
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			e->obj->Delete();
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
+}
+
+void CMario::TakeDamage()
+{
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
 }
 void CMario::OnCollisionWithBigColorBrick(LPCOLLISIONEVENT e)
 {
