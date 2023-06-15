@@ -14,6 +14,7 @@
 #include "BigColorBrick.h"
 #include "PlayScene.h"
 #include "ShootingPlant.h"
+#include "Turtle.h"
 // ny < 0 : mario on top, ny > 0 : mario below
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -88,12 +89,37 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPlantBullet(e);
 	else if (dynamic_cast<CShootingPlant*> (e->obj))
 		OnCollisionWithPlant(e);
+
+	else if (dynamic_cast<CTurtle*> (e->obj))
+		OnCollisionWithTurtle(e);
 	
 	
 	
 		
 }
-
+void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
+{
+	CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+	if (e->ny < 0)
+	{
+		if (turtle->GetState() == TURTLE_STATE_WALKING)
+		{
+			turtle->SetState(TURTLE_STATE_SHELL);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (turtle->GetState() == TURTLE_STATE_SHELL)
+		{
+			turtle->SetState(TURTLE_STATE_SHELL_MOVING);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (turtle->GetState() == TURTLE_STATE_SHELL_MOVING)
+		{
+			turtle->SetState(TURTLE_STATE_SHELL);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	
+}
 void CMario::OnCollisionWithPlant(LPCOLLISIONEVENT e)
 {
 	if (untouchable == 0)

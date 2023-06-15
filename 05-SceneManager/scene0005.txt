@@ -10,6 +10,8 @@ backgroundItems.txt
 mushroom.txt
 bigColorBrick.txt
 tunnel.txt
+goomba.txt
+turtle.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -63,15 +65,18 @@ tunnel.txt
 8	240	100	3
 8	255	100	3
 
-
+2	260	120
 ##Big color bricks
 9	285	115	4	3	5
 9	255	145	3	3	3
+
 
 ##Tunnel ;mid green = 2. type - x 	y	color 	height, with plant (11)
 
 11	385	155
 10	375	145	2	3
+
+
 
 
 ## loot brick after tunnel
@@ -82,6 +87,10 @@ tunnel.txt
 9	495	115	3	4	5
 9	540	160	2	6	2
 9	435	145	2	5	3
+##Turtle
+12	540	80	540	620
+#Goomba
+2	420	130
 #New plaform after this
 ##Third cloud
 7	590	40	14	14	2	71001	-1	71000
@@ -155,7 +164,7 @@ tunnel.txt
 ##Bush at the start of lower plaform
 7	1255	175	15	15	3	70300	70300	70300
 # MARIO
-0	480	10
+0	120	10
 
 
 #COIN

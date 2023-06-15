@@ -16,6 +16,7 @@
 #include "BigColorBrick.h"
 #include "Tunnel.h"
 #include "ShootingPlant.h"
+#include "Turtle.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -239,7 +240,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
 	break;
-	
+	case OBJECT_TYPE_TURTLE:
+	{
+		float limitLeft = (float)atof(tokens[3].c_str());
+		float limitRight = (float)atof(tokens[4].c_str());
+		obj = new CTurtle(x, y, limitLeft, limitRight);
+		break;
+	}
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);

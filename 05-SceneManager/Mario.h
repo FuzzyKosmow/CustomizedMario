@@ -19,7 +19,7 @@
 #define MARIO_GRAVITY			0.002f
 
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
-#define MARIO_RACCOON_ATTACK_TIME 600
+#define MARIO_RACCOON_ATTACK_TIME 300
 
 #define MARIO_STATE_DIE				-10
 #define MARIO_STATE_IDLE			0
@@ -165,6 +165,7 @@ class CMario : public CGameObject
 	void OnCollisionWithDetectionBox(LPCOLLISIONEVENT e);
 	void OnCollisionWithPlantBullet(LPCOLLISIONEVENT e);
 	void OnCollisionWithPlant(LPCOLLISIONEVENT e);
+	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRaccoon();

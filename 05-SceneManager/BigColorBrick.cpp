@@ -1,6 +1,8 @@
 #include "BigColorBrick.h"
 #include "Mario.h"
 #include "Textures.h"
+#include "Turtle.h"
+#include "Goomba.h"
 void CBigColorBrick::Render()
 {
 	if (height <= 0) return;
@@ -124,7 +126,7 @@ void CBigColorBrick::RenderBoundingBox()
 
 void CBigColorBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CMario*>(e->obj))
+	if (dynamic_cast<CMario*>(e->obj) || dynamic_cast<CGoomba*>(e->obj) || dynamic_cast<CTurtle*>(e->obj) )
 	{
 		if (e->ny < 0)
 		{

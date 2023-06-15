@@ -22,6 +22,7 @@
 #define OBJECT_TYPE_BIG_COLOR_BRICK 9 //Brick that you can only jump on top, no collision otherwise
 #define OBJECT_TYPE_TUNNEL 10
 #define OBJECT_TYPE_SHOOTING_PLANT 11 //Chomper
+#define OBJECT_TYPE_TURTLE 12
 
 
 #define OBJECT_TYPE_PORTAL	50
@@ -134,5 +135,6 @@
 
 //Invinsible block
 
+//Turtle stuff ~ 120000
 #define ID_SPRITE_INVISIBLE_BLOCK 999999
 

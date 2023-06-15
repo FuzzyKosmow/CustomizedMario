@@ -40,7 +40,7 @@
 #define SHOOTING_PLANT_SHOOT_INTERVAL 2000
 #define SHOOTING_PLANT_BBOX_HEIGHT 32
 #define SHOOTING_PLANT_BBOX_WIDTH 16
-
+#define SHOOTING_PLANT_DETECTION_ZONE_SIZE 20
 
 //Projectile stats
 #define PLANT_PROJECTILE_SPEED 0.2f
@@ -95,7 +95,7 @@ protected:
 
 	float baseX; //Defalt position
 	float baseY;
-	float detectionZoneSize = 10;
+	float detectionZoneSize = SHOOTING_PLANT_DETECTION_ZONE_SIZE;
 	//Detectionzone, only make make the plant start working when mario is in the zone
 	SquareDetectionZone* dZone;
 	PlantProjectile* projectile = NULL;
@@ -103,9 +103,10 @@ public:
 	int IsBlocking() { return 0; };
 	int IsCollidable() { return 1; }
 	CShootingPlant(float x, float y) : CGameObject(x, y) {
-
+		
 		SetState(SHOOTING_PLANT_STATE_IDLE);
 		dZone = new SquareDetectionZone(x-detectionZoneSize/2*16, y-detectionZoneSize/2*16, detectionZoneSize);
+		dZone->MakeInvisible();
 		baseX = x;
 		baseY = y;
 		LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();

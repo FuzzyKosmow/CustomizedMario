@@ -15,7 +15,7 @@
 #define SHROOM_STATE_WALKING 100
 
 
-#define ID_ANI_SHROOM_WALKING 5000
+#define ID_ANI_SHROOM_WALKING 6000
 
 
 class CShroom : public CGameObject

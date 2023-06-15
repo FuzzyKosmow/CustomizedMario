@@ -42,7 +42,7 @@ void CShootingPlant::Render()
 			s->Get(ID_SPRITE_PLANT_LOOK_DOWN_LEFT)->Draw(x, y);
 		}
 	}
-	RenderBoundingBox();
+	/*RenderBoundingBox();*/
 }
 
 void CShootingPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
