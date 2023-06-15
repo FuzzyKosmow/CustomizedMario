@@ -35,7 +35,8 @@
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
 //RACCON STATE
-#define MARIO_STATE_FLY				700
+#define MARIO_STATE_FLY_RIGHT		700
+#define MARIO_STATE_FLY_LEFT		701
 #define MARIO_STATE_TAIL_ATTACK_RIGHT	800
 #define MARIO_STATE_TAIL_ATTACK_LEFT	801
 
@@ -143,12 +144,15 @@
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
+	bool isFlying = false;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
 	int level;
 	int untouchable;
+	
+	bool maxSpeedReached = false;
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	/*CMarioTailAttack tailAttack;*/
@@ -210,6 +214,7 @@ public:
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void AddCoin(int num) { coin += num; }
 	void TakeDamage(); // 1 unit of damage = 1 level
+	
 };
 
 class CMarioTailAttack : public CGameObject
@@ -232,6 +237,7 @@ public:
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	bool GetRenderState() { return isRendered; };
 	bool SetRenderState(bool value) { isRendered = value; };
+	
 	
 
 };

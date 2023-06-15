@@ -17,7 +17,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-		mario->SetState(MARIO_STATE_JUMP);
+	
+		
+			mario->SetState(MARIO_STATE_JUMP);
 		break;
 	case DIK_A:
 		//Tail attack if level raccoon
@@ -47,11 +49,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
-	case DIK_5:
-		float mX, mY;
-		mario->GetPosition(mX, mY);
-		mario->SetPosition(mX, mY-200);
-		break;
+	
 	case DIK_R: // reset
 		// Reload();
 		break;
@@ -86,16 +84,26 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (game->IsKeyDown(DIK_A))
+		{
 			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+			
+		}
 		else
+		{
 			mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		}
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
 		if (game->IsKeyDown(DIK_A))
+
+		{
 			mario->SetState(MARIO_STATE_RUNNING_LEFT);
+		}
 		else
+		{
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
+		}
 	}
 	else 
 	

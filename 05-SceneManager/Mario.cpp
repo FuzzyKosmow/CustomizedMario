@@ -15,13 +15,24 @@
 #include "PlayScene.h"
 #include "ShootingPlant.h"
 #include "Turtle.h"
-// ny < 0 : mario on top, ny > 0 : mario below
+
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	
-	if (abs(vx) > abs(maxVx)) vx = maxVx;
+	if (isOnPlatform)
+	{
+		isFlying = false;
+	}
+	if (abs(vx) > abs(maxVx))
+	{
+		vx = maxVx;
+		maxSpeedReached = true;
+	}
+	else
+	{
+		maxSpeedReached = false;
+	}
 	
 	//Reset attack timer for raccoon attack
 	if (isRaccoonAttacking)
@@ -37,18 +48,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			//Render the attack zone and handle collison
 			
 		}
-
-		
 	}
-
-
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-	
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -89,7 +95,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPlantBullet(e);
 	else if (dynamic_cast<CShootingPlant*> (e->obj))
 		OnCollisionWithPlant(e);
-
 	else if (dynamic_cast<CTurtle*> (e->obj))
 		OnCollisionWithTurtle(e);
 	
@@ -156,22 +161,7 @@ void CMario::OnCollisionWithPlantBullet(LPCOLLISIONEVENT e)
 	}
 }
 
-void CMario::TakeDamage()
-{
-	if (untouchable == 0)
-	{
-		if (level > MARIO_LEVEL_SMALL)
-		{
-			level = MARIO_LEVEL_SMALL;
-			StartUntouchable();
-		}
-		else
-		{
-			DebugOut(L">>> Mario DIE >>> \n");
-			SetState(MARIO_STATE_DIE);
-		}
-	}
-}
+
 void CMario::OnCollisionWithBigColorBrick(LPCOLLISIONEVENT e)
 {
 
@@ -529,7 +519,7 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_JUMP:
 		if (isSitting) break;
-		if (isOnPlatform)
+		if (isOnPlatform && level != MARIO_LEVEL_RACCOON)
 		{
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
@@ -537,6 +527,17 @@ void CMario::SetState(int state)
 				vy = -MARIO_JUMP_SPEED_Y;
 			
 		}
+		else if (level == MARIO_LEVEL_RACCOON)
+		{
+			if (abs (this->vx) == MARIO_RUNNING_SPEED)
+				vy = -MARIO_JUMP_RUN_SPEED_Y;
+			else if (isOnPlatform)
+			{
+				vy = -MARIO_JUMP_SPEED_Y;
+			}
+				
+		}
+		
 		break;
 
 	case MARIO_STATE_RELEASE_JUMP:
@@ -566,7 +567,25 @@ void CMario::SetState(int state)
 		ax = 0.0f;
 		vx = 0.0f;
 		break;
+	case MARIO_STATE_FLY_RIGHT:
+	{
+		if (isOnPlatform)
+		{
+			vy = -MARIO_JUMP_SPEED_Y;
+			isFlying = true;
+			ax = MARIO_ACCEL_RUN_X;
+		}
+		else
+		{
+			vy = -MARIO_JUMP_RUN_SPEED_Y;
+			ax = MARIO_ACCEL_RUN_X;
+		}
+		break;
+	}
+	case MARIO_STATE_FLY_LEFT:
+	{
 
+	}
 	case MARIO_STATE_DIE:
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		vx = 0;
@@ -576,6 +595,13 @@ void CMario::SetState(int state)
 
 	CGameObject::SetState(state);
 }
+
+
+
+
+
+
+
 //Basically hitbox/ collision box.  left, top , right, bottom is basically the cord of the sprite. To modify, + to move it to the right, - to move it to the left
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -633,7 +659,22 @@ void CMario::SetLevel(int l)
 	level = l;
 }
 
-
+void CMario::TakeDamage()
+{
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
+}
 void CMarioTailAttack::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (nx >= 0)
@@ -666,3 +707,5 @@ void CMarioTailAttack::OnCollisionWith(LPCOLLISIONEVENT e)
 		e->obj->Delete();
 	}
 }
+
+
