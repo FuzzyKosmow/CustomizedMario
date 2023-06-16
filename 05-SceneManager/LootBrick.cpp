@@ -49,7 +49,7 @@ void CLootBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				float lootOldY = 0;
 				float lootOldX = 0;
 				loot->GetPosition(lootOldX, lootOldY);
-				float heightAddEachFrame = (1000.0f / MAX_FRAME_RATE) * (BRICK_AND_LOOT_HEIGHT_DIFF+20) / LOOT_BRICK_TIME_TO_SHOW_COIN;
+				float heightAddEachFrame = (1000.0f / MAX_FRAME_RATE) * (BRICK_AND_COIN_HEIGHT_DIFF) / LOOT_BRICK_TIME_TO_SHOW_COIN;
 				loot->SetPosition(lootOldX, lootOldY - heightAddEachFrame);
 			}
 			

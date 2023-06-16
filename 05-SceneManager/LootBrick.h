@@ -22,6 +22,7 @@
 #define LOOT_BRICK_TIME_TO_SHOW_LOOT 600
 #define LOOT_BRICK_TIME_TO_SHOW_COIN 150
 #define BRICK_AND_LOOT_HEIGHT_DIFF 30
+#define BRICK_AND_COIN_HEIGHT_DIFF 50
 
 class CLootBrick : public CGameObject {
 	public:

@@ -65,11 +65,13 @@ turtle.txt
 8	240	100	3
 8	255	100	3
 
-2	260	120
+
 ##Big color bricks
 9	285	115	4	3	5
 9	255	145	3	3	3
 
+#Goomba
+2	260	120
 
 ##Tunnel ;mid green = 2. type - x 	y	color 	height, with plant (11)
 

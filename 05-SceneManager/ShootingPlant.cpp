@@ -5,7 +5,7 @@
 #include "PlayScene.h"
 #include "Sprites.h"
 #include "debug.h"
-//TODO: Fix the bug that cause after the first hit, the later hit does not register.
+//TODO: Fix the bug that make the projectile only register from below
 //Plant
 void CShootingPlant::Render()
 {
@@ -136,7 +136,7 @@ void CShootingPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						ySpawnForDirection = y - PLANT_SPAWN_OFFSET;
 						xSpawn = x - PLANT_SPAWN_OFFSET;
 						ySpawn = y - PLANT_SPAWN_OFFSET;
-					}
+					}	
 					else
 					{
 						xSpawnForDirection = x - PLANT_SPAWN_OFFSET;
@@ -217,6 +217,7 @@ void PlantProjectile::Render()
 {
 	CSprites* s = CSprites::GetInstance();
 	s->Get(ID_SPRITE_PLANT_BULLET)->Draw(x, y, currentRotation);
+	RenderBoundingBox();
 }
 
 void PlantProjectile::OnNoCollision(DWORD dt)
@@ -225,13 +226,11 @@ void PlantProjectile::OnNoCollision(DWORD dt)
 	y += direction.y * speed * dt;
 
 }
+
 void PlantProjectile::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CMario*> (e->obj))
-	{
-		CMario* mario = dynamic_cast<CMario*> (e->obj);
-		mario->TakeDamage();
-	}
+	if (dynamic_cast<PlantProjectile*>(e->obj))
+		return;
 }
 
 
@@ -257,3 +256,27 @@ void PlantProjectile::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 };
+
+
+void PlantProjectile::RenderBoundingBox()
+{
+		D3DXVECTOR3 p(x, y, 0);
+	RECT rect;
+
+	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
+
+	float l, t, r, b;
+
+	GetBoundingBox(l, t, r, b);
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = (int)r - (int)l;
+	rect.bottom = (int)b - (int)t;
+
+	float cx, cy;
+	CGame::GetInstance()->GetCamPos(cx, cy);
+
+	float xx = x - PLANT_PROJECTILE_BBOX_WIDTH / 2 + rect.right / 2;
+	float yy = y - PLANT_PROJECTILE_BBOX_HEIGHT / 2 + rect.bottom / 2;
+	CGame::GetInstance()->Draw(xx - cx, yy - cy, bbox, nullptr, BBOX_ALPHA, rect.right - 1, rect.bottom - 1);
+}

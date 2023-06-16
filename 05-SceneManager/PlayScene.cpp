@@ -202,7 +202,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			break;
 		case LOOT_TYPE_COIN:
 			loot = new CCoin(x, y, 0);
-			loot->SetPosition(x, y-1);
+			loot->SetPosition(x, y-COIN_SPAWN_IN_LOOT_OFFSET);
 			break;
 		default:
 			break;
@@ -358,7 +358,7 @@ void CPlayScene::Update(DWORD dt)
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
-	if (cy >= 5) cy = 0.0;
+	if (cy >= 0) cy = 0.0;
 
 	CGame::GetInstance()->SetCamPos(cx, cy);
 

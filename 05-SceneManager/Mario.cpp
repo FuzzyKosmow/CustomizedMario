@@ -18,11 +18,21 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+
+	DebugOutTitle(L"coin: %d", coin);
+
+	if (!isFlying) //Since only raccoon can fly
+	{
+		ay = MARIO_GRAVITY;
+	}
 	vy += ay * dt;
 	vx += ax * dt;
+	
 	if (isOnPlatform)
 	{
 		isFlying = false;
+
+
 	}
 	if (abs(vx) > abs(maxVx))
 	{
@@ -91,7 +101,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CShroom*>(e->obj))
 		OnCollisionWithSchroom(e);
-	else if (dynamic_cast<PlantProjectile*> (e->obj))
+	else if	(dynamic_cast<PlantProjectile*>(e->obj))
 		OnCollisionWithPlantBullet(e);
 	else if (dynamic_cast<CShootingPlant*> (e->obj))
 		OnCollisionWithPlant(e);
@@ -145,20 +155,8 @@ void CMario::OnCollisionWithPlant(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPlantBullet(LPCOLLISIONEVENT e)
 {
-	if (untouchable == 0)
-	{
-		if (level > MARIO_LEVEL_SMALL)
-		{
-			level = MARIO_LEVEL_SMALL;
-			e->obj->Delete();
-			StartUntouchable();
-		}
-		else
-		{
-			DebugOut(L">>> Mario DIE >>> \n");
-			SetState(MARIO_STATE_DIE);
-		}
-	}
+	TakeDamage();
+	
 }
 
 
@@ -465,7 +463,7 @@ void CMario::Render()
 	animations->Get(aniId)->Render(x, y);
 
 	
-	
+	RenderBoundingBox();
 	
 }
 
@@ -480,6 +478,7 @@ void CMario::SetState(int state)
 		if (isSitting) break;
 		vx = 0;
 		ax = 0;
+		
 		nx = 1;
 		raccoonAttack_start = GetTickCount64();
 		isRaccoonAttacking = true;
@@ -497,18 +496,21 @@ void CMario::SetState(int state)
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
+		
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
+		
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (isSitting) break;
 		maxVx = MARIO_WALKING_SPEED;
 		ax = MARIO_ACCEL_WALK_X;
 		nx = 1;
+		
 		break;
 	
 	case MARIO_STATE_WALKING_LEFT:
@@ -516,11 +518,14 @@ void CMario::SetState(int state)
 		maxVx = -MARIO_WALKING_SPEED;
 		ax = -MARIO_ACCEL_WALK_X;
 		nx = -1;
+		
 		break;
 	case MARIO_STATE_JUMP:
+		
 		if (isSitting) break;
 		if (isOnPlatform && level != MARIO_LEVEL_RACCOON)
 		{
+			
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
 			else
@@ -529,22 +534,32 @@ void CMario::SetState(int state)
 		}
 		else if (level == MARIO_LEVEL_RACCOON)
 		{
-			if (abs (this->vx) == MARIO_RUNNING_SPEED)
-				vy = -MARIO_JUMP_RUN_SPEED_Y;
-			else if (isOnPlatform)
+			
+			if (abs(this->vx) == MARIO_RUNNING_SPEED && !isOnPlatform)
 			{
-				vy = -MARIO_JUMP_SPEED_Y;
+				
+				vy = -MARIO_RACCOON_FLY_SPEED_Y;
+				ay = MARIO_RACCOON_GRAVITY;
 			}
 				
+			else if (isOnPlatform)
+			{
+				
+				vy = -MARIO_JUMP_SPEED_Y;
+				ay = MARIO_RACCOON_GRAVITY;
+			}
+			isFlying = true;
 		}
 		
 		break;
 
 	case MARIO_STATE_RELEASE_JUMP:
+		
 		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
 		break;
 
 	case MARIO_STATE_SIT:
+		
 		if (isOnPlatform && level != MARIO_LEVEL_SMALL)
 		{
 			state = MARIO_STATE_IDLE;
@@ -555,6 +570,7 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_SIT_RELEASE:
+		
 		if (isSitting)
 		{
 			isSitting = false;
@@ -564,21 +580,23 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_IDLE:
+	
 		ax = 0.0f;
 		vx = 0.0f;
 		break;
 	case MARIO_STATE_FLY_RIGHT:
 	{
+		
 		if (isOnPlatform)
 		{
-			vy = -MARIO_JUMP_SPEED_Y;
+			vy = -MARIO_RACCOON_FLY_SPEED_Y;
 			isFlying = true;
-			ax = MARIO_ACCEL_RUN_X;
+			ax = MARIO_ACCEL_FLY_X;
 		}
 		else
 		{
 			vy = -MARIO_JUMP_RUN_SPEED_Y;
-			ax = MARIO_ACCEL_RUN_X;
+			ax = MARIO_ACCEL_FLY_X;
 		}
 		break;
 	}
@@ -656,21 +674,37 @@ void CMario::SetLevel(int l)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 	}
+	
 	level = l;
+	if (this->level == MARIO_LEVEL_RACCOON)
+	{
+		/*ay = MARIO_RACCOON_GRAVITY;*/
+	}
+	else
+
+	{
+		ay = MARIO_GRAVITY;
+	}
 }
 
 void CMario::TakeDamage()
 {
 	if (untouchable == 0)
 	{
-		if (level > MARIO_LEVEL_SMALL)
+		if (level == MARIO_LEVEL_RACCOON)
+		{
+			level = MARIO_LEVEL_BIG;
+			StartUntouchable();
+		}
+		else if (level == MARIO_LEVEL_BIG)
 		{
 			level = MARIO_LEVEL_SMALL;
 			StartUntouchable();
 		}
 		else
 		{
-			DebugOut(L">>> Mario DIE >>> \n");
+			//Die if small
+			
 			SetState(MARIO_STATE_DIE);
 		}
 	}

@@ -5,11 +5,11 @@
 #include "Animations.h"
 
 #define ID_ANI_COIN 11000
-
+#define INACTIVE 
 #define	COIN_WIDTH 10
 #define COIN_BBOX_WIDTH 10
 #define COIN_BBOX_HEIGHT 16
-
+#define COIN_SPAWN_IN_LOOT_OFFSET 1
 class CCoin : public CGameObject {
 	int activated = 1;
 public:
