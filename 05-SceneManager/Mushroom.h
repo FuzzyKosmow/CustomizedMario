@@ -17,7 +17,7 @@
 
 #define ID_ANI_SHROOM_WALKING 6000
 
-
+#define MUSHROOM_SPAWN_OFFSET 1
 class CShroom : public CGameObject
 {
 protected:

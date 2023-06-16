@@ -153,6 +153,9 @@ turtle.txt
 #Small bush head
 7	985	160	15	15	2	70000	-1	70001
 
+2	1075	120
+2	1095	120
+
 ##First milestone last small bushes
 7	1075	160	15	15	3	70300	70300	70300
 ##Also coin then third plaform begin

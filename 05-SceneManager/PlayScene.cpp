@@ -198,10 +198,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		{
 		case LOOT_TYPE_MUSHROOM:
 			loot = new CShroom(x, y);
-			loot->SetPosition(x-1, y-1);
+			loot->SetPosition(x- MUSHROOM_SPAWN_OFFSET, y- MUSHROOM_SPAWN_OFFSET);
 			break;
 		case LOOT_TYPE_COIN:
-			loot = new CCoin(x, y, 0);
+			loot = new CCoin(x, y, INACTIVE);
 			loot->SetPosition(x, y-COIN_SPAWN_IN_LOOT_OFFSET);
 			break;
 		default:
