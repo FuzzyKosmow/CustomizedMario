@@ -93,6 +93,12 @@
     <ClCompile Include="ShootingPlant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Detection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Turtle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -182,5 +188,61 @@
     <ClInclude Include="ShootingPlant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Detection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Turtle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="backgroundItems.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="bigColorBrick.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="brick.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="cloud.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="coin.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="goomba.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="ground.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="invisibleBlock.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="mario.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="mario-sample.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="mushroom.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="scene01.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="scene02.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="scene0005.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="tunnel.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="turtle.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

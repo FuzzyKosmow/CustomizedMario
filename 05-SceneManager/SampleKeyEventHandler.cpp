@@ -51,7 +51,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	
 	case DIK_R: // reset
-		// Reload();
+		//Reload();
 		break;
 	}
 }
