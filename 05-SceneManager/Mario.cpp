@@ -20,6 +20,49 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 
 	DebugOutTitle(L"coin: %d", coin);
+	//Control the holding object here
+	if (holdingObject)
+	{
+		LPGAME game = CGame::GetInstance();
+		if (game->IsKeyDown(DIK_A))
+		{
+			if (nx == 1)
+			{
+				holdObject->SetPosition(x + MARIO_BIG_BBOX_WIDTH, y);
+
+			}
+			else
+
+			{
+				holdObject->SetPosition(x - MARIO_BIG_BBOX_WIDTH, y);
+			}
+		}
+		else
+		{
+			//Release object if not holding A
+			if (dynamic_cast<CTurtle*> (holdObject))
+			{
+				CTurtle* turtle = dynamic_cast<CTurtle*> (holdObject);
+				turtle->SetState(TURTLE_STATE_SHELL_MOVING);
+				if (nx == 1)
+				{
+					//Nothing, default direction is on the right
+				}
+				else
+
+				{
+					float turtleVx = 0, turtlVy = 0;
+					turtle->GetSpeed(vx, vy);
+					turtle->SetSpeed(vx * -1, vy);
+				}
+
+			}
+			holdingObject = false;
+			holdObject = nullptr;
+		}
+
+		
+	}
 
 	if (!isFlying) //Since only raccoon can fly
 	{
@@ -115,6 +158,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 {
 	CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+	LPGAME game = CGame::GetInstance();
 	if (e->ny < 0)
 	{
 		if (turtle->GetState() == TURTLE_STATE_WALKING)
@@ -125,6 +169,14 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		else if (turtle->GetState() == TURTLE_STATE_SHELL)
 		{
 			turtle->SetState(TURTLE_STATE_SHELL_MOVING);
+			if (e->nx > 0 )
+			{
+				turtle->SetSpeed(TURTLE_SHELL_SPEED, 0);
+			}
+			else
+			{
+				turtle->SetSpeed(-TURTLE_SHELL_SPEED, 0);
+			}
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 		else if (turtle->GetState() == TURTLE_STATE_SHELL_MOVING)
@@ -132,6 +184,18 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 			turtle->SetState(TURTLE_STATE_SHELL);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
+	}
+	else if (e->nx !=0 && turtle->GetState() == TURTLE_STATE_SHELL  && 
+		game->IsKeyDown(DIK_A)
+		)
+	{
+		if (!holdingObject)
+		{
+			holdingObject = true;
+			holdObject = turtle;
+		}
+		
+		
 	}
 	
 }

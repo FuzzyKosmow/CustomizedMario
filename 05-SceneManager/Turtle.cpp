@@ -143,10 +143,10 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
-
+	vy += ay * dt;
 	if (GetState() == TURTLE_STATE_WALKING || state == TURTLE_STATE_SHELL_MOVING)
 	{
-		vy += ay * dt;
+		
 		vx += ax * dt;
 		if (state == TURTLE_STATE_WALKING)
 		{
@@ -205,13 +205,12 @@ void CTurtle::SetState(int state)
 	case TURTLE_STATE_SHELL:
 	{
 		vx = 0;
-		
+		y-= JUMPED_ON_OFFSET;
 		break;
 	}
 	case TURTLE_STATE_SHELL_MOVING:
 	{
 		vx = TURTLE_SHELL_SPEED;
-		
 		y -= JUMPED_ON_OFFSET;
 		break;
 	}

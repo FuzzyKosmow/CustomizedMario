@@ -77,17 +77,17 @@ class CBigColorBrick : public CGameObject
 	int color;
 	int height;  //How many small brick vertically
 	int width;  // how many small brick horizontally
-	int spriteIDBeginTop;
-	int spriteIDMiddleTop;
-	int spriteIDEndTop;
+	int spriteIDBeginTop = -1;
+	int spriteIDMiddleTop = -1;
+	int spriteIDEndTop = -1;
 
-	int spriteIDBeginBottom;
-	int spriteIDMiddleBottom;
-	int spriteIDEndBottom;
+	int spriteIDBeginBottom = -1;
+	int spriteIDMiddleBottom = -1;
+	int spriteIDEndBottom = -1;
 
-	int spriteIDBeginMiddle;
-	int spriteIDMiddleMiddle;
-	int spriteIDEndMiddle;
+	int spriteIDBeginMiddle = -1;
+	int spriteIDMiddleMiddle = -1;
+	int spriteIDEndMiddle = -1;
 public:
 	bool blocking = false;
 	

@@ -157,9 +157,14 @@ class CMario : public CGameObject
 	int level;
 	int untouchable;
 	
+
 	bool maxSpeedReached = false;
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
+
+
+	bool holdingObject = false;
+	LPGAMEOBJECT holdObject = nullptr;
 	/*CMarioTailAttack tailAttack;*/
 	int coin;
 	//Raccoon attack
