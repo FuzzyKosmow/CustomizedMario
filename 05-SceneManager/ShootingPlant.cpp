@@ -222,8 +222,8 @@ void PlantProjectile::Render()
 
 void PlantProjectile::OnNoCollision(DWORD dt)
 {
-	x += direction.x * speed * dt;
-	y += direction.y * speed * dt;
+	x += direction.x * (float)speed * dt;
+	y += direction.y * (float)speed * dt;
 
 }
 

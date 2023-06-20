@@ -48,7 +48,7 @@ void CSprite::Draw(float x, float y, float angle  )
 	D3DXMatrixTranslation(&matTranslation, x - cx, g->GetBackBufferHeight() - y + cy, 0.1f);
 
 	if (angle != 0.0f)
-		D3DXMatrixRotationZ(&matRotation, angle * D3DX_PI / 180.0f);
+		D3DXMatrixRotationZ(&matRotation, (float) (angle * D3DX_PI / 180.0f));
 	else
 		D3DXMatrixIdentity(&matRotation);
 

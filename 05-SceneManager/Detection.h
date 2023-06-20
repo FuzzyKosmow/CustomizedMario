@@ -15,7 +15,7 @@ class SquareDetectionZone : public CGameObject {
 	float alpha = BBOX_ALPHA;
 	bool visible = true;
 public:
-	SquareDetectionZone(float x, float y, float width) : CGameObject(x, y) {
+	SquareDetectionZone(float x, float y, int width) : CGameObject(x, y) {
 		this->width = width;
 		SetState(DETECTION_ZONE_STATE_IDLE);
 	}

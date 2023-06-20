@@ -12,7 +12,7 @@
 #include "debug.h"
 #include "PlayScene.h"
 #include "Detection.h"
-#define PLANT_PROJECTILE_SPEED 0.0005f
+
 #define PLANT_SHOW_UP_SPEED 0.3f
 #define ID_SPRITE_PLANT_LOOK_UP_RIGHT 101000
 #define ID_SPRITE_PLANT_LOOK_DOWN_RIGHT 101001
@@ -43,7 +43,7 @@
 #define SHOOTING_PLANT_DETECTION_ZONE_SIZE 20
 
 //Projectile stats
-#define PLANT_PROJECTILE_SPEED 0.2f
+#define PLANT_PROJECTILE_SPEED 0.05f
 #define PLANT_PROJECTILE_BBOX_HEIGHT 20
 #define PLANT_PROJECTILE_BBOX_WIDTH 20
 #define PLANT_SPAWN_OFFSET 10
@@ -54,7 +54,7 @@ class PlantProjectile : public CGameObject {
 	double speed = PLANT_PROJECTILE_SPEED;
 	float currentRotation = 0;
 	D3DXVECTOR2 direction = D3DXVECTOR2(0, 0);
-	float spawnTime;
+	ULONGLONG spawnTime;
 	//Note just spawn the thing a bit away from the plant
 public:
 	PlantProjectile(float x, float y, D3DXVECTOR2 direction)
@@ -89,15 +89,15 @@ public:
 class CShootingPlant : public CGameObject {
 protected:
 	//Time trackers
-	float show_start = 0;
-	float shoot_start = 0;
-	float retract_start = 0;
-	float last_shot = 0;
-	float idle_start = 0;
+	ULONGLONG show_start = 0;
+	ULONGLONG shoot_start = 0;
+	ULONGLONG retract_start = 0;
+	ULONGLONG last_shot = 0;
+	ULONGLONG idle_start = 0;
 
 	float baseX; //Defalt position
 	float baseY;
-	float detectionZoneSize = SHOOTING_PLANT_DETECTION_ZONE_SIZE;
+	int detectionZoneSize = SHOOTING_PLANT_DETECTION_ZONE_SIZE;
 	//Detectionzone, only make make the plant start working when mario is in the zone
 	SquareDetectionZone* dZone;
 	PlantProjectile* projectile = NULL;
