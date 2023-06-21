@@ -246,11 +246,17 @@ void CMario::OnCollisionWithBigColorBrick(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithSchroom(LPCOLLISIONEVENT e)
 {
 	if (state == MARIO_STATE_DIE) return;
-	if ((GetLevel() == MARIO_LEVEL_SMALL || GetLevel() == MARIO_LEVEL_BIG) && dynamic_cast<CShroom*>(e->obj)->GetState() == SHROOM_STATE_WALKING)
+	if ((GetLevel() == MARIO_LEVEL_SMALL || GetLevel() == MARIO_LEVEL_BIG ) && dynamic_cast<CShroom*>(e->obj)->GetState() == SHROOM_STATE_WALKING)
 	{
 		SetLevel(MARIO_LEVEL_BIG);
 		e->obj->Delete();
 	}
+	else if (level == MARIO_LEVEL_RACCOON && dynamic_cast<CShroom*>(e->obj)->GetState() == SHROOM_STATE_WALKING)
+	{
+		SetLevel(MARIO_LEVEL_RACCOON);
+		e->obj->Delete();
+	}
+	
 }
 void CMario::OnCollisionWithLootBrick(LPCOLLISIONEVENT e)
 {
