@@ -12,7 +12,7 @@
 #include "LootBrick.h"
 
 
-#define TURTLE_GRAVITY 0.002f
+#define TURTLE_GRAVITY 0.001f
 #define TURTLE_WALKING_SPEED 0.05f
 #define TURTLE_SHELL_SPEED 0.2f
 #define JUMPED_ON_OFFSET 10
