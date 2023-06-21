@@ -570,77 +570,160 @@ int CMario::GetAniIdBig()
 
 int CMario::GetAniIdRaccoon()
 {
-	
 	int aniId = -1;
 	if (!isOnPlatform)
 	{
-		if (abs(ax) == MARIO_ACCEL_RUN_X)
+		if (nx >= 0)
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT;
+			if (holdingObject)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT_GRABBING;
+			}
 			else
-				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT;
+			{
+				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT;
+			}
 		}
 		else
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_RACCOON_JUMP_WALK_RIGHT;
+			if (holdingObject)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT_GRABBING;
+			}
 			else
-				aniId = ID_ANI_MARIO_RACCOON_JUMP_WALK_LEFT;
+			{
+				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT;
+			}
 		}
 	}
-	else
-		
-		if (isSitting)
+	else if (isSitting)
+	{
+		if (nx > 0)
 		{
-			if (nx > 0)
-				aniId = ID_ANI_MARIO_RACCOON_SIT_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_RACCOON_SIT_LEFT;
+			aniId = ID_ANI_MARIO_RACCOON_SIT_RIGHT;
 		}
 		else
 		{
-			//Set aniID to raccoon attack accordingly if mario is attacking
-			if (isRaccoonAttacking)
+			aniId = ID_ANI_MARIO_RACCOON_SIT_LEFT;
+		}
+	}
+	else if (isRaccoonAttacking)
+	{
+		if (nx > 0)
+		{
+			aniId = ID_ANI_MARIO_RACCOON_ATTACK_RIGHT;
+		}
+		else
+		{
+			aniId = ID_ANI_MARIO_RACCOON_ATTACK_LEFT;
+		}
+	}
+	else if (vx == 0)
+	{
+		if (nx > 0)
+		{
+			if (holdingObject)
 			{
-				if (nx > 0)
-				{
-					aniId = ID_ANI_MARIO_RACCOON_ATTACK_RIGHT;
-				}
-				else
-				{
-					aniId = ID_ANI_MARIO_RACCOON_ATTACK_LEFT;
-				}	
+				aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT_GRABBING;
 			}
 			else
-			if (vx == 0)
 			{
-				if (nx > 0) aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
-				else aniId = ID_ANI_MARIO_RACCOON_IDLE_LEFT;
-			}
-			else if (vx > 0)
-			{
-				if (ax < 0)
-					aniId = ID_ANI_MARIO_RACCOON_BRACE_RIGHT;
-				else if (ax == MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_RACCOON_RUNNING_RIGHT;
-				else if (ax == MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_RACCOON_WALKING_RIGHT;
-			}
-			else // vx < 0
-			{
-				if (ax > 0)
-					aniId = ID_ANI_MARIO_RACCOON_BRACE_LEFT;
-				else if (ax == -MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_RACCOON_RUNNING_LEFT;
-				else if (ax == -MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_RACCOON_WALKING_LEFT;
+				aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
 			}
 		}
-			
-	if (aniId == -1) aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
+		else
+		{
+			if (holdingObject)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_IDLE_LEFT_GRABBING;
+			}
+			else
+			{
+				aniId = ID_ANI_MARIO_RACCOON_IDLE_LEFT;
+			}
+		}
+	}
+	else if (vx > 0)
+	{
+		if (ax < 0)
+		{
+			if (holdingObject)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_IDLE_LEFT_GRABBING;
+			}
+			else
+			{
+				aniId = ID_ANI_MARIO_RACCOON_BRACE_RIGHT;
+			}
+		}
+		else if (ax == MARIO_ACCEL_RUN_X)
+		{
+			if (holdingObject)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_RUNNING_RIGHT_GRABBING;
+			}
+			else
+			{
+				aniId = ID_ANI_MARIO_RACCOON_RUNNING_RIGHT;
+			}
+		}
+		else if (ax == MARIO_ACCEL_WALK_X)
+		{
+			if (holdingObject)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_WALKING_RIGHT_GRABBING;
+			}
+			else
+			{
+				aniId = ID_ANI_MARIO_RACCOON_WALKING_RIGHT;
+			}
+		}
+	}
+	else // vx < 0
+	{
+		if (ax > 0)
+		{
+			if (holdingObject)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT_GRABBING;
+			}
+			else
+			{
+				aniId = ID_ANI_MARIO_RACCOON_BRACE_LEFT;
+			}
+		}
+		else if (ax == -MARIO_ACCEL_RUN_X)
+		{
+			if (holdingObject)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_RUNNING_LEFT_GRABBING;
+			}
+			else
+			{
+				aniId = ID_ANI_MARIO_RACCOON_RUNNING_LEFT;
+			}
+		}
+		else if (ax == -MARIO_ACCEL_WALK_X)
+		{
+			if (holdingObject)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_WALKING_LEFT_GRABBING;
+			}
+			else
+			{
+				aniId = ID_ANI_MARIO_RACCOON_WALKING_LEFT;
+			}
+		}
+	}
+
+	if (aniId == -1)
+	{
+		aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
+	}
+
 	return aniId;
 }
+
 void CMario::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
