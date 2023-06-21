@@ -74,6 +74,7 @@
 #define COLOR_BRICK_STATE_HITBOX	1
 class CBigColorBrick : public CGameObject
 {
+	
 	int color;
 	int height;  //How many small brick vertically
 	int width;  // how many small brick horizontally
@@ -88,6 +89,9 @@ class CBigColorBrick : public CGameObject
 	int spriteIDBeginMiddle = -1;
 	int spriteIDMiddleMiddle = -1;
 	int spriteIDEndMiddle = -1;
+
+	float baseX;
+	float baseY;
 public:
 	bool blocking = false;
 	
@@ -117,6 +121,8 @@ public:
 	};
 	CBigColorBrick(float x, float y, int color, int width, int height) : CGameObject(x, y)
 	{
+		baseX = x;
+		baseY = y;
 		this->color = color;
 		this->height = height;
 		this->width = width;

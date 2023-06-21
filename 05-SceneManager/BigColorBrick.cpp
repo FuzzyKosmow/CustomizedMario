@@ -141,6 +141,9 @@ void CBigColorBrick::OnNoCollision(DWORD dt)
 
 void CBigColorBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	//To prevent blocking thing from accidentally displace the brick
+	x = baseX;
+	y = baseY;
 	CGameObject::Update(dt);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
