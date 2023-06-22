@@ -3,6 +3,11 @@
 //
 // This file contains all IDs of game assets 
 //
+//NOTE !!!!!!!
+//NAMING CONVENTION: Not accounting for old name given by prof, most sprite for the right direction will be an even number, usually 0 or 1 . EX: 13400 for walking right, 13410 for walking left. second sprite for walking right could be 
+// 13401, 13402, and so on. 
+// In case where there is little space left, say , walking is ~600, running is ~ 700, but you need walking while grabbing. So if walking is 600, 601,602,
+// 610,611,612, then the walking grab could be 620, 621, 622, 630, 631 , 632
 
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
