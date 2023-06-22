@@ -96,6 +96,29 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 
 			
 		}
+		else if (dynamic_cast<CMario*>(e->obj))
+		{
+			if (e->nx != 0)
+			{
+				CMario* mario = dynamic_cast<CMario*>(e->obj);
+				mario->TakeDamage();
+				vx *= -1;
+			}
+
+		}
+	}
+	else if (state == TURTLE_STATE_WALKING)
+	{
+		if (dynamic_cast<CMario*>(e->obj))
+		{
+			if (e->nx != 0)
+			{
+				CMario* mario = dynamic_cast<CMario*>(e->obj);
+				mario->TakeDamage();
+			}
+
+		}
+
 	}
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CTurtle*>(e->obj)) return;
@@ -107,34 +130,7 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
-	if (state == TURTLE_STATE_WALKING || state == TURTLE_STATE_SHELL_MOVING)
-	{
-		if (dynamic_cast<CMario*>(e->obj))
-		{
-			if (e->nx > 0 || e->nx < 0)
-			{
-				CMario* mario = dynamic_cast<CMario*>(e->obj);
-				mario->TakeDamage();
-			}
-			
-		}
-		if (state == TURTLE_STATE_SHELL_MOVING)
-		{
-			if (dynamic_cast<CGoomba*> (e->obj))
-			{
-				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-				
-					goomba->SetState(GOOMBA_STATE_DIE);
-			
-				
-			}
-			else if (dynamic_cast<CLootBrick*>(e->obj))
-			{
-				//Nothing yet
-			}
-		}
-
-	}
+	
 
 
 }
