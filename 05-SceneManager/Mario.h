@@ -211,7 +211,7 @@ class CMario : public CGameObject
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithLootBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithSchroom(LPCOLLISIONEVENT e);
-	void OnCollisionWithBigColorBrick(LPCOLLISIONEVENT e);
+	
 	void OnCollisionWithDetectionBox(LPCOLLISIONEVENT e);
 	void OnCollisionWithPlantBullet(LPCOLLISIONEVENT e);
 	void OnCollisionWithPlant(LPCOLLISIONEVENT e);
@@ -221,7 +221,8 @@ class CMario : public CGameObject
 	int GetAniIdRaccoon();
 
 public:
-	bool amongUs = false;
+	bool colliable = true;
+	ULONGLONG toBeColliableAgainAt;
 	CMario(float x, float y) : CGameObject(x, y)
 	{
 		isSitting = false;
@@ -241,13 +242,13 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
-
+	void SetUnColliableFor(ULONGLONG time) { colliable = false; toBeColliableAgainAt = GetTickCount64() + time; }
 	int IsCollidable()
 	{
-		return (state != MARIO_STATE_DIE);
+		return (state != MARIO_STATE_DIE && colliable);
 	}
 
-	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable == 0); }
+	int IsBlocking() { return 0; }
 
 	void OnNoCollision(DWORD dt);
 	//All collision is proactive, meaning for this to be called the object must be moving, apparently

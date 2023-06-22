@@ -20,6 +20,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 
 	DebugOutTitle(L"coin: %d", coin);
+
+	//Handle the set colliable by time
+	if (GetTickCount() == toBeColliableAgainAt)
+	{
+		colliable = true;
+	}
 	//Control the holding object here
 	if (holdingObject)
 	{
@@ -123,7 +129,8 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0 && e->obj->IsBlocking())
+	
+	if (e->ny != 0 && e->obj->IsBlocking() )
 	{
 		
 		vy = 0;
@@ -222,27 +229,11 @@ void CMario::OnCollisionWithPlant(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithPlantBullet(LPCOLLISIONEVENT e)
 {
 	TakeDamage();
-	
+	e->obj->Delete();	
 }
 
 
-void CMario::OnCollisionWithBigColorBrick(LPCOLLISIONEVENT e)
-{
 
-		// If Mario jumps from below, allow mario to be on top of the brick
-	if (e->ny > 0 ) {
-		if (e->obj->IsBlocking())
-		{
-			vy = 0;
-			isOnPlatform = true;
-		}
-	}
-	else if (e->nx != 0 && e->obj->IsBlocking())
-	{
-		vx = 0;
-		
-	}
-}
 void CMario::OnCollisionWithSchroom(LPCOLLISIONEVENT e)
 {
 	if (state == MARIO_STATE_DIE) return;

@@ -69,9 +69,13 @@
 //Brick height and width
 #define COLOR_BRICK_HEIGHT 15
 #define COLOR_BRICK_WIDTH 15
+#define COLOR_BRICK_SHADOW_DISTANCE 10
 
 #define COLOR_BRICK_STATE_NO_HITBOX 0
 #define COLOR_BRICK_STATE_HITBOX	1
+
+
+#define DISTANCE_OFFSET_Y 10
 class CBigColorBrick : public CGameObject
 {
 	
@@ -93,23 +97,18 @@ class CBigColorBrick : public CGameObject
 	float baseX;
 	float baseY;
 public:
-	bool blocking = false;
 	
-	virtual int IsCollidable() { return 1; };
-	virtual int IsBlocking() { 
-		if (blocking)
-			return 1;
-		else
-			return 0;
+	
+	virtual int IsCollidable() { 
+		return 1;
 	};
-	void SetBlock(bool value) {
-		blocking = value;
+	virtual int IsBlocking() { 
+		return 1;
 		
-	}
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	virtual void OnNoCollision(DWORD dt);
+	};
 	
-	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	
 
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
@@ -119,6 +118,11 @@ public:
 		this->state = state;
 
 	};
+	virtual int IsDirectionColliable(float nx, float ny)
+	{
+		if (nx == 0 && ny == -1) return 1;
+		else return 0;
+	}
 	CBigColorBrick(float x, float y, int color, int width, int height) : CGameObject(x, y)
 	{
 		baseX = x;
