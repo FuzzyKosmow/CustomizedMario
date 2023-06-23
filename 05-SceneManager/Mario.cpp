@@ -15,6 +15,9 @@
 #include "PlayScene.h"
 #include "ShootingPlant.h"
 #include "Turtle.h"
+#include "Leaf.h"
+
+// TODO: FIX A BUG THAT CAUSE MARIO WITH PLANT PROJECTILE NOT REGISTER. WHEN MARIO STAND STILL, THE HIT DOES NOT REGISTER, WHEN MARIO MOVE, IT DOES. FIGURE OUT WHY
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -129,6 +132,8 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<PlantProjectile*>(e->obj))
+		OnCollisionWithPlantBullet(e);
 	
 	if (e->ny != 0 && e->obj->IsBlocking() )
 	{
@@ -153,17 +158,23 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CShroom*>(e->obj))
 		OnCollisionWithSchroom(e);
-	else if	(dynamic_cast<PlantProjectile*>(e->obj))
-		OnCollisionWithPlantBullet(e);
 	else if (dynamic_cast<CShootingPlant*> (e->obj))
 		OnCollisionWithPlant(e);
 	else if (dynamic_cast<CTurtle*> (e->obj))
 		OnCollisionWithTurtle(e);
-	
+	else if (dynamic_cast<CLeaf*> (e->obj))
+		OnCollisionWithLeaf(e);
 	
 	
 		
 }
+
+void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
+{
+	SetLevel(MARIO_LEVEL_RACCOON);
+	e->obj->Delete();
+}
+
 void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 {
 	CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
@@ -228,8 +239,12 @@ void CMario::OnCollisionWithPlant(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPlantBullet(LPCOLLISIONEVENT e)
 {
-	TakeDamage();
-	e->obj->Delete();	
+	if (!untouchable)
+	{
+		TakeDamage();
+		e->obj->Delete();
+	}
+	
 }
 
 
@@ -736,7 +751,7 @@ void CMario::Render()
 		aniId = GetAniIdRaccoon();
 	
 	
-	animations->Get(aniId)->Render(x, y);
+	animations->Get(aniId)->Render(x, y,0 ,true);
 
 	
 	RenderBoundingBox();
@@ -910,7 +925,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		}
 		else
 		{
-			left = x - MARIO_BIG_BBOX_WIDTH / 2;
+			left = x - MARIO_BIG_BBOX_WIDTH / 2 ;
 			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
 			right = left + MARIO_BIG_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;

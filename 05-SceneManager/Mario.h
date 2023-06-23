@@ -168,10 +168,14 @@
 #define MARIO_BIG_BBOX_HEIGHT 24
 #define MARIO_BIG_SITTING_BBOX_WIDTH  14
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 16
+
 #define MARIO_RACCOON_BBOX_WIDTH  15
 #define MARIO_RACCOON_BBOX_HEIGHT 24
+
 #define MARIO_RACCOON_SITTING_BBOX_WIDTH  14
 #define MARIO_RACCOON_SITTING_BBOX_HEIGHT 16
+#define MARIO_RACCOON_BBOX_WIDTH_OFFSET 2
+#define MARIO_RACCOON_BBOX_HEIGHT_OFFSET 0
 
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 
@@ -216,6 +220,9 @@ class CMario : public CGameObject
 	void OnCollisionWithPlantBullet(LPCOLLISIONEVENT e);
 	void OnCollisionWithPlant(LPCOLLISIONEVENT e);
 	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
+	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
+
+
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRaccoon();
@@ -230,7 +237,7 @@ public:
 		ax = 0.0f;
 		ay = MARIO_GRAVITY;
 
-		level = MARIO_LEVEL_BIG;
+		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;

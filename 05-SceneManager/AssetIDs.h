@@ -140,6 +140,11 @@
 
 //Invinsible block
 
+//Leaf
+#define ID_SPRITE_LEAF_RIGHT 110000
+#define ID_SPRITE_LEAF_LEFT 110001
+
+
 //Turtle stuff ~ 120000
 #define ID_SPRITE_INVISIBLE_BLOCK 999999
 

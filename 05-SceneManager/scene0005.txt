@@ -12,6 +12,7 @@ bigColorBrick.txt
 tunnel.txt
 goomba.txt
 turtle.txt
+leaf.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -59,10 +60,10 @@ turtle.txt
 ## Three small bushes
 7	195	175	15	15	3	70300	70300	70300
 ## Loot brick 1
-8	195	130	1
+8	195	130	3
 8	210	130	3
 
-8	240	100	3
+8	240	100	1
 8	255	100	3
 
 
@@ -102,7 +103,7 @@ turtle.txt
 7	690	57	14	14	2	71011	-1	71010
 ##More loot
 8	690	160	1
-8	735	130	1
+8	735	130	2
 
 ##Bushes after the 2 loot brick. small bush
 7	705	160	15	15	6	70300	70300	70300

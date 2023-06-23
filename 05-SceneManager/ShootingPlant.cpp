@@ -47,9 +47,9 @@ void CShootingPlant::Render()
 
 void CShootingPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt);
+	
 
-	//If player go out of detection zone, reset 
+	//If player go out of detection zone, reset . A way to hide things
 	if (!dZone->PlayerDetected())
 	{
 		x = baseX;
@@ -150,7 +150,7 @@ void CShootingPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 					//Normalize direction
 					D3DXVec2Normalize(&direction, &direction);
-					DebugOutTitle(L"Direction: %f %f\n", direction.x, direction.y);
+				
 					LPGAMEOBJECT bullet = new PlantProjectile(xSpawn, ySpawn, direction);
 					projectile = dynamic_cast<PlantProjectile*>(bullet);
 					scene->AddObject(bullet);
@@ -216,27 +216,17 @@ void CShootingPlant::RenderBoundingBox()
 void PlantProjectile::Render()
 {
 	CSprites* s = CSprites::GetInstance();
-	s->Get(ID_SPRITE_PLANT_BULLET)->Draw(x, y, currentRotation);
+	s->Get(ID_SPRITE_PLANT_BULLET)->Draw(x, y);
 	RenderBoundingBox();
 }
 
-void PlantProjectile::OnNoCollision(DWORD dt)
-{
-	x += direction.x * (float)speed * dt;
-	y += direction.y * (float)speed * dt;
 
-}
-
-void PlantProjectile::OnCollisionWith(LPCOLLISIONEVENT e)
-{
-	if (dynamic_cast<PlantProjectile*>(e->obj))
-		return;
-}
 
 
 void PlantProjectile::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
+	x += direction.x * (float)speed * dt;
+	y += direction.y * (float)speed * dt;
 	//Check life time, if still has time ,rotate
 	if (GetTickCount64() - spawnTime < PLANT_PROJECTILE_LIFE_TIME)
 	{
@@ -253,9 +243,22 @@ void PlantProjectile::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		this->Delete();
 	}
-	CGameObject::Update(dt, coObjects);
+	
+	
+	
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 };
+
+
+void PlantProjectile::GetBoundingBox( float& l, float& t, float& r, float& b)
+{
+	
+		l = x - PLANT_PROJECTILE_BBOX_WIDTH / 2;
+		t = y - PLANT_PROJECTILE_BBOX_HEIGHT / 2;
+		r = l + PLANT_PROJECTILE_BBOX_WIDTH;
+		b = t + PLANT_PROJECTILE_BBOX_HEIGHT;
+	
+}
 
 
 void PlantProjectile::RenderBoundingBox()

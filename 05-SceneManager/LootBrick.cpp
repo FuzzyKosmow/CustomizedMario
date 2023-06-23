@@ -5,6 +5,7 @@
 #include "Mario.h"
 #include "debug.h"
 #include "PlayScene.h"
+#include "Leaf.h"
 void CLootBrick::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -73,7 +74,9 @@ void CLootBrick::ShowLoot() //Slowly show the loot, from down to top
 
 void CLootBrick::EnableLoot() //Enable state of the actual loot
 {
-	
+	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+	//Swap the loot to the last so that it render correctly
+	scene->SwapObjectOrderToLast(loot);
 	if (lootType == LOOT_TYPE_MUSHROOM) {
 		CShroom* shroom = dynamic_cast <CShroom*>(loot);
 
@@ -88,7 +91,10 @@ void CLootBrick::EnableLoot() //Enable state of the actual loot
 		
 		
 	}
-	
+	else if (lootType == LOOT_TYPE_LEAF) {
+		CLeaf* leaf = dynamic_cast <CLeaf*>(loot);
+		leaf->SetState(LEAF_STATE_FLYING);
+	}
 }
 
 

@@ -41,6 +41,7 @@ public:
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 	void AddObject (LPGAMEOBJECT object);
+	void SwapObjectOrderToLast(LPGAMEOBJECT object);
 };
 
 typedef CPlayScene* LPPLAYSCENE;

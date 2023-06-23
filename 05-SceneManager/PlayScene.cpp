@@ -17,6 +17,7 @@
 #include "Tunnel.h"
 #include "ShootingPlant.h"
 #include "Turtle.h"
+#include "Leaf.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -204,6 +205,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			loot = new CCoin(x, y, INACTIVE);
 			loot->SetPosition(x, y-COIN_SPAWN_IN_LOOT_OFFSET);
 			break;
+		case LOOT_TYPE_LEAF:
+			loot = new CLeaf(x, y, false);
+			loot->SetPosition(x - LEAF_SPAWN_OFFSET, y - LEAF_SPAWN_OFFSET);
 		default:
 			break;
 		}
@@ -427,4 +431,22 @@ void CPlayScene::PurgeDeletedObjects()
 void CPlayScene::AddObject(LPGAMEOBJECT obj)
 {
 	objects.push_back(obj);
+}
+
+void CPlayScene::SwapObjectOrderToLast(LPGAMEOBJECT obj)
+{
+	//Swap the object to the last of the list
+	//Send the swapped object to the original obj location
+
+	vector<LPGAMEOBJECT>::iterator it;
+	for (it = objects.begin(); it != objects.end(); it++)
+	{
+		if (*it == obj)
+		{
+			objects.erase(it);
+			objects.push_back(obj);
+			break;
+		}
+	}
+
 }

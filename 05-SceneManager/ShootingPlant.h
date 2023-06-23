@@ -44,8 +44,8 @@
 
 //Projectile stats
 #define PLANT_PROJECTILE_SPEED 0.1f
-#define PLANT_PROJECTILE_BBOX_HEIGHT 20
-#define PLANT_PROJECTILE_BBOX_WIDTH 20
+#define PLANT_PROJECTILE_BBOX_HEIGHT 10
+#define PLANT_PROJECTILE_BBOX_WIDTH 10
 #define PLANT_SPAWN_OFFSET 10
 #define PLANT_SPAWN_OFFSET_Y_DOWN -10
 #define PLANT_PROJECTILE_LIFE_TIME 3000
@@ -69,17 +69,12 @@ public:
 	void Render();
 	int IsCollidable() { return 1; };
 	int IsBlocking() { return 0; };
-	void OnNoCollision(DWORD dt);
-	void OnCollisionWith(LPCOLLISIONEVENT e);
+	
+	
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	
-	void GetBoundingBox(float& l, float& t, float& r, float& b)
-	{
-		l = x -  PLANT_PROJECTILE_BBOX_WIDTH / 2;
-		t = y - PLANT_PROJECTILE_BBOX_HEIGHT / 2;
-		r = l + PLANT_PROJECTILE_BBOX_WIDTH;
-		b = t + PLANT_PROJECTILE_BBOX_HEIGHT;
-	}
+	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	
 	void RenderBoundingBox();
 
 };
