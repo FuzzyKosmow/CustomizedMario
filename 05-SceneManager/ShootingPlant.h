@@ -50,8 +50,11 @@
 #define PLANT_SPAWN_OFFSET_Y_DOWN -10
 #define PLANT_PROJECTILE_LIFE_TIME 3000
 #define PLANT_PROJECTILE_ROTATION_DEGREE 60
+#define PLANT_PROJECTILE_AX 0.000011f
+#define PLANT_PROJECTILE_AY 0.00001f
 class PlantProjectile : public CGameObject {
-	double speed = PLANT_PROJECTILE_SPEED;
+	
+	float speed = PLANT_PROJECTILE_SPEED;
 	float currentRotation = 0;
 	D3DXVECTOR2 direction = D3DXVECTOR2(0, 0);
 	ULONGLONG spawnTime;
@@ -61,7 +64,8 @@ public:
 	{
 		this->x = x;
 		this->y = y;
-		
+		this->vx =direction.x * PLANT_PROJECTILE_SPEED;
+		this->vy = direction.y * PLANT_PROJECTILE_SPEED;
 		
 		this->direction = direction;
 		spawnTime = GetTickCount64();
@@ -69,7 +73,7 @@ public:
 	void Render();
 	int IsCollidable() { return 1; };
 	int IsBlocking() { return 0; };
-	
+	void OnNoCollision(DWORD dt);
 	
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	

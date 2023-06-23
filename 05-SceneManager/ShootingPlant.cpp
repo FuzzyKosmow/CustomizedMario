@@ -5,7 +5,8 @@
 #include "PlayScene.h"
 #include "Sprites.h"
 #include "debug.h"
-//TODO: Fix the bug that make the projectile only register from below
+//TODO: Fix the bug that make the projectile only register from below /// FIXED : because for some reason if not you update the x,y in on no collision without using vx,vy, the collision sometimes does not register. So its better 
+// To just assign vx,vy, update these value and use vx vy to update x and y. Among us
 //Plant
 void CShootingPlant::Render()
 {
@@ -221,12 +222,17 @@ void PlantProjectile::Render()
 }
 
 
+void PlantProjectile::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
 
+	y += vy * dt;
+}
 
 void PlantProjectile::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	x += direction.x * (float)speed * dt;
-	y += direction.y * (float)speed * dt;
+
+	
 	//Check life time, if still has time ,rotate
 	if (GetTickCount64() - spawnTime < PLANT_PROJECTILE_LIFE_TIME)
 	{
