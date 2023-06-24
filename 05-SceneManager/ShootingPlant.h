@@ -44,6 +44,7 @@
 
 //Projectile stats
 #define PLANT_PROJECTILE_SPEED 0.1f
+#define PLANT_PROJECTILE_ROTATION_TIME 100
 #define PLANT_PROJECTILE_BBOX_HEIGHT 10
 #define PLANT_PROJECTILE_BBOX_WIDTH 10
 #define PLANT_SPAWN_OFFSET 10
@@ -58,6 +59,7 @@ class PlantProjectile : public CGameObject {
 	float currentRotation = 0;
 	D3DXVECTOR2 direction = D3DXVECTOR2(0, 0);
 	ULONGLONG spawnTime;
+	ULONGLONG lastRotationTime = 0;
 	//Note just spawn the thing a bit away from the plant
 public:
 	PlantProjectile(float x, float y, D3DXVECTOR2 direction)
@@ -71,7 +73,7 @@ public:
 		spawnTime = GetTickCount64();
 	}
 	void Render();
-	int IsCollidable() { return 1; };
+	int IsCollidable() { return 0; };
 	int IsBlocking() { return 0; };
 	void OnNoCollision(DWORD dt);
 	

@@ -217,7 +217,7 @@ void CShootingPlant::RenderBoundingBox()
 void PlantProjectile::Render()
 {
 	CSprites* s = CSprites::GetInstance();
-	s->Get(ID_SPRITE_PLANT_BULLET)->Draw(x, y);
+	s->Get(ID_SPRITE_PLANT_BULLET)->Draw(x, y, currentRotation);
 	RenderBoundingBox();
 }
 
@@ -225,9 +225,10 @@ void PlantProjectile::Render()
 void PlantProjectile::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
-
 	y += vy * dt;
 }
+
+
 
 void PlantProjectile::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -236,14 +237,16 @@ void PlantProjectile::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//Check life time, if still has time ,rotate
 	if (GetTickCount64() - spawnTime < PLANT_PROJECTILE_LIFE_TIME)
 	{
-		if (currentRotation >= 360)
+		if (GetTickCount64() - lastRotationTime > PLANT_PROJECTILE_ROTATION_TIME)
 		{
-			currentRotation = 0;
+			if (currentRotation >= 360)
+				currentRotation = 0;
+			
+			else
+				currentRotation += PLANT_PROJECTILE_ROTATION_DEGREE;
+			lastRotationTime = GetTickCount64();
 		}
-		else
-		{
-			currentRotation += PLANT_PROJECTILE_ROTATION_DEGREE;
-		}
+		
 	}
 	else
 	{
