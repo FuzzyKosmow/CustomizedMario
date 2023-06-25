@@ -250,5 +250,8 @@
     <Text Include="turtle.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="leaf.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

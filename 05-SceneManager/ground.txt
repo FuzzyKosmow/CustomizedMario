@@ -10,7 +10,15 @@
 65000	442	313	457	322	30
 66000	460	313	475	322	30
 
+
+###Wooden like plaform
+67000	255	189	270	204	40
+
 ###Small vertical layer between plaform , left and right  ratio 3-7
 61001	222	230	225	237	30
+
+
+
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]

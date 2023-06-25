@@ -218,6 +218,7 @@
     <Text Include="goomba.txt" />
     <Text Include="ground.txt" />
     <Text Include="invisibleBlock.txt" />
+    <Text Include="leaf.txt" />
     <Text Include="mario-sample.txt" />
     <Text Include="mario.txt" />
     <Text Include="mushroom.txt" />

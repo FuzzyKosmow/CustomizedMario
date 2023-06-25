@@ -21,6 +21,11 @@
 71020	205	205	212	212	30
 
 
+# cloud pair
+
+71100	161	34	210	59	40
+
+
 
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
