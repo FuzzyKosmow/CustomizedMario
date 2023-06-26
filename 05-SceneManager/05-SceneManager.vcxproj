@@ -156,6 +156,7 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Detection.cpp" />
     <ClCompile Include="EatingPlant.cpp" />
+    <ClCompile Include="FlyingGoomba.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="Detection.h" />
     <ClInclude Include="EatingPlant.h" />
+    <ClInclude Include="FlyingGoomba.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />

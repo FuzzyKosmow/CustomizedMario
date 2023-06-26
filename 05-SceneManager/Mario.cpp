@@ -17,6 +17,7 @@
 #include "Turtle.h"
 #include "Leaf.h"
 #include "EatingPlant.h"
+#include "FlyingGoomba.h"
 // TODO: FIX A BUG THAT CAUSE MARIO WITH PLANT PROJECTILE NOT REGISTER. WHEN MARIO STAND STILL, THE HIT DOES NOT REGISTER, WHEN MARIO MOVE, IT DOES. FIGURE OUT WHY
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -166,9 +167,33 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithLeaf(e);
 	else if (dynamic_cast<CEatingPlant*> (e->obj))
 		OnCollisionWithEatingPlant(e);
+	else if (dynamic_cast<CFlyingGoomba*>(e->obj))
+		OnCollisionWithFlyingGoomba(e);
 		 
 	
 		
+}
+
+
+void CMario::OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e)
+{
+	if (e->ny < 0)
+	{
+		if (e->obj->GetState() == FLYING_GOOMBA_STATE_FLYING)
+		{
+			e->obj->SetState(FLYING_GOOMBA_STATE_WALKING);
+		}
+		else if (e->obj->GetState() == FLYING_GOOMBA_STATE_WALKING)
+		{
+			e->obj->SetState(FLYING_GOOMBA_STATE_DIE);
+			
+		}
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
+	}
+	else
+	{
+		TakeDamage();
+	}
 }
 
 void CMario::OnCollisionWithEatingPlant(LPCOLLISIONEVENT e)

@@ -1,6 +1,8 @@
 # id	left	top	right	bottom	texture_id
 [SPRITES]
+
 20001	372	153	387	168	20
+
 
 ##Loot brick (?)
 20010	157	188	174	205	40
@@ -9,9 +11,22 @@
 20013	215	188	232	205	40
 ###Looted brick
 20014	235	188	252	205	40
+
+##Breakable brick
+20020	275	189	290	204	40
+20021	294	189	309	204	40
+20022	313	189	328	204	40
+20023	332	189	347	204	40
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
+
+###Loot brick section
 10000	20001	1000
 10001	20010	300	20011	300	20012	300	20013	300
 ###Looted brick
 10002	20014	1000
+
+##Breakable brick
+10003	20020	300	20021	300	20022	300	20023	300
+
