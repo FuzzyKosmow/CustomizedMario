@@ -18,6 +18,7 @@
 #include "ShootingPlant.h"
 #include "Turtle.h"
 #include "Leaf.h"
+#include "EatingPlant.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -236,6 +237,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CShootingPlant(x, y);
 		break;
 	}
+	case OBJECT_TYPE_EATING_PLANT:
+		obj = new CEatingPlant(x, y);
+		break;
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = (float)atof(tokens[3].c_str());

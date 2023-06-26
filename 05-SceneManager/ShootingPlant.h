@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "AssetIDs.h"
 #include "Utils.h"
 #include "Textures.h"
 #include "Sprites.h"
@@ -14,15 +15,6 @@
 #include "Detection.h"
 
 #define PLANT_SHOW_UP_SPEED 0.3f
-#define ID_SPRITE_PLANT_LOOK_UP_RIGHT 101000
-#define ID_SPRITE_PLANT_LOOK_DOWN_RIGHT 101001
-#define ID_SPRITE_PLANT_LOOK_UP_LEFT 101010
-#define ID_SPRITE_PLANT_LOOK_DOWN_LEFT 101011
-#define ID_SPRITE_PLANT_STRAIGHT_UP 101100
-#define ID_SPRITE_PLANT_BULLET  101200
-
-#define ID_ANI_PLANT_STRAIGHT_UP 1010
-
 
 
 

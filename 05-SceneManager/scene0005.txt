@@ -210,7 +210,7 @@ leaf.txt
 
 
 ##Tunnel after stair 1
-11	1885	170
+13	1885	170
 10	1875	160	2	2
 
 ##Tunnel after stair 2
