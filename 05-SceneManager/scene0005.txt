@@ -155,9 +155,11 @@ flyingGoomba.txt
 #Small bush head
 7	985	160	15	15	2	70000	-1	70001
 
+##2 small goomba
 2	1075	120
 2	1095	120
-
+#Flying goomba
+14	1070	10
 ##First milestone last small bushes
 7	1075	160	15	15	3	70300	70300	70300
 ##Also coin then third plaform begin
@@ -176,6 +178,10 @@ flyingGoomba.txt
 9	1360	130	3	7	4
 9	1320	160	2	7	2
 
+##Flyign turtle on color box
+15	1430	50	1300	1400
+15	1450	50	1300	1400
+15	1480	50	1300	1400
 
 ## Loot brick with leaf
 8	1540	145	2
@@ -227,10 +233,9 @@ flyingGoomba.txt
 7	2000	175	15	15	2	70200	-1	70011
 
 
-14	1600	10
 
-##Turtle
-15	1300	140	1300	1400
+
+
 # MARIO
 0	1600	10
 
