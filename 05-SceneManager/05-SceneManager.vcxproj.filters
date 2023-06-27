@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Loot">
       <UniqueIdentifier>{ae0454ff-6df2-496a-9ce4-39a9038d503d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Turtle">
+      <UniqueIdentifier>{e03a7d46-77fa-4ac5-82df-82fb598b753b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Turtle">
+      <UniqueIdentifier>{c7081d34-f6bd-4a2b-919f-a9d14b89de1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -64,9 +70,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Detection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Turtle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EatingPlant.cpp">
@@ -126,6 +129,12 @@
     <ClCompile Include="Mushroom.cpp">
       <Filter>Source Files\Loot</Filter>
     </ClCompile>
+    <ClCompile Include="Turtle.cpp">
+      <Filter>Source Files\Turtle</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyingTurtle.cpp">
+      <Filter>Source Files\Turtle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetIDs.h">
@@ -162,9 +171,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Detection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Turtle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EatingPlant.h">
@@ -229,6 +235,12 @@
     </ClInclude>
     <ClInclude Include="Mushroom.h">
       <Filter>Header Files\Loot</Filter>
+    </ClInclude>
+    <ClInclude Include="Turtle.h">
+      <Filter>Header Files\Turtle</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyingTurtle.h">
+      <Filter>Header Files\Turtle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

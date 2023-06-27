@@ -172,8 +172,6 @@ flyingGoomba.txt
 7	1255	175	15	15	3	70300	70300	70300
 
 ##Colorbox after bushes
-
-
 9	1400	100	4	7	6
 9	1360	130	3	7	4
 9	1320	160	2	7	2
@@ -231,6 +229,8 @@ flyingGoomba.txt
 
 14	1600	10
 
+##Turtle
+15	1300	140	1300	1400
 # MARIO
 0	1600	10
 
@@ -249,7 +249,7 @@ flyingGoomba.txt
 #All the sprite width is 15.
 
 #Platform // start x - start y , width and height plaform . length, spriteIDBegin, spriteID Middle, spriteIDEnd 
-5	15	190	15	13	43	61000	62000	63000
+5	15	190	15	15	43	61000	62000	63000
 5	15	197	15	10	43	64000	65000	66000
 
 ##Plafrom at higher y
@@ -258,18 +258,18 @@ flyingGoomba.txt
 5	660	198	15	10	32	64000	65000	66000
 5	660	208	15	10	32	64000	65000	66000
 ##Back to plaform lower y
-5	1225	190	15	10	24	61000	62000	63000
+5	1225	190	15	15	24	61000	62000	63000
 
 
 ##Plaform after jump loot brick 
-5	1615	190	15	13	5	61000	62000	63000
+5	1615	190	15	15	5	61000	62000	63000
 
 ##Plaform of (1) wooden stair
-5	1615	190	15	13	5	61000	62000	63000
+5	1615	190	15	15	5	61000	62000	63000
 
 
 ##Plaform of (2) wooden stair and back to normal
-5	1750	190	15	13	40	61000	62000	63000
+5	1750	190	15	15	40	61000	62000	63000
 
 
 

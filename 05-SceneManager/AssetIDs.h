@@ -30,6 +30,7 @@
 #define OBJECT_TYPE_TURTLE 12
 #define OBJECT_TYPE_EATING_PLANT 13 // Chomper, does not shoot.
 #define OBJECT_TYPE_FLYING_GOOMBA 14 //Goomba that can fly
+#define OBJECT_TYPE_FLYING_TURTLE 15 //Turtle that can fly
 
 #define OBJECT_TYPE_PORTAL	50
 

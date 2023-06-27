@@ -20,6 +20,7 @@
 #include "Leaf.h"
 #include "EatingPlant.h"
 #include "FlyingGoomba.h"
+#include "FlyingTurtle.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -261,7 +262,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CTurtle(x, y, limitLeft, limitRight);
 		break;
 	}
+	case OBJECT_TYPE_FLYING_TURTLE:
 
+	{
+		float limitLeft = (float)atof(tokens[3].c_str());
+		float limitRight = (float)atof(tokens[4].c_str());
+		obj = new CFlyingTurtle(x, y);
+		break;
+
+	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;

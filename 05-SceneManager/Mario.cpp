@@ -18,6 +18,7 @@
 #include "Leaf.h"
 #include "EatingPlant.h"
 #include "FlyingGoomba.h"
+#include "FlyingTurtle.h"
 // TODO: FIX A BUG THAT CAUSE MARIO WITH PLANT PROJECTILE NOT REGISTER. WHEN MARIO STAND STILL, THE HIT DOES NOT REGISTER, WHEN MARIO MOVE, IT DOES. FIGURE OUT WHY
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -169,11 +170,64 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithEatingPlant(e);
 	else if (dynamic_cast<CFlyingGoomba*>(e->obj))
 		OnCollisionWithFlyingGoomba(e);
+	else if (dynamic_cast<CFlyingTurtle*>	(e->obj))
+		OnCollisionWithFlyingTurtle(e);
 		 
 	
 		
 }
+void CMario::OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e)
+{
+	CFlyingTurtle* turtle = dynamic_cast<CFlyingTurtle*>(e->obj);
+	LPGAME game = CGame::GetInstance();
+	if (e->ny < 0)
+	{
+		if (turtle->GetState() == FLYING_TURTLE_STATE_FLYING ||
+			turtle->GetState() == FLYING_TURTLE_STATE_WALKING)
+		{
+			if (turtle->GetState() == FLYING_TURTLE_STATE_FLYING)
+			{
+				turtle->SetState(FLYING_TURTLE_STATE_WALKING);
+			}
+			else
+			{
+				turtle->SetState(FLYING_TURTLE_STATE_SHELL);
+			}
+			
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (turtle->GetState() == FLYING_TURTLE_STATE_SHELL)
+		{
+			turtle->SetState(FLYING_TURTLE_STATE_SHELL_MOVING);
+			if (e->nx > 0)
+			{
+				turtle->SetSpeed(FLYING_TURTLE_SHELL_SPEED, 0);
+			}
+			else
+			{
+				turtle->SetSpeed(-FLYING_TURTLE_SHELL_SPEED, 0);
+			}
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (turtle->GetState() == FLYING_TURTLE_STATE_SHELL_MOVING)
+		{
+			turtle->SetState(FLYING_TURTLE_STATE_SHELL);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	else if (e->nx != 0 && turtle->GetState() == FLYING_TURTLE_STATE_SHELL &&
+		game->IsKeyDown(DIK_A)
+		)
+	{
+		if (!holdingObject)
+		{
+			holdingObject = true;
+			holdObject = turtle;
+		}
 
+
+	}
+}
 
 void CMario::OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e)
 {
