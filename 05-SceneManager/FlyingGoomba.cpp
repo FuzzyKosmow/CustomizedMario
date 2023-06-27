@@ -111,8 +111,21 @@ void CFlyingGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFlyingGoomba::Render()
 {
-	int aniId = ID_ANI_FLYING_GOOMBA_WALKING;
 	
+
+	int aniId = -1;
+	if (state == FLYING_GOOMBA_STATE_DIE)
+	{
+		aniId = ID_ANI_FLYING_GOOMBA_DIE;
+	}
+	else if (state == FLYING_GOOMBA_STATE_WALKING)
+	{
+		aniId = ID_ANI_FLYING_GOOMBA_WALKING;
+	}
+	else if (state == FLYING_GOOMBA_STATE_FLYING)
+	{
+		aniId = ID_ANI_FLYING_GOOMBA_FLYING;
+	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
@@ -133,6 +146,7 @@ void CFlyingGoomba::SetState(int state)
 	case FLYING_GOOMBA_STATE_WALKING:
 		vx = -FLYING_GOOMBA_WALKING_SPEED;
 		ay = FLYING_GOOMBA_WALKING_GRAVITY;
+		y -= (FLYING_GOOMBA_BBOX_HEIGHT - FLYING_GOOMBA_BBOX_HEIGHT_DIE) / 2;
 		vy = 0;
 		break;
 	case FLYING_GOOMBA_STATE_FLYING:

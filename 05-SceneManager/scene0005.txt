@@ -13,6 +13,7 @@ tunnel.txt
 goomba.txt
 turtle.txt
 leaf.txt
+flyingGoomba.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
