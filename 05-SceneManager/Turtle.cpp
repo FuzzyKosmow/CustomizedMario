@@ -189,7 +189,7 @@ void CTurtle::Render()
 void CTurtle::SetState(int state)
 {
 	switch (state)
-
+	
 	{
 	case TURTLE_STATE_WALKING:
 	{
