@@ -9,17 +9,17 @@
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
-
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	CGame* game = CGame::GetInstance();
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-	
-		
-			mario->SetState(MARIO_STATE_JUMP);
+
+
+		mario->SetState(MARIO_STATE_JUMP);
 		break;
 	case DIK_A:
 		//Tail attack if level raccoon
@@ -35,7 +35,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 				mario->SetState(MARIO_STATE_TAIL_ATTACK_LEFT);
 			}
 		}
-		
+
 		break;
 	case DIK_1:
 		mario->SetLevel(MARIO_LEVEL_SMALL);
@@ -44,15 +44,24 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetLevel(MARIO_LEVEL_BIG);
 		break;
 	case DIK_3:
-		mario ->SetLevel(MARIO_LEVEL_RACCOON);
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		break;
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
-	
-	case DIK_R: // reset
-		/*Reload();*/
+	case DIK_ESCAPE:
+		CGame::GetInstance()->TogglePause();
 		break;
+	case DIK_L:
+		
+		CGame::GetInstance()->PauseFor(2000);
+		break;
+		// Pause indefinitely and unpause when pressed again
+	
+	//case DIK_R: // reset
+	//	/*Reload();*/
+	//	break;
+
 	}
 }
 
@@ -72,7 +81,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	}
 }
 
-void CSampleKeyHandler::KeyState(BYTE *states)
+void CSampleKeyHandler::KeyState(BYTE* states)
 {
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
@@ -86,7 +95,7 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 		if (game->IsKeyDown(DIK_A))
 		{
 			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
-			
+
 		}
 		else
 		{
@@ -105,10 +114,10 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
 		}
 	}
-	else 
-	
+	else
+
 	{
 		mario->SetState(MARIO_STATE_IDLE);
 	}
-		
+
 }

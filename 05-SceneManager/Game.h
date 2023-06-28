@@ -59,7 +59,37 @@ class CGame
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
 
+
+	//Pause 
+	
+	bool isPaused = false;
+	bool isPausedIndefinitely = false; // Indicates if the game is paused indefinitely
+	DWORD pauseStartTime = 0;
+	DWORD pauseEndTime = 0;
+	DWORD pauseDuration = 0;
+	bool pauseForTriggered = false;
 public:
+	//Pause section
+	bool PauseForActivated() { return pauseForTriggered; }
+	void DeactivatePauseFor() { pauseForTriggered = false; pauseEndTime = GetTickCount(); }
+	void TogglePause();
+	void PauseFor(DWORD milliseconds);
+
+	bool IsPausedIndefinitely() { return isPausedIndefinitely; }
+	
+	bool IsPaused() { return isPaused; }
+
+	//Mostly for automatic unpause
+	DWORD GetPauseStartTime() { return pauseStartTime; }
+	DWORD GetPauseEndTime() { return pauseEndTime; }
+	DWORD GetPauseDuration() {
+
+		return pauseDuration;
+	}
+	///
+	
+
+
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd, HINSTANCE hInstance);
 
@@ -80,7 +110,12 @@ public:
 	}
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
-
+	void Pause() {
+		isPaused = true;
+		pauseStartTime = GetTickCount64();
+	}
+	
+	
 	// Keyboard related functions 
 	void InitKeyboard();
 	int IsKeyDown(int KeyCode);

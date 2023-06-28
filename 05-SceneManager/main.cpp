@@ -1,16 +1,16 @@
 /* =============================================================
 	INTRODUCTION TO GAME PROGRAMMING SE102
-	
+
 	SAMPLE 05 - SCENE MANAGER
 
 	This sample illustrates how to:
 
-		1/ Read scene (textures, sprites, animations and objects) from files 
+		1/ Read scene (textures, sprites, animations and objects) from files
 		2/ Handle multiple scenes in game
 
 	Key classes/functions:
 		CScene
-		CPlayScene		
+		CPlayScene
 
 
 HOW TO INSTALL Microsoft.DXSDK.D3DX
@@ -75,7 +75,7 @@ void Update(DWORD dt)
 }
 
 /*
-	Render a frame 
+	Render a frame
 */
 void Render()
 {
@@ -133,7 +133,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 			hInstance,
 			NULL);
 
-	if (!hWnd) 
+	if (!hWnd)
 	{
 		OutputDebugString(L"[ERROR] CreateWindow failed");
 		DWORD ErrCode = GetLastError();
@@ -162,25 +162,49 @@ int Run()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		CGame* game = CGame::GetInstance();
 
 		ULONGLONG now = GetTickCount64();
 
+		DWORD dt;
+		dt = (DWORD)(now - frameStart);
 		// dt: the time between (beginning of last frame) and now
 		// this frame: the frame we are about to render
-		DWORD dt = (DWORD)(now - frameStart);
+
+		if (game->IsPaused())
+		{
+			CGame::GetInstance()->ProcessKeyboard();
+			frameStart = now;
+			DebugOut(L"[INFO] Paused ! . FrameStart: %d\n", frameStart);
+			if (game->PauseForActivated())
+			{
+				if (now - game->GetPauseStartTime() >= game->GetPauseDuration ())
+				{
+					game->TogglePause();
+				}
+				else
+					continue;
+			}
+				
+			continue;
+		}
 
 		if (dt >= tickPerFrame)
 		{
+
 			frameStart = now;
 
-			CGame::GetInstance()->ProcessKeyboard();			
+			CGame::GetInstance()->ProcessKeyboard();
 			Update(dt);
 			Render();
 
 			CGame::GetInstance()->SwitchScene();
 		}
 		else
-			Sleep(tickPerFrame - dt);	
+			Sleep(tickPerFrame - dt);
+
+
+
 	}
 
 	return 1;
@@ -202,9 +226,9 @@ int WINAPI WinMain(
 
 
 	//IMPORTANT: this is the only place where a hardcoded file name is allowed ! 
-	game->Load(L"mario-sample.txt");  
+	game->Load(L"mario-sample.txt");
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

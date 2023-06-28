@@ -200,18 +200,31 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_LOOT_BRICK:
 	{
 		
+	
+		
+	
+		//brickSpriteType != 0 ? dynamic_cast<CLootBrick*>(obj)->SetSpriteType(brickSpriteType) : dynamic_cast<CLootBrick*>(obj)->SetSpriteType(NULL);
+		int brickSpriteType;
 		int lootType = atoi(tokens[3].c_str());
+		if (tokens.size() > 4)
+		{
+			brickSpriteType = atoi(tokens[4].c_str());
+		}
+		else
+		{
+			brickSpriteType = NULL;
+		}
 
 		LPGAMEOBJECT loot;
 		switch (lootType)
 		{
 		case LOOT_TYPE_MUSHROOM:
 			loot = new CShroom(x, y);
-			loot->SetPosition(x- MUSHROOM_SPAWN_OFFSET, y- MUSHROOM_SPAWN_OFFSET);
+			loot->SetPosition(x - MUSHROOM_SPAWN_OFFSET, y - MUSHROOM_SPAWN_OFFSET);
 			break;
 		case LOOT_TYPE_COIN:
 			loot = new CCoin(x, y, INACTIVE);
-			loot->SetPosition(x, y-COIN_SPAWN_IN_LOOT_OFFSET);
+			loot->SetPosition(x, y - COIN_SPAWN_IN_LOOT_OFFSET);
 			break;
 		case LOOT_TYPE_LEAF:
 			loot = new CLeaf(x, y, false);
@@ -219,15 +232,20 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		default:
 			break;
 		}
-		if (lootType == LOOT_TYPE_MUSHROOM)
-		{
-			
-			
-		}
-		objects.push_back(loot);
 		
+		objects.push_back(loot);
+
 		obj = new CLootBrick(x, y, lootType);
 		dynamic_cast<CLootBrick*>(obj)->SetLoot(loot);
+		if (brickSpriteType != NULL)
+		{
+			dynamic_cast<CLootBrick*>(obj)->SetSpriteType(brickSpriteType);
+		}
+
+		break;
+		
+		
+		
 		
 		break;
 	}

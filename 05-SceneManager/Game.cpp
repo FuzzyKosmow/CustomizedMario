@@ -15,6 +15,44 @@ CGame * CGame::__instance = NULL;
 	rendering 2D images
 	- hWnd: Application window handle
 */
+
+void CGame::TogglePause()
+{
+	if (isPaused)
+	{
+		pauseEndTime = GetTickCount();
+		isPaused = false;
+		isPausedIndefinitely = false;
+		pauseForTriggered = false;
+	}
+		
+	else
+	{
+		
+		pauseStartTime = GetTickCount();
+		isPaused = true;
+		isPausedIndefinitely = true;
+	}
+		
+	
+}
+
+void CGame::PauseFor(DWORD milliseconds)
+{
+	if (!isPaused)
+	{
+		isPaused = true;
+		isPausedIndefinitely = false;
+		pauseStartTime = GetTickCount();
+		pauseDuration = milliseconds;
+		pauseForTriggered= true;
+		
+		
+	}
+}
+
+
+
 void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 {
 	this->hWnd = hWnd;
@@ -405,7 +443,7 @@ void CGame::ProcessKeyboard()
 			return;
 		}
 	}
-
+	
 	keyHandler->KeyState((BYTE*)&keyStates);
 
 	// Collect all buffered events
