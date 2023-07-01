@@ -135,6 +135,9 @@
     <ClCompile Include="FlyingTurtle.cpp">
       <Filter>Source Files\Turtle</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetIDs.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="FlyingTurtle.h">
       <Filter>Header Files\Turtle</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

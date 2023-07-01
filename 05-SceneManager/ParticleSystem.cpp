@@ -128,7 +128,80 @@ void ParticleSystem::SpawnStaticParticle(float x, float y, int count, int sprite
 
 void ParticleSystem::SpawnAnimatedParticle(float x, float y, int count, int aniID)
 {
+	 //Seed the rand
+	srand(time(NULL));
 
+	if (count < 4)
+		return;
+
+	int maxParticles = count - 3;
+
+	int topLeftSpawnCount = 1;
+	int topRightSpawnCount = 1;
+	int remainingCount = 2;
+	int bottomLeftSpawnCount = rand() % remainingCount + 1;
+	int bottomRightSpawnCount = maxParticles - topLeftSpawnCount - topRightSpawnCount - bottomLeftSpawnCount;
+	if (count > 4) {
+		// Generate random values for each direction
+		topLeftSpawnCount = rand() % (maxParticles - 1) + 1;
+		topRightSpawnCount = rand() % (maxParticles - topLeftSpawnCount) + 1;
+		remainingCount = maxParticles - topLeftSpawnCount - topRightSpawnCount;
+
+		// Ensure the remaining count is within the valid range
+		remainingCount = min(remainingCount, maxParticles - 1);
+		remainingCount = max(remainingCount, 1);
+	}
+	D3DXVECTOR2 direction;
+	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+	//Top left
+	for (int i = 0; i < topLeftSpawnCount; i++)
+	{
+		direction = D3DXVECTOR2(-1, -1);
+		direction.x = ((rand() % 100 + 1) / 100.0f) * direction.x;
+		direction.y = ((rand() % 100 + 1) / 100.0f) * direction.y;
+		Particle* p = new Particle(x, y, direction * spawnPower, -1, false, aniID);
+
+		scene->AddObject(p);
+		particles.push_back(p);
+		spawned++;
+	}
+	//Top right
+	for (int i = 0; i < topRightSpawnCount; i++)
+	{
+		direction = D3DXVECTOR2(1, -1);
+		direction.x = ((rand() % 100 + 1) / 100.0f) * direction.x;
+		direction.y = ((rand() % 100 + 1) / 100.0f) * direction.y;
+		Particle* p = new Particle(x, y, direction * spawnPower, -1, false, aniID);
+
+		scene->AddObject(p);
+		particles.push_back(p);
+		spawned++;
+	}
+	//Bottom left
+	
+	for (int i = 0; i < bottomLeftSpawnCount; i++)
+	{
+		direction = D3DXVECTOR2(-1, 1);
+		direction.x = ((rand() % 100 + 1) / 100.0f) * direction.x;
+		direction.y = ((rand() % 100 + 1) / 100.0f) * direction.y;
+		Particle* p = new Particle(x, y, direction * spawnPower, -1, false, aniID);
+
+		scene->AddObject(p);
+		particles.push_back(p);
+		spawned++;
+	}
+	//Bottom right
+	for (int i = 0; i < bottomRightSpawnCount; i++)
+	{
+		direction = D3DXVECTOR2(1, 1);
+		direction.x = ((rand() % 100 + 1) / 100.0f) * direction.x;
+		direction.y = ((rand() % 100 + 1) / 100.0f) * direction.y;
+		Particle* p = new Particle(x, y, direction * spawnPower, -1, false, aniID);
+
+		scene->AddObject(p);
+		particles.push_back(p);
+		spawned++;
+	}
 }
 
 LPPARTICLESYSTEM ParticleSystem::GetInstance ()
