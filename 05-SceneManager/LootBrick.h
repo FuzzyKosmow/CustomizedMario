@@ -7,6 +7,8 @@
 
 #define ID_ANI_LOOT_BRICK 10001
 #define ID_ANI_LOOT_BRICK_LOOTED 10002
+#define ID_ANI_LOOT_BRICK_TYPE_BRICK 10003
+
 #define BRICK_WIDTH 16
 #define LBRICK_BBOX_WIDTH 17
 #define LBRICK_BBOX_HEIGHT 17
@@ -24,15 +26,23 @@
 #define BRICK_AND_LOOT_HEIGHT_DIFF 30
 #define BRICK_AND_COIN_HEIGHT_DIFF 50
 
+
+#define LOOT_BRICK_SPRITE_TYPE_QUESTION_MARK 0 //NULL
+#define LOOT_BRICK_SPRITE_TYPE_BRICK 1
+
 class CLootBrick : public CGameObject {
 	public:
+
 	int lootType;
 	int lootState;
-	LPGAMEOBJECT loot;
+	LPGAMEOBJECT loot = NULL;
 	ULONGLONG timeStartToShowLoot = 0;
 	bool lootShowComplete = false;
-
+	
+	int spriteType = LOOT_BRICK_SPRITE_TYPE_QUESTION_MARK;
 	CLootBrick(float x, float y, int lootType) : CGameObject(x, y) {
+		
+		
 		this->lootType = lootType;
 		lootState = LOOT_BRICK_STATE_NOT_LOOTED;
 	}
@@ -49,5 +59,8 @@ class CLootBrick : public CGameObject {
 	
 	void ShowLoot(); //Slowly move it to the top then enable it.
 	void EnableLoot();
+
+
+	void SetSpriteType(int spriteType) { this->spriteType = spriteType; };
 };
 

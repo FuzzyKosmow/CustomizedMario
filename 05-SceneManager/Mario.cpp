@@ -19,7 +19,8 @@
 #include "EatingPlant.h"
 #include "FlyingGoomba.h"
 #include "FlyingTurtle.h"
-// TODO: FIX A BUG THAT CAUSE MARIO WITH PLANT PROJECTILE NOT REGISTER. WHEN MARIO STAND STILL, THE HIT DOES NOT REGISTER, WHEN MARIO MOVE, IT DOES. FIGURE OUT WHY
+#include "ParticleSystem.h"
+
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -128,6 +129,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 //Collision section
 void CMario::OnNoCollision(DWORD dt)
 {
+	
 	x += vx * dt;
 	y += vy * dt;
 }
@@ -152,6 +154,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	
 	if (dynamic_cast<CLootBrick*>(e->obj))
 		OnCollisionWithLootBrick(e);
+	else if (dynamic_cast<CBrick *>(e->obj))
+		OnCollisionWithBrick(e);
 	else if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
@@ -259,6 +263,7 @@ void CMario::OnCollisionWithEatingPlant(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 {
+	
 	SetLevel(MARIO_LEVEL_RACCOON);
 	e->obj->Delete();
 }
@@ -352,6 +357,16 @@ void CMario::OnCollisionWithSchroom(LPCOLLISIONEVENT e)
 	}
 	
 }
+
+void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
+{
+	if (e->ny > 0)
+	{
+		CBrick *brick = dynamic_cast<CBrick*>(e->obj);
+		brick->Break();
+	}
+}
+
 void CMario::OnCollisionWithLootBrick(LPCOLLISIONEVENT e)
 {
 	CLootBrick* lootBrick = dynamic_cast<CLootBrick*>(e->obj);
@@ -359,6 +374,7 @@ void CMario::OnCollisionWithLootBrick(LPCOLLISIONEVENT e)
 
 	if (e->ny > 0)
 	{
+		
 		if (lootBrick->GetCurrentState() == LOOT_BRICK_STATE_NOT_LOOTED)
 		{
 			

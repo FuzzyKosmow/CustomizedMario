@@ -3,7 +3,7 @@
 
 #include "Animation.h"
 #include "Animations.h"
-
+#include "AssetIDs.h"
 #include "debug.h"
 
 //THERE IS A HIDDEN THING BETWEEN HEIGHT AND WID OF A SPRITE, FOR SOME REASON IT CAN CAUSE BLUR IF REDUCE / INCREASE BY 1. TRY INCREASE OR DECREASE BY 1 PIXEL IN HEIGHT
@@ -213,6 +213,7 @@ class CMario : public CGameObject
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	void OnCollisionWithBrick (LPCOLLISIONEVENT e);
 	void OnCollisionWithLootBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithSchroom(LPCOLLISIONEVENT e);
 	
@@ -221,9 +222,16 @@ class CMario : public CGameObject
 	void OnCollisionWithPlant(LPCOLLISIONEVENT e);
 	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
+
+
 	void OnCollisionWithEatingPlant( LPCOLLISIONEVENT e);
+
+
 	void OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e);
+
+
+
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRaccoon();
