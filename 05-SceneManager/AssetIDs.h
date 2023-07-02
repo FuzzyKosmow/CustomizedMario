@@ -32,6 +32,8 @@
 #define OBJECT_TYPE_FLYING_GOOMBA 14 //Goomba that can fly
 #define OBJECT_TYPE_FLYING_TURTLE 15 //Turtle that can fly
 
+#define OBJECT_TYPE_GROUND_BUTTON 16 //Button that can be pressed by mario to activate something
+
 #define OBJECT_TYPE_PORTAL	50
 
 
@@ -160,5 +162,15 @@
 
 
 //Turtle stuff ~ 120000
+
+
+//Ground button
+#define ID_SPRITE_GROUND_BUTTON 130000
+
+//Particle stuffs/ Effects
+#define ID_SPRITE_PARTICLE_BRICK 900000
+
+
+
 #define ID_SPRITE_INVISIBLE_BLOCK 999999
 

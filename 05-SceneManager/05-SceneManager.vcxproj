@@ -161,6 +161,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="GroundButton.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="LootBrick.cpp" />
     <ClCompile Include="main.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
+    <ClCompile Include="SecretBrickWithButton.cpp" />
     <ClCompile Include="ShootingPlant.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
@@ -187,6 +189,7 @@
     <ClInclude Include="BackgroundObject.h" />
     <ClInclude Include="BigColorBrick.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="GroundButton.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
@@ -208,6 +211,8 @@
     <ClInclude Include="Portal.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SecretBrickWithButton.h" />
+    <ClInclude Include="SecretWorld1_1.h" />
     <ClInclude Include="ShootingPlant.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
@@ -226,6 +231,7 @@
     <Text Include="flyingGoomba.txt" />
     <Text Include="goomba.txt" />
     <Text Include="ground.txt" />
+    <Text Include="groundButton.txt" />
     <Text Include="invisibleBlock.txt" />
     <Text Include="leaf.txt" />
     <Text Include="mario-sample.txt" />

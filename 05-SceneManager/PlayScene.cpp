@@ -21,6 +21,8 @@
 #include "EatingPlant.h"
 #include "FlyingGoomba.h"
 #include "FlyingTurtle.h"
+#include "SecretBrickWithButton.h"
+#include "GroundButton.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -288,6 +290,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CFlyingTurtle(x, y);
 		break;
 
+	}
+	case OBJECT_TYPE_GROUND_BUTTON:
+	{
+		obj = new CGroundButton(x, y);
+		break;
+	break;
 	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);

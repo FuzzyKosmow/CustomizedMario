@@ -20,7 +20,7 @@
 #include "FlyingGoomba.h"
 #include "FlyingTurtle.h"
 #include "ParticleSystem.h"
-
+#include "SecretBrickWithButton.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -176,7 +176,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFlyingGoomba(e);
 	else if (dynamic_cast<CFlyingTurtle*>	(e->obj))
 		OnCollisionWithFlyingTurtle(e);
-		 
+	else if (dynamic_cast<CGroundButton*> (e->obj))
+		OnCollisionWithGroundButton(e);
 	
 		
 }
@@ -266,6 +267,18 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 	
 	SetLevel(MARIO_LEVEL_RACCOON);
 	e->obj->Delete();
+}
+
+void CMario::OnCollisionWithGroundButton(LPCOLLISIONEVENT e)
+{
+	if (e->ny < 0)
+	{
+		if (e->obj->GetState() == GROUND_BUTTON_STATE_NORMAL)
+		{
+			e->obj->SetState(GROUND_BUTTON_STATE_PRESSED);
+			
+		}
+	}
 }
 
 void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)

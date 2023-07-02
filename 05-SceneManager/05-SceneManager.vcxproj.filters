@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Turtle">
       <UniqueIdentifier>{c7081d34-f6bd-4a2b-919f-a9d14b89de1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Secrets">
+      <UniqueIdentifier>{58825618-3c5f-414f-93d8-b57a36ab03f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Secrets">
+      <UniqueIdentifier>{71b03056-e93d-4bab-ae01-6f2d71ffeddc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -137,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="SecretBrickWithButton.cpp">
+      <Filter>Source Files\Secrets</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundButton.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +260,15 @@
     <ClInclude Include="ParticleSystem.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="SecretWorld1_1.h">
+      <Filter>Header Files\Secrets</Filter>
+    </ClInclude>
+    <ClInclude Include="SecretBrickWithButton.h">
+      <Filter>Header Files\Secrets</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="backgroundItems.txt">
@@ -302,6 +323,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="flyingGoomba.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="groundButton.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

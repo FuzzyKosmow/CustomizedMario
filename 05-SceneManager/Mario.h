@@ -223,6 +223,7 @@ class CMario : public CGameObject
 	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 
+	void OnCollisionWithGroundButton(LPCOLLISIONEVENT e);
 
 	void OnCollisionWithEatingPlant( LPCOLLISIONEVENT e);
 

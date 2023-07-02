@@ -1,0 +1,14 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+##Not pressed
+130000	156	145	173	160	40
+130001	178	145	195	160	40
+
+##Pressed
+130002	200	153	216	160	40
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+13001	130000	600	130001	600
+13002	130002	1000
+
