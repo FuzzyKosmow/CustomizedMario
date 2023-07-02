@@ -28,5 +28,5 @@ public:
 	virtual int IsCollidable() { return 1; };
 	virtual int IsBlocking() { return 1; };
 	void Break();
-
+	int GetObjectType () { return OBJECT_TYPE_BRICK; }
 };

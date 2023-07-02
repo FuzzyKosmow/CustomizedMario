@@ -38,4 +38,5 @@ protected:
 public: 	
 	CGoomba(float x, float y);
 	virtual void SetState(int state);
+	int GetObjectType () { return OBJECT_TYPE_GOOMBA; }
 };

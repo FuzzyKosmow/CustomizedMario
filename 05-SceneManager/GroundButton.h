@@ -43,4 +43,6 @@ public:
 	}
 	void SetPressed(bool pressed) { this->pressed = pressed; }
 	bool GetPressed() { return pressed; }
+
+	int GetObjectType () { return OBJECT_TYPE_GROUND_BUTTON; }
 };

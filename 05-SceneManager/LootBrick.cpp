@@ -11,8 +11,12 @@ void CLootBrick::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	
 	
-	if (lootState == LOOT_BRICK_STATE_NOT_LOOTED) {
+	if (lootState == LOOT_BRICK_STATE_NOT_LOOTED && spriteType == LOOT_BRICK_SPRITE_TYPE_QUESTION_MARK) {
 		animations->Get(ID_ANI_LOOT_BRICK)->Render(x, y);
+	}
+	else if (lootState == LOOT_BRICK_STATE_NOT_LOOTED && spriteType == LOOT_BRICK_SPRITE_TYPE_BRICK)
+	{
+		animations->Get(ID_ANI_LOOT_BRICK_TYPE_BRICK)->Render(x, y);
 	}
 	else if (lootState == LOOT_BRICK_STATE_LOOTED) {
 		animations->Get(ID_ANI_LOOT_BRICK_LOOTED)->Render(x, y);

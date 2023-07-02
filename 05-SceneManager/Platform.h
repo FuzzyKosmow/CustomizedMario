@@ -30,6 +30,7 @@ public:
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void RenderBoundingBox();
+	int GetObjectType () { return OBJECT_TYPE_PLATFORM; }
 };
 
 typedef CPlatform* LPPLATFORM;
@@ -61,7 +62,7 @@ public:
 	int IsBlocking() { return 1; }
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void RenderBoundingBox();
-	
+	int GetObjectType() { return OBJECT_TYPE_VERTICAL_OBJECT; }
 	
 
 };

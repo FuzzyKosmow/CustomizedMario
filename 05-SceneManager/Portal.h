@@ -20,4 +20,5 @@ public:
 	
 	int GetSceneId() { return scene_id;  }
 	int IsBlocking() { return 0; }
+	int GetObjectType() { return OBJECT_TYPE_PORTAL; }
 };

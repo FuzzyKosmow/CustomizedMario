@@ -71,7 +71,7 @@ class CGame
 public:
 	//Pause section
 	bool PauseForActivated() { return pauseForTriggered; }
-	void DeactivatePauseFor() { pauseForTriggered = false; pauseEndTime = GetTickCount(); }
+	void DeactivatePauseFor() { pauseForTriggered = false; pauseEndTime = GetTickCount64(); }
 	void TogglePause();
 	void PauseFor(DWORD milliseconds);
 

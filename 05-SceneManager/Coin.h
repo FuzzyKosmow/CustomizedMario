@@ -20,4 +20,5 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() { return 0; }
 	void Activate() { activated = 1; }
+	int GetObjectType () { return OBJECT_TYPE_COIN; }
 };

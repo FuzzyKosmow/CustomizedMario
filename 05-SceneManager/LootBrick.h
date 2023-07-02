@@ -62,5 +62,6 @@ class CLootBrick : public CGameObject {
 
 
 	void SetSpriteType(int spriteType) { this->spriteType = spriteType; };
+	int GetObjectType () { return OBJECT_TYPE_LOOT_BRICK; };
 };
 

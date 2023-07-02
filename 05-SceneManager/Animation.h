@@ -5,7 +5,7 @@
 
 #include "Sprites.h"
 #include "AnimationFrame.h"
-
+#include "AssetIDs.h"
 using namespace std;
 
 class CAnimation
@@ -18,6 +18,7 @@ public:
 	CAnimation(int defaultTime = 100) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, float rotation = 0.0f, bool flipX = false);
+
 };
 
 typedef CAnimation* LPANIMATION;

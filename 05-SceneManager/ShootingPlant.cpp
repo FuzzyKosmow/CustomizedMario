@@ -232,7 +232,7 @@ void PlantProjectile::OnNoCollision(DWORD dt)
 
 void PlantProjectile::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
+	
 	
 	//Check life time, if still has time ,rotate
 	if (GetTickCount64() - spawnTime < PLANT_PROJECTILE_LIFE_TIME)

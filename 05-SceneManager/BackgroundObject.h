@@ -32,4 +32,8 @@ public:
 	{
 		return -1;
 	}
+	int GetObjectType()
+	{
+		return OBJECT_TYPE_BACKGROUND_ITEM	;
+	}
 };

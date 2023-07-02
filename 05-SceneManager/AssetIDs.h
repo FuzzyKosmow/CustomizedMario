@@ -31,11 +31,21 @@
 #define OBJECT_TYPE_EATING_PLANT 13 // Chomper, does not shoot.
 #define OBJECT_TYPE_FLYING_GOOMBA 14 //Goomba that can fly
 #define OBJECT_TYPE_FLYING_TURTLE 15 //Turtle that can fly
-
 #define OBJECT_TYPE_GROUND_BUTTON 16 //Button that can be pressed by mario to activate something
+#define OBJECT_TYPE_LEAF 17
+#define OBJECT_TYPE_MUSHROOM 18
+
 
 #define OBJECT_TYPE_PORTAL	50
+//Projectile (>500)
+#define OBJECT_TYPE_PLANT_PROJECTILE 500
 
+//System obj definition
+#define OBJECT_TYPE_DETECTION_ZONE 1000
+#define OBJECT_TYPE_OBJECT_DETECTOR 1001
+
+#define OBJECT_TYPE_PARTICLE 1100
+#define OBJECT_TYPE_SYSTEM 99999 // Anything that is not visible, but is used to control the game. EX: Camera, HUD, etc...
 
 #pragma region MARIO 
 

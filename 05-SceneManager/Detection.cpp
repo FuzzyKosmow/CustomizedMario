@@ -47,3 +47,13 @@ void SquareDetectionZone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		alpha = BBOX_ALPHA; // Mario is outside the detection zone, set default alpha
 	}
 }
+
+
+
+void ObjectDetector::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	
+}
+
+
+	

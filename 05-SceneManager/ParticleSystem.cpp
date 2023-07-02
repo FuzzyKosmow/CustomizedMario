@@ -208,7 +208,7 @@ LPPARTICLESYSTEM ParticleSystem::GetInstance ()
 {
 	
 if (__instance == NULL)
-		__instance = new ParticleSystem(1,1);
+		__instance = new ParticleSystem();
 	return __instance;
 }
 

@@ -278,7 +278,7 @@ public:
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void AddCoin(int num) { coin += num; }
 	void TakeDamage(); // 1 unit of damage = 1 level
-	
+	int GetObjectType () { return OBJECT_TYPE_MARIO; }
 };
 
 class CMarioTailAttack : public CGameObject

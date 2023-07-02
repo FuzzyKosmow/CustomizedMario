@@ -14,6 +14,8 @@ goomba.txt
 turtle.txt
 leaf.txt
 flyingGoomba.txt
+particle.txt
+groundButton.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -232,9 +234,9 @@ flyingGoomba.txt
 7	2000	160	15	15	2	70000	-1	70001
 7	2000	175	15	15	2	70200	-1	70011
 
+9999	1600	10
 
-
-
+16	1620	90
 
 # MARIO
 0	1600	10

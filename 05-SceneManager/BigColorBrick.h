@@ -195,7 +195,9 @@ public:
 		
 	}
 	
-	
+	int GetObjectType () {
+		return OBJECT_TYPE_BIG_COLOR_BRICK;
+	}
 	
 	
 	

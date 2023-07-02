@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-#include "AssetIDs.h"
+
 
 #define LEAF_FLYING_SPEED 0.05f
 #define LEAF_MAX_VX 0.11f
@@ -17,7 +17,7 @@
 #define LEAF_STATE_NOT_ACTIVATED 0
 #define LEAF_STATE_FLYING 100
 
-#define LEAF_SPAWN_OFFSET 1
+#define LEAF_SPAWN_OFFSET 0
 
 
 
@@ -42,4 +42,5 @@ protected:
 public:
 	CLeaf(float x, float y, bool ativate);
 	void SetState(int state);
+	int GetObjectType() { return OBJECT_TYPE_LEAF; };
 };

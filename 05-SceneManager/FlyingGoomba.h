@@ -55,4 +55,5 @@ protected:
 public:
 	CFlyingGoomba(float x, float y);
 	virtual void SetState(int state);
+	int GetObjectType () { return OBJECT_TYPE_FLYING_GOOMBA; }
 };

@@ -85,14 +85,14 @@ public:
 
 
 	void Render();
-
+	int GetObjectType() { return OBJECT_TYPE_PARTICLE; }
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom) {};
 };
 
 // X,y is supposed where the system will spawn. It can then use any object x,y to spawn particle as a center
 // Spawn a <count> number of particles in 4 main different direction ( Top left, top right, bottom left, bottom right). Each direction consist at least 1 particle, maximum of (count -3)
 // And will be randomized from 1 -> (count -3 - spawned) for each direction.
-class ParticleSystem : public CGameObject
+class ParticleSystem 
 {
 	static ParticleSystem* __instance;
 
@@ -102,11 +102,7 @@ class ParticleSystem : public CGameObject
 	//How much force is pushed to the particle
 	float spawnPower = 1;
 public:
-	ParticleSystem(float x, float y)
-	{
-		this->x = x;
-		this->y = y;
-	}
+	
 	int IsColliable() { return 0; }
 	int IsBlocking() { return 0; }
 	int SetSpawnPower (float spawnPower) { this->spawnPower = spawnPower; }
@@ -118,5 +114,6 @@ public:
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom) {  };
 
 	static LPPARTICLESYSTEM GetInstance();
+	
 
 };

@@ -35,7 +35,7 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
-	
+	int GetObjectType () { return OBJECT_TYPE_MUSHROOM; }
 
 public:
 	CShroom(float x, float y);

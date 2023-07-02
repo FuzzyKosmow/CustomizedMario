@@ -8,7 +8,7 @@
 #include "Animations.h"
 #include "Sprites.h"
 #include "Collision.h"
-
+#include "AssetIDs.h"
 using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
@@ -70,4 +70,5 @@ public:
 	~CGameObject();
 
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
+	virtual int GetObjectType() = 0;
 };

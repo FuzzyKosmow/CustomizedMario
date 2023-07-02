@@ -56,4 +56,5 @@ protected:
 public:
 	CTurtle(float x, float y, float limitLeft, float limitRight);
 	virtual void SetState(int state);
+	int GetObjectType() { return OBJECT_TYPE_TURTLE; }
 };
