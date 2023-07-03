@@ -7,6 +7,7 @@ CLeaf::CLeaf(float x, float y, bool activate) :CGameObject(x, y)
 	this->ay = 0;
 	activated = activate;
 	SetState(LEAF_STATE_NOT_ACTIVATED);
+	
 }
 
 void CLeaf::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -43,6 +44,7 @@ void CLeaf::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+
 }
 
 void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

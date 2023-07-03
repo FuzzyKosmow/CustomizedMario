@@ -47,7 +47,7 @@ public:
 	CEatingPlant(float x, float y) : CGameObject(x, y) {
 
 		SetState(EATING_PLANT_STATE_IDLE);
-		dZone = new SquareDetectionZone(x - detectionZoneSize / 2 * 16, y - detectionZoneSize / 2 * 16, detectionZoneSize);
+		dZone = new SquareDetectionZone(x , y , detectionZoneSize);
 		dZone->MakeInvisible();
 		baseX = x;
 		baseY = y;

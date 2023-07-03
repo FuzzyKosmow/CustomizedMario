@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-
+#include "Detection.h"
 
 #define LEAF_FLYING_SPEED 0.05f
 #define LEAF_MAX_VX 0.11f
@@ -27,6 +27,7 @@ protected:
 	float ax;
 	float ay;
 	bool activated = false;
+	
 	ULONGLONG flyTimeOutStart = 0;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
