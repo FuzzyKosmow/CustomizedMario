@@ -201,10 +201,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_LOOT_BRICK:
 	{
-		
-	
-		
-	
 		//brickSpriteType != 0 ? dynamic_cast<CLootBrick*>(obj)->SetSpriteType(brickSpriteType) : dynamic_cast<CLootBrick*>(obj)->SetSpriteType(NULL);
 		int brickSpriteType;
 		int lootType = atoi(tokens[3].c_str());
@@ -244,11 +240,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			dynamic_cast<CLootBrick*>(obj)->SetSpriteType(brickSpriteType);
 		}
 
-		break;
-		
-		
-		
-		
 		break;
 	}
 	case OBJECT_TYPE_TUNNEL:
@@ -295,8 +286,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		obj = new CGroundButton(x, y);
 		break;
-	break;
+	
 	}
+	//Secret go here
+	case OBJECT_TYPE_SECRET_BRICK_WORLD_1_1:
+	{
+		obj = new CSecretBrickWithButton(x, y);
+		break;
+	}
+	
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;

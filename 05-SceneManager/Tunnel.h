@@ -4,7 +4,7 @@
 #include "Sprite.h"
 #include "Sprites.h"
 
-#define ID_ANI_BRICK 10000
+
 #define BRICK_WIDTH 16
 #define TUNNEL_TOP_BLOCK_WIDTH 15
 #define TUNNEL_TOP_BLOCK_HEIGHT 15

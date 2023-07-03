@@ -64,25 +64,25 @@ class CGame
 	
 	bool isPaused = false;
 	bool isPausedIndefinitely = false; // Indicates if the game is paused indefinitely
-	DWORD pauseStartTime = 0;
-	DWORD pauseEndTime = 0;
-	DWORD pauseDuration = 0;
+	ULONGLONG pauseStartTime = 0;
+	ULONGLONG pauseEndTime = 0;
+	ULONGLONG pauseDuration = 0;
 	bool pauseForTriggered = false;
 public:
 	//Pause section
 	bool PauseForActivated() { return pauseForTriggered; }
 	void DeactivatePauseFor() { pauseForTriggered = false; pauseEndTime = GetTickCount64(); }
 	void TogglePause();
-	void PauseFor(DWORD milliseconds);
+	void PauseFor(ULONGLONG milliseconds);
 
 	bool IsPausedIndefinitely() { return isPausedIndefinitely; }
 	
 	bool IsPaused() { return isPaused; }
 
 	//Mostly for automatic unpause
-	DWORD GetPauseStartTime() { return pauseStartTime; }
-	DWORD GetPauseEndTime() { return pauseEndTime; }
-	DWORD GetPauseDuration() {
+	ULONGLONG GetPauseStartTime() { return pauseStartTime; }
+	ULONGLONG GetPauseEndTime() { return pauseEndTime; }
+	ULONGLONG GetPauseDuration() {
 
 		return pauseDuration;
 	}

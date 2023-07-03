@@ -37,7 +37,7 @@ void CGame::TogglePause()
 	
 }
 
-void CGame::PauseFor(DWORD milliseconds)
+void CGame::PauseFor(ULONGLONG milliseconds)
 {
 	if (!isPaused)
 	{

@@ -1,10 +1,8 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Sprite.h"
 #include "PlayScene.h"
-#include "Mario.h"
-#include "AssetIDs.h"
+
 #define DETECTION_ZONE_STATE_IDLE 0
 #define DETECTION_ZONE_STATE_DETECTED 1
 #define DETECTION_ZONE_CELL_WIDTH 15

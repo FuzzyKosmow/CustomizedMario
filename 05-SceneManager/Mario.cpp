@@ -28,7 +28,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	DebugOutTitle(L"coin: %d", coin);
 
 	//Handle the set colliable by time
-	if (GetTickCount() == toBeColliableAgainAt)
+	if (GetTickCount64() == toBeColliableAgainAt)
 	{
 		colliable = true;
 	}
@@ -132,6 +132,7 @@ void CMario::OnNoCollision(DWORD dt)
 	
 	x += vx * dt;
 	y += vy * dt;
+	/*detector->SetPosition(x, y);*/
 }
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -271,6 +272,18 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithGroundButton(LPCOLLISIONEVENT e)
 {
+	//if (dynamic_cast<CSecretBrickWithButton*>(e->obj))
+	//{
+	//	if (e->ny > 0) {
+	//		CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
+	//		if (brick->GetState() == SECRET_BRICK_WITH_BUTTON_STATE_NORMAL)
+	//		{
+	//			brick->SetState(SECRET_BRICK_WITH_BUTTON_STATE_SHOW_BUTTON);
+	//		}
+	//	}
+
+	//}
+	//else // Handle normal brick
 	if (e->ny < 0)
 	{
 		if (e->obj->GetState() == GROUND_BUTTON_STATE_NORMAL)
@@ -373,6 +386,7 @@ void CMario::OnCollisionWithSchroom(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
+	
 	if (e->ny > 0)
 	{
 		CBrick *brick = dynamic_cast<CBrick*>(e->obj);

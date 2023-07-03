@@ -1,11 +1,7 @@
 #pragma once
 #include "GameObject.h"
-
-#include "Animation.h"
-#include "Animations.h"
-#include "AssetIDs.h"
-#include "debug.h"
-
+#include "Detection.h"
+#include "SecretBrickWithButton.h"
 //THERE IS A HIDDEN THING BETWEEN HEIGHT AND WID OF A SPRITE, FOR SOME REASON IT CAN CAUSE BLUR IF REDUCE / INCREASE BY 1. TRY INCREASE OR DECREASE BY 1 PIXEL IN HEIGHT
 #define MARIO_WALKING_SPEED		0.1f
 #define MARIO_RUNNING_SPEED		0.2f
@@ -188,6 +184,7 @@
 
 class CMario : public CGameObject
 {
+	
 	BOOLEAN isSitting;
 	bool isFlying = false;
 	float maxVx;
@@ -213,6 +210,7 @@ class CMario : public CGameObject
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+
 	void OnCollisionWithBrick (LPCOLLISIONEVENT e);
 	void OnCollisionWithLootBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithSchroom(LPCOLLISIONEVENT e);
@@ -236,8 +234,9 @@ class CMario : public CGameObject
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRaccoon();
-
+	
 public:
+	
 	bool colliable = true;
 	ULONGLONG toBeColliableAgainAt;
 	CMario(float x, float y) : CGameObject(x, y)
@@ -253,7 +252,7 @@ public:
 		isOnPlatform = false;
 		coin = 0;
 		raccoonAttack_start = -1;
-
+		
 	}
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -270,7 +269,7 @@ public:
 	void OnNoCollision(DWORD dt);
 	//All collision is proactive, meaning for this to be called the object must be moving, apparently
 	void OnCollisionWith(LPCOLLISIONEVENT e);
-
+	
 	void SetLevel(int l);
 	int GetLevel() { return level; };
 	int GetXDirection() { return nx; }; //X > 0: right, X < 0: left

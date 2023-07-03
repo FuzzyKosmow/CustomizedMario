@@ -45,6 +45,10 @@
 
 
 #define OBJECT_TYPE_PARTICLE 1100
+//Secret 10000>
+#define OBJECT_TYPE_SECRET_BRICK_WORLD_1_1 10001 //Brick that has a button that turn brick around it into coin
+
+//System
 #define OBJECT_TYPE_SYSTEM 99999 // Anything that is not visible, but is used to control the game. EX: Camera, HUD, etc...
 
 #pragma region MARIO 

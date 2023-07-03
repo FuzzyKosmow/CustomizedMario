@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#include "debug.h"
+
 //Simple particle system that allow to shoot out n particle similiar to fireworks.\
 ///Particle stuffs
 #define PARTICLE_SPEED_Y 0.05f

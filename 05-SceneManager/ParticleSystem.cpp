@@ -24,7 +24,7 @@ void Particle::Render()
 
 void ParticleSystem::Update (DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	for (int i = 0; i < particles.size(); i++)
+	for (size_t i = 0; i < particles.size(); i++)
 	{
 		if (particles[i]->IsDeleted())
 		{
@@ -43,7 +43,8 @@ void ParticleSystem::Update (DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void ParticleSystem::SpawnStaticParticle(float x, float y, int count, int spriteID)
 {
 	//Seed the rand
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
+
 	
 	if (count < 4)
 		return;
@@ -129,7 +130,8 @@ void ParticleSystem::SpawnStaticParticle(float x, float y, int count, int sprite
 void ParticleSystem::SpawnAnimatedParticle(float x, float y, int count, int aniID)
 {
 	 //Seed the rand
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
+
 
 	if (count < 4)
 		return;

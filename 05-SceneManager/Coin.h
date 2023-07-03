@@ -1,8 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Animation.h"
-#include "Animations.h"
+
 
 #define ID_ANI_COIN 11000
 #define INACTIVE 0
