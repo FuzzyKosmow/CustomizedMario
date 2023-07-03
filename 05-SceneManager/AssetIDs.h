@@ -42,7 +42,7 @@
 
 //System obj definition
 #define OBJECT_TYPE_DETECTION_ZONE 1000
-#define OBJECT_TYPE_OBJECT_DETECTOR 1001
+
 
 #define OBJECT_TYPE_PARTICLE 1100
 #define OBJECT_TYPE_SYSTEM 99999 // Anything that is not visible, but is used to control the game. EX: Camera, HUD, etc...
