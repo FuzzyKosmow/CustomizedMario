@@ -71,40 +71,96 @@ void CTurtle::OnNoCollision(DWORD dt)
 }
 
 
+
 void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	
+	if (dynamic_cast<CGoomba*> (e->obj))
+	{
+		OnCollisionWithGoomba(e);
+	}
+	else if (dynamic_cast<CLootBrick*>(e->obj))
+	{
+		OnCollisionWithLootBrick(e);
+	}
+	else if (dynamic_cast<CMario*>(e->obj))
+	{
+		OnCollisionWithMario(e);
+
+	}
+	else if (dynamic_cast<CBrick*> (e->obj))
+	{
+		OnCollisionWithBrick(e);
+	}
+
+	if (!e->obj->IsBlocking()) return;
+	if (dynamic_cast<CTurtle*>(e->obj)) return;
+	if (e->ny != 0)
+	{
+		vy = 0;
+	}
+	else if (e->nx != 0)
+	{
+		vx = -vx;
+	}
+
+	
+
+
+}
+
+void CTurtle::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	if (state == TURTLE_STATE_SHELL_MOVING)
 	{
-		if (dynamic_cast<CGoomba*> (e->obj))
+		CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+
+		goomba->SetState(GOOMBA_STATE_DIE);
+
+	}
+
+}
+
+
+void CTurtle::OnCollisionWithLootBrick(LPCOLLISIONEVENT e)
+{
+	if (state == TURTLE_STATE_SHELL_MOVING)
+	{
+		CLootBrick* lootBrick = dynamic_cast<CLootBrick*>(e->obj);
+
+		if (lootBrick->GetCurrentState() == LOOT_BRICK_STATE_NOT_LOOTED)
 		{
-			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
-			goomba->SetState(GOOMBA_STATE_DIE);
-
+			lootBrick->ShowLoot();
 
 		}
-		else if (dynamic_cast<CLootBrick*>(e->obj))
+	}
+
+}
+
+
+void CTurtle::OnCollisionWithBrick(LPCOLLISIONEVENT e)
+{
+	if (state == TURTLE_STATE_SHELL_MOVING)
+	{
+		if (e->nx != 0)
 		{
-			CLootBrick* lootBrick = dynamic_cast<CLootBrick*>(e->obj);
-			
-				if (lootBrick->GetCurrentState() == LOOT_BRICK_STATE_NOT_LOOTED)
-				{
-
-					lootBrick->ShowLoot();
-
-				}
-
-			
+			CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+			brick->Break();
 		}
-		else if (dynamic_cast<CMario*>(e->obj))
-		{
-			if (e->nx != 0)
-			{
-				CMario* mario = dynamic_cast<CMario*>(e->obj);
-				mario->TakeDamage();
-				vx *= -1;
-			}
+	}
 
+
+}
+void CTurtle::OnCollisionWithMario(LPCOLLISIONEVENT e)
+{
+	if (state == TURTLE_STATE_SHELL_MOVING)
+	{
+		if (e->nx != 0)
+		{
+			CMario* mario = dynamic_cast<CMario*>(e->obj);
+			mario->TakeDamage();
+			vx *= -1;
 		}
 	}
 	else if (state == TURTLE_STATE_WALKING)
@@ -120,29 +176,15 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 		}
 
 	}
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CTurtle*>(e->obj)) return;
-	if (e->ny != 0)
-	{
-		vy = 0;
-	}
-	else if (e->nx != 0)
-	{
-		vx = -vx;
-	}
-	
-
 
 }
-
-
 void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 	vy += ay * dt;
 	if (GetState() == TURTLE_STATE_WALKING || state == TURTLE_STATE_SHELL_MOVING)
 	{
-		
+
 		vx += ax * dt;
 		if (state == TURTLE_STATE_WALKING)
 		{
@@ -157,7 +199,7 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				vx = -vx;
 			}
 		}
-		
+
 	}
 
 	//progress collision
@@ -189,19 +231,19 @@ void CTurtle::Render()
 void CTurtle::SetState(int state)
 {
 	switch (state)
-	
+
 	{
 	case TURTLE_STATE_WALKING:
 	{
 		vx = TURTLE_WALKING_SPEED;
-		
+
 		break;
 	}
 
 	case TURTLE_STATE_SHELL:
 	{
 		vx = 0;
-		y-= JUMPED_ON_OFFSET;
+		y -= JUMPED_ON_OFFSET;
 		break;
 	}
 	case TURTLE_STATE_SHELL_MOVING:

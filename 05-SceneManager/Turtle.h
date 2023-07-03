@@ -8,7 +8,7 @@
 #include "Mario.h"
 #include "Goomba.h"
 #include "Textures.h"
-
+#include "Brick.h"
 #include "LootBrick.h"
 
 
@@ -53,6 +53,10 @@ protected:
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
+	void OnCollisionWithMario(LPCOLLISIONEVENT e);
+	void OnCollisionWithLootBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 public:
 	CTurtle(float x, float y, float limitLeft, float limitRight);
 	virtual void SetState(int state);
