@@ -15,6 +15,8 @@
 #define GROUND_BUTTON_ANI_NORMAL		13001
 #define GROUND_BUTTON_ANI_PRESSED		13002
 
+#define GROUND_BUTTON_PRESSED_OFFSET_Y 6
+
 class CGroundButton : public CGameObject
 {
 	bool pressed;
@@ -36,6 +38,7 @@ public:
 				break;
 			case GROUND_BUTTON_STATE_PRESSED:
 				pressed = true;
+				y+= GROUND_BUTTON_PRESSED_OFFSET_Y;
 				break;
 		}
 		this ->state = state;

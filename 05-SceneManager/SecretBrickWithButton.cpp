@@ -6,7 +6,7 @@ CSecretBrickWithButton::CSecretBrickWithButton(float x, float y): CBrick(x, y) {
 	detector = new ObjectDetector(x, y, 15, 15, OBJECT_TYPE_BRICK);
 	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
 	scene->AddObject(detector);
-
+	detector->MakeInvisible();
 };
 
 void CSecretBrickWithButton::SetState (int state)
@@ -32,19 +32,27 @@ void CSecretBrickWithButton::Update (DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (button->GetPressed() && !convertedBrickToCoin)
 		{
 			LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
-			vector<LPGAMEOBJECT> bricks;
-			for (size_t i = 0; i < coObjects->size(); i++)
+			vector<LPGAMEOBJECT> objects;
+			objects = detector->GetDetectedObjects ();
+			if (!objects.empty())
 			{
-				float coinX = 0;
-				float coinY = 0;
-				bricks[i]->GetPosition (coinX, coinY);
-				bricks[i]->Delete();
+				for (size_t i = 0; i < objects.size(); i++)
+				{
+					float coinX;
+					float coinY;
+					objects[i]->GetPosition(coinX, coinY);
+					objects[i]->Delete();
 
-				bool activateCoin = true;
-				CCoin* coin = new CCoin(coinX, coinY, activateCoin);
-				scene->AddObject(coin);
+					bool activateCoin = true;
+					CCoin* coin = new CCoin(coinX, coinY, activateCoin);
+					scene->AddObject(coin);
+					
+					
 
+				}
+				DebugOut(L"Coin converted\n");
 			}
+			
 
 
 			
@@ -52,6 +60,7 @@ void CSecretBrickWithButton::Update (DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		
 	}
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 	
 }
 

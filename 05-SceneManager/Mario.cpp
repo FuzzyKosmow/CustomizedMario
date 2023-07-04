@@ -272,18 +272,7 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithGroundButton(LPCOLLISIONEVENT e)
 {
-	//if (dynamic_cast<CSecretBrickWithButton*>(e->obj))
-	//{
-	//	if (e->ny > 0) {
-	//		CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
-	//		if (brick->GetState() == SECRET_BRICK_WITH_BUTTON_STATE_NORMAL)
-	//		{
-	//			brick->SetState(SECRET_BRICK_WITH_BUTTON_STATE_SHOW_BUTTON);
-	//		}
-	//	}
-
-	//}
-	//else // Handle normal brick
+	
 	if (e->ny < 0)
 	{
 		if (e->obj->GetState() == GROUND_BUTTON_STATE_NORMAL)
@@ -386,7 +375,15 @@ void CMario::OnCollisionWithSchroom(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
-	
+	if (dynamic_cast<CSecretBrickWithButton*>(e->obj))
+	{
+		if (e->ny > 0) {
+			CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
+			 brick->Break();
+		}
+
+	}
+	else // Handle normal brick
 	if (e->ny > 0)
 	{
 		CBrick *brick = dynamic_cast<CBrick*>(e->obj);
