@@ -199,6 +199,10 @@ public:
 		return OBJECT_TYPE_BIG_COLOR_BRICK;
 	}
 	
+
+	int IsStatic() {
+		return 1;
+	}
 	
 	
 };

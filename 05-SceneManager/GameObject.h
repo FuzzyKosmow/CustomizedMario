@@ -72,4 +72,5 @@ public:
 
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
 	virtual int GetObjectType() = 0;
+	virtual int IsStatic() { return 0; }
 };

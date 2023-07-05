@@ -27,4 +27,5 @@
 		virtual int IsBlocking() { return 1; };
 		void Break();
 		int GetObjectType () { return OBJECT_TYPE_BRICK; }
+		int IsStatic() { return 1; }
 	};

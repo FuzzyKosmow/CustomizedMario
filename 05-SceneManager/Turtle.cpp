@@ -256,3 +256,5 @@ void CTurtle::SetState(int state)
 	}
 	this->state = state;
 }
+
+
