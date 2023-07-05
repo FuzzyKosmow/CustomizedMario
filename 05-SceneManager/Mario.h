@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
-#include "Detection.h"
-#include "SecretBrickWithButton.h"
+
+
 //THERE IS A HIDDEN THING BETWEEN HEIGHT AND WID OF A SPRITE, FOR SOME REASON IT CAN CAUSE BLUR IF REDUCE / INCREASE BY 1. TRY INCREASE OR DECREASE BY 1 PIXEL IN HEIGHT
 #define MARIO_WALKING_SPEED		0.1f
 #define MARIO_RUNNING_SPEED		0.2f
@@ -182,6 +182,8 @@
 #define MARIO_UNTOUCHABLE_TIME 2500
 
 
+class CMarioTailAttack;
+
 class CMario : public CGameObject
 {
 	
@@ -199,10 +201,10 @@ class CMario : public CGameObject
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 
-
+	
 	bool holdingObject = false;
 	LPGAMEOBJECT holdObject = nullptr;
-	/*CMarioTailAttack tailAttack;*/
+	CMarioTailAttack* tailAttack;
 	int coin;
 	//Raccoon attack
 	ULONGLONG raccoonAttack_start;
@@ -239,21 +241,7 @@ public:
 	
 	bool colliable = true;
 	ULONGLONG toBeColliableAgainAt;
-	CMario(float x, float y) : CGameObject(x, y)
-	{
-		isSitting = false;
-		maxVx = 0.0f;
-		ax = 0.0f;
-		ay = MARIO_GRAVITY;
-
-		level = MARIO_LEVEL_SMALL;
-		untouchable = 0;
-		untouchable_start = -1;
-		isOnPlatform = false;
-		coin = 0;
-		raccoonAttack_start = -1;
-		
-	}
+	CMario(float x, float y);
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -280,27 +268,4 @@ public:
 	int GetObjectType () { return OBJECT_TYPE_MARIO; }
 };
 
-class CMarioTailAttack : public CGameObject
-{
-	bool isRendered = false;
 
-
-public:
-	CMarioTailAttack(float x, float y) : CGameObject(x, y)
-	{
-
-	}
-	CMarioTailAttack()
-	{
-
-	}
-	void OnNoCollision(DWORD dt);
-	void OnCollisionWith(LPCOLLISIONEVENT e);
-	void Render();
-	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	bool GetRenderState() { return isRendered; };
-	bool SetRenderState(bool value) { isRendered = value; };
-	
-	
-
-};

@@ -165,6 +165,7 @@
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="LootBrick.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MairoTailAttack.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Leaf.h" />
     <ClInclude Include="LootBrick.h" />
     <ClInclude Include="Mario.h" />
+    <ClInclude Include="MarioTailAttack.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Platform.h" />
@@ -212,7 +214,6 @@
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SecretBrickWithButton.h" />
-    <ClInclude Include="SecretWorld1_1.h" />
     <ClInclude Include="ShootingPlant.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />

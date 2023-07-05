@@ -19,9 +19,6 @@
     <Filter Include="Header Files\Goomba">
       <UniqueIdentifier>{efc76274-342a-4fe1-b2ea-591e36a7efbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\System">
-      <UniqueIdentifier>{3032f8ee-4fd1-45a1-9363-8cb965c72077}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{434b6d51-c268-4ebe-889b-cd5368e895ff}</UniqueIdentifier>
     </Filter>
@@ -43,15 +40,21 @@
     <Filter Include="Source Files\Secrets">
       <UniqueIdentifier>{71b03056-e93d-4bab-ae01-6f2d71ffeddc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Mario">
+      <UniqueIdentifier>{646e6c44-849e-42a0-b1e3-9ece55351dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{3032f8ee-4fd1-45a1-9363-8cb965c72077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Mario">
+      <UniqueIdentifier>{643f7247-5261-4c72-99b3-0e72a378696e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Platform.cpp">
@@ -150,15 +153,18 @@
     <ClCompile Include="GroundButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Source Files\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="MairoTailAttack.cpp">
+      <Filter>Source Files\Mario</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetIDs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Platform.h">
@@ -168,9 +174,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BackgroundObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LootBrick.h">
@@ -260,14 +263,20 @@
     <ClInclude Include="ParticleSystem.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="SecretWorld1_1.h">
-      <Filter>Header Files\Secrets</Filter>
-    </ClInclude>
     <ClInclude Include="SecretBrickWithButton.h">
       <Filter>Header Files\Secrets</Filter>
     </ClInclude>
     <ClInclude Include="GroundButton.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>Header Files\Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioTailAttack.h">
+      <Filter>Header Files\Mario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -241,16 +241,16 @@ groundButton.txt
 1	2045	175
 1	2060	175
 1	2075	175
-#1	2090	175
-#1	2105	175
-#1	2120	175
+1	2090	175
+1	2105	175
+1	2120	175
 
 
 1	2045	160
 1	2060	160
 1	2075	160
-#1	2090	160
-#1	2105	160
+1	2090	160
+1	2105	160
 
 1	2060	145
 1	2075	145
@@ -283,7 +283,7 @@ groundButton.txt
 # Ground sprite first floor is 13, second is 10. Meaning the first ground and second ground should have 13 y unit difference, while the second and third and so forth have 10 y unit difference
 #All the sprite width is 15.
 
-#Platform // start x - start y , width and height plaform . length, spriteIDBegin, spriteID Middle, spriteIDEnd 
+#Platform // start x - start y , width and height plaform unit . length, spriteIDBegin, spriteID Middle, spriteIDEnd 
 5	15	190	15	15	43	61000	62000	63000
 5	15	197	15	10	43	64000	65000	66000
 
@@ -304,7 +304,7 @@ groundButton.txt
 
 
 ##Plaform of (2) wooden stair and back to normal
-5	1750	190	15	15	40	61000	62000	63000
+5	1750	190	15	15	45	61000	62000	63000
 
 
 

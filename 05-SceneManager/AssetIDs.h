@@ -38,8 +38,8 @@
 
 #define OBJECT_TYPE_PORTAL	50
 //Projectile (>500)
-#define OBJECT_TYPE_PLANT_PROJECTILE 500
-
+#define OBJECT_TYPE_PLANT_PROJECTILE 500 //Plant fireballs
+#define OBJECT_TYPE_MARIO_TAIL_ATTACK 501
 //System obj definition
 #define OBJECT_TYPE_DETECTION_ZONE 1000
 
