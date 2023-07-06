@@ -53,8 +53,7 @@ void CFlyingGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CFlyingGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
+	
 	
 	//Do 2 light jump then one big jump. Before walking a bit then resume back to the jump series. Last jump is heavy jump
 	if (state == FLYING_GOOMBA_STATE_FLYING)
@@ -103,7 +102,8 @@ void CFlyingGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isDeleted = true;
 		return;
 	}
-
+	vy += ay * dt;
+	vx += ax * dt;
 	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -151,6 +151,15 @@ void CFlyingGoomba::SetState(int state)
 		vy = 0;
 		ay = 0;
 		break;
+	case FLYING_GOOMBA_STATE_DIE_BY_ATTACK:
+		die_start = GetTickCount64();
+		ay = FLYING_GOOMBA_WALKING_GRAVITY;
+		vy -= FLYING_GOOMBA_DIE_BY_ATTACK_VY_DEFLECT;
+		if (vx > 0)
+			vx = FLYING_GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
+		else
+			vx = -FLYING_GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
+		break;
 	case FLYING_GOOMBA_STATE_WALKING:
 		vx = -FLYING_GOOMBA_WALKING_SPEED;
 		ay = FLYING_GOOMBA_WALKING_GRAVITY;
@@ -162,14 +171,7 @@ void CFlyingGoomba::SetState(int state)
 		
 		vx = -FLYING_GOOMBA_WALKING_SPEED;
 		break;
-	case FLYING_GOOMBA_STATE_DIE_BY_ATTACK:
-		die_start = GetTickCount64();
-		ay = FLYING_GOOMBA_WALKING_GRAVITY;
-		vy -= FLYING_GOOMBA_DIE_BY_ATTACK_VY_DEFLECT;
-		if (vx>0)
-			 vx = FLYING_GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
-		else
-			vx = -FLYING_GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
+	
 	}
 }
 

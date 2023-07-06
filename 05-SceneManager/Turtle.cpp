@@ -1,5 +1,5 @@
 #include "Turtle.h"
-
+#include "SecretBrickWithButton.h"
 
 CTurtle::CTurtle(float x, float y, float limitLeft, float limitRight) : CGameObject(x, y)
 {
@@ -83,11 +83,7 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		OnCollisionWithLootBrick(e);
 	}
-	else if (dynamic_cast<CMario*>(e->obj))
-	{
-		OnCollisionWithMario(e);
-
-	}
+	
 	else if (dynamic_cast<CBrick*> (e->obj))
 	{
 		OnCollisionWithBrick(e);
@@ -145,39 +141,24 @@ void CTurtle::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 	{
 		if (e->nx != 0)
 		{
-			CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-			brick->Break();
-		}
-	}
-
-
-}
-void CTurtle::OnCollisionWithMario(LPCOLLISIONEVENT e)
-{
-	if (state == TURTLE_STATE_SHELL_MOVING)
-	{
-		if (e->nx != 0)
-		{
-			CMario* mario = dynamic_cast<CMario*>(e->obj);
-			mario->TakeDamage();
-			vx *= -1;
-		}
-	}
-	else if (state == TURTLE_STATE_WALKING)
-	{
-		if (dynamic_cast<CMario*>(e->obj))
-		{
-			if (e->nx != 0)
+			
+			if (dynamic_cast<CSecretBrickWithButton*>(e->obj)) //Special brick handling
 			{
-				CMario* mario = dynamic_cast<CMario*>(e->obj);
-				mario->TakeDamage();
+				  CSecretBrickWithButton* secretBrick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
+				  secretBrick->Break();
 			}
-
+			else //Normal brick handling
+			{
+				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+				brick->Break();
+			}
+			
 		}
-
 	}
 
+
 }
+
 void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
@@ -201,6 +182,12 @@ void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 	}
+	else if (state == TURTLE_STATE_DIE_BY_ATTACK && GetTickCount64() - die_start > TURTLE_DIE_TIMEOUT)
+	{
+		isDeleted = true;
+		return;
+	}
+	
 
 	//progress collision
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -224,6 +211,10 @@ void CTurtle::Render()
 	else if (state == TURTLE_STATE_SHELL_MOVING)
 	{
 		animations->Get(ANI_ID_TURLTE_SHELL_MOVING)->Render(x, y);
+	}
+	else if (state == TURTLE_STATE_DIE_BY_ATTACK)
+	{
+		animations->Get(ANI_ID_TURLTE_SHELL)->Render(x, y,180);
 	}
 }
 
@@ -252,6 +243,20 @@ void CTurtle::SetState(int state)
 		y -= JUMPED_ON_OFFSET;
 		break;
 	}
+	case TURTLE_STATE_DIE_BY_ATTACK:
+	{
+		die_start = GetTickCount64();
+		vy = -TURTLE_DIE_BY_ATTACK_DEFLECT_VY;
+		if (vx > 0)
+		{
+			vx = TURTLE_DIE_BY_ATTACK_DEFLECT_VX;
+		}
+		else
+		{
+			vx = -TURTLE_DIE_BY_ATTACK_DEFLECT_VX;
+		}
+	}
+
 
 	}
 	this->state = state;

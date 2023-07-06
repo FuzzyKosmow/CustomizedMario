@@ -25,6 +25,9 @@
 
 #define JUMPED_ON_OFFSET 10
 
+#define FLYING_TURTLE_DIE_BY_ATTACK_DEFLECT_VX 0.1f
+#define FLYING_TURTLE_DIE_BY_ATTACK_DEFLECT_VY 0.1f
+
 #define FLYING_TURTLE_BBOX_WIDTH 18
 #define FLYING_TURTLE_BBOX_HEIGHT 20
 #define FLYING_TURTLE_SHELL_BBOX_WIDTH 16
@@ -38,7 +41,7 @@
 #define FLYING_TURTLE_STATE_WALKING 200
 #define FLYING_TURTLE_STATE_SHELL 300
 #define FLYING_TURTLE_STATE_SHELL_MOVING 400
-
+#define FLYING_TURTLE_STATE_DIE_BY_ATTACK 500
 
 #define ANI_ID_FLYING_TURTLE_WALKING_LEFT 7000
 #define ANI_ID_FLYING_TURTLE_WALKING_RIGHT 7001
@@ -71,7 +74,7 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void RenderBoundingBox();
-	virtual int IsCollidable() { return state != FLYING_TURTLE_STATE_DIE; };
+	virtual int IsCollidable() { return state != FLYING_TURTLE_STATE_DIE_BY_ATTACK; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 

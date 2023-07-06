@@ -263,7 +263,7 @@ void CMario::OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e)
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
-	else if (e->nx != 0 && turtle->GetState() == FLYING_TURTLE_STATE_SHELL &&
+	else if (e->nx != 0 && turtle->GetState() == FLYING_TURTLE_STATE_SHELL && //Holding
 		game->IsKeyDown(DIK_A)
 		)
 	{
@@ -274,6 +274,18 @@ void CMario::OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e)
 		}
 
 
+	} 
+	 else if (e->obj->GetState() == FLYING_TURTLE_STATE_WALKING //Hit by turtle
+		|| e->obj->GetState() == FLYING_TURTLE_STATE_FLYING
+		 || e->obj->GetState() == FLYING_TURTLE_STATE_SHELL_MOVING)
+	{
+
+			if (e->nx != 0 && !untouchable)
+			{
+				TakeDamage();
+			}
+
+		
 	}
 }
 
@@ -294,10 +306,12 @@ void CMario::OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e)
 		}
 
 	}
-	else
+	else if (e->obj->GetState() != FLYING_GOOMBA_STATE_DIE || e->obj->GetState() != FLYING_GOOMBA_STATE_DIE_BY_ATTACK)
 	{
-		TakeDamage();
+		if (!untouchable )
+			TakeDamage();
 	}
+	
 }
 
 void CMario::OnCollisionWithEatingPlant(LPCOLLISIONEVENT e)
@@ -366,6 +380,27 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		}
 
 
+	}
+	else //Hit by turtle
+	{
+		if (e->obj->GetState() == TURTLE_STATE_SHELL_MOVING)
+		{
+			if (e->nx != 0 && !untouchable)
+			{
+				TakeDamage();
+			}
+		}
+		else if (e->obj->GetState() == TURTLE_STATE_WALKING)
+		{
+			
+			if (e->nx != 0 && !untouchable)
+			{
+				TakeDamage();
+			}
+
+		
+
+		}
 	}
 
 }
@@ -466,7 +501,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	}
 	else // hit by Goomba
 	{
-		if (untouchable == 0)
+		/*if (untouchable == 0)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE)
 			{
@@ -480,6 +515,13 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 					DebugOut(L">>> Mario DIE >>> \n");
 					SetState(MARIO_STATE_DIE);
 				}
+			}
+		}*/
+		if (!untouchable)
+		{
+			if (goomba->GetState() != GOOMBA_STATE_DIE || goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
+			{
+				TakeDamage();
 			}
 		}
 	}

@@ -60,15 +60,20 @@ void CMarioTailAttack::OnNoCollision(DWORD dt)
 void CMarioTailAttack::OnTriggerEnter(LPCOLLISIONEVENT e)
 {
 	/*DebugOut(L"Ontrigger function object type: %d\n", e->obj->GetObjectType());*/
-	if (dynamic_cast<CSecretBrickWithButton*>(e->obj))
+	if (dynamic_cast<CSecretBrickWithButton*>(e->obj)) //Secret Brick
 	{
 		CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
 		brick->Break();
 	}
-	else if (dynamic_cast<CBrick*>(e->obj))
+	else if (dynamic_cast<CBrick*>(e->obj)) //Brick
 	{
 		CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 		brick->Break();
+	}
+	else if (dynamic_cast<CLootBrick*>(e->obj))
+	{
+		CLootBrick* brick = dynamic_cast<CLootBrick*> (e->obj);
+		brick->ShowLoot();
 	}
 	else if (dynamic_cast<CGoomba*>(e->obj))
 	{
@@ -81,16 +86,19 @@ void CMarioTailAttack::OnTriggerEnter(LPCOLLISIONEVENT e)
 		CFlyingGoomba* goomba = dynamic_cast<CFlyingGoomba*>(e->obj);
 		goomba->SetState(FLYING_GOOMBA_STATE_DIE_BY_ATTACK);
 	}
-	/*else if (dynamic_cast<CFlyingTurtle*>(e->obj))
+	else if (dynamic_cast <CTurtle*>(e->obj))
+	{
+		CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+		turtle->SetState(TURTLE_STATE_DIE_BY_ATTACK);
+	}
+	else if (dynamic_cast<CFlyingTurtle*>(e->obj))
 	{
 		CFlyingTurtle* turtle = dynamic_cast<CFlyingTurtle*>(e->obj);
 		turtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
-	}
-	else if (dynamic_cast <CTurtle*>(e->obj))
-	{
-
-	};*/
+	};
 }
+	
+	
 void CMarioTailAttack::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 

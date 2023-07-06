@@ -97,34 +97,10 @@ void CFlyingTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 				lootBrick->ShowLoot();
 
 			}
-
-
 		}
-		else if (dynamic_cast<CMario*>(e->obj))
-		{
-			if (e->nx != 0)
-			{
-				CMario* mario = dynamic_cast<CMario*>(e->obj);
-				mario->TakeDamage();
-				vx *= -1;
-			}
-
-		}
+		
 	}
-	else if (state == FLYING_TURTLE_STATE_WALKING 
-		||  state == FLYING_TURTLE_STATE_FLYING)
-	{
-		if (dynamic_cast<CMario*>(e->obj))
-		{
-			if (e->nx != 0)
-			{
-				CMario* mario = dynamic_cast<CMario*>(e->obj);
-				mario->TakeDamage();
-			}
-
-		}
-
-	}
+	
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CFlyingTurtle*>(e->obj)) return;
 	if (e->ny != 0)
@@ -187,10 +163,14 @@ void CFlyingTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 	}
-	else
-	if (GetState() == FLYING_TURTLE_STATE_WALKING || state == FLYING_TURTLE_STATE_SHELL_MOVING)
+	else if (GetState() == FLYING_TURTLE_STATE_WALKING || state == FLYING_TURTLE_STATE_SHELL_MOVING)
 	{
 		vx += ax * dt;
+	}
+	else if (state == FLYING_TURTLE_STATE_DIE_BY_ATTACK && GetTickCount64() - die_start > FLYING_TURTLE_DIE_TIMEOUT)
+	{
+		isDeleted = true;
+		return;
 	}
 	isOnPlatform = false;
 	//progress collision
@@ -222,6 +202,10 @@ void CFlyingTurtle::Render()
 			animations->Get(ANI_ID_FLYING_TURTLE_FLYING_LEFT)->Render(x, y);
 		else
 			animations->Get(ANI_ID_FLYING_TURTLE_FLYING_RIGHT)->Render(x, y);
+	}
+	else if (state == FLYING_TURTLE_STATE_DIE_BY_ATTACK)
+	{
+		animations->Get(ANI_ID_FLYING_TURTLE_SHELL)->Render(x, y,180);
 	}
 }
 
@@ -259,7 +243,16 @@ void CFlyingTurtle::SetState(int state)
 		y -= JUMPED_ON_OFFSET;
 		break;
 	}
-
+	case FLYING_TURTLE_STATE_DIE_BY_ATTACK:
+	{
+		die_start = GetTickCount64();
+		ay = FLYING_TURTLE_GRAVITY;
+		vy = -FLYING_TURTLE_DIE_BY_ATTACK_DEFLECT_VX;
+		if (vx >0)
+			vx = FLYING_TURTLE_DIE_BY_ATTACK_DEFLECT_VX;
+		else
+			vx = -FLYING_TURTLE_DIE_BY_ATTACK_DEFLECT_VX;
+	}
 	}
 	this->state = state;
 }
