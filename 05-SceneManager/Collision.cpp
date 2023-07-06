@@ -166,13 +166,39 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 {
 	for (UINT i = 0; i < objDests->size(); i++)
 	{
-		LPCOLLISIONEVENT e = SweptAABB(objSrc, dt, objDests->at(i));
+		LPGAMEOBJECT objDest = objDests->at(i);
+		if (objSrc->IsTrigger()) //Simple trigger handling
+		{
+			float triggerLeft, triggerTop, triggerRight, triggerBottom;
+			objSrc->GetBoundingBox(triggerLeft, triggerTop, triggerRight, triggerBottom);
 
-		if (e->WasCollided()==1)
-			coEvents.push_back(e);
+			// Check if the destination object's bounding box overlaps with the trigger zone
+			float destLeft, destTop, destRight, destBottom;
+			objDest->GetBoundingBox(destLeft, destTop, destRight, destBottom);
+			if (destRight >= triggerLeft && destLeft <= triggerRight && destBottom >= triggerTop && destTop <= triggerBottom)
+			{
+				// Register collision event for the trigger object
+				LPCOLLISIONEVENT e = SweptAABB(objSrc, dt, objDest);
+				e->srcObjectIsTrigger = true;
+				coEvents.push_back(e);
+
+				
+			}
+			
+
+		}
 		else
-			delete e;
+		{
+			LPCOLLISIONEVENT e = SweptAABB(objSrc, dt, objDests->at(i));
+
+			if (e->WasCollided() == 1)
+				coEvents.push_back(e);
+			else
+				delete e;
+		}
+		
 	}
+	
 
 	//std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
@@ -197,7 +223,7 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 		LPCOLLISIONEVENT c = coEvents[i];
 		if (c->isDeleted) continue;
 		if (c->obj->IsDeleted()) continue; 
-
+		
 		// ignore collision event with object having IsBlocking = 0 (like coin, mushroom, etc)
 		if (filterBlock == 1 && !c->obj->IsBlocking()) 
 		{
@@ -226,8 +252,9 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	vector<LPCOLLISIONEVENT> coEvents;
 	LPCOLLISIONEVENT colX = NULL; 
 	LPCOLLISIONEVENT colY = NULL;
-
+	
 	coEvents.clear();
+	
 
 	if (objSrc->IsCollidable())
 	{
@@ -239,7 +266,16 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	{
 		objSrc->OnNoCollision(dt);
 	}
-	else
+	else if (objSrc->IsTrigger())
+	{
+		for (UINT i = 0; i < coEvents.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEvents[i];
+			objSrc->OnTriggerEnter(e);
+		}
+		return;
+	}
+	else 
 	{
 		Filter(objSrc, coEvents, colX, colY);
 
@@ -248,7 +284,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		objSrc->GetSpeed(vx, vy);
 		dx = vx * dt;
 		dy = vy * dt;
-
+		
 		if (colX != NULL && colY != NULL) 
 		{
 			if (colY->t < colX->t)	// was collision on Y first ?
@@ -349,8 +385,12 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		LPCOLLISIONEVENT e = coEvents[i];
 		if (e->isDeleted) continue;
 		if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
-
+		
+			
 		objSrc->OnCollisionWith(e);			
+		
+		
+
 	}
 
 

@@ -36,7 +36,7 @@ struct CCollisionEvent
 	}
 
 	int WasCollided();
-
+	bool srcObjectIsTrigger = false;
 	static bool compare(const LPCOLLISIONEVENT& a, LPCOLLISIONEVENT& b)
 	{
 		return a->t < b->t;

@@ -31,9 +31,43 @@ CMarioTailAttack::CMarioTailAttack(float x, float y) : CGameObject(x, y)
 }
 
 
+void CMarioTailAttack::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CSecretBrickWithButton*>(e->obj))
+	{
+		CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
+		brick->Break();
+	}
+	else if (dynamic_cast<CBrick*>(e->obj))
+	{
+		CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+		brick->Break();
+	}
+}
 
 
+void CMarioTailAttack::OnNoCollision(DWORD dt)
+{
+	//DebugOut(L"NO COLLISION\n");
+	/*x+= vx * dt;
+	y+= vy * dt;*/
+	
+}
 
+void CMarioTailAttack::OnTriggerEnter(LPCOLLISIONEVENT e)
+{
+	DebugOut(L"Ontrigger function object type: %d\n", e->obj->GetObjectType());
+	if (dynamic_cast<CSecretBrickWithButton*>(e->obj))
+	{
+		CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
+		brick->Break();
+	}
+	else if (dynamic_cast<CBrick*>(e->obj))
+	{
+		CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+		brick->Break();
+	}
+}
 void CMarioTailAttack::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 
@@ -51,7 +85,7 @@ void CMarioTailAttack::GetBoundingBox(float& left, float& top, float& right, flo
 
 void CMarioTailAttack::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
+	
 	if (isActive)
 	{
 		if (GetTickCount64() - raccoonAttackStart > MARIO_RACCOON_ATTACK_TIME)
@@ -59,36 +93,36 @@ void CMarioTailAttack::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isActive = false;
 			raccoonAttackStart = 0;
 		};
-		//Static collision handling here because it doesnt really change pos and kinda just suddenly appear.
-		// Act more like a scanner
-		float t, l, b, r;
-		GetBoundingBox(l, t, r, b);
-		for (size_t i = 0; i < coObjects->size(); i++)
-		{
-			LPGAMEOBJECT obj = coObjects->at(i);
-			float oX, oY;
-			obj->GetPosition(oX, oY);
-			if ((oX > l && oX < r) && (oY > t && oY < b))
-			{
-				if (dynamic_cast<CSecretBrickWithButton*>(obj))
-				{
-									CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(obj);
-					brick->Break();
-				}
-				else
-				if (dynamic_cast<CBrick*>(obj))
-				{
-					CBrick* brick = dynamic_cast<CBrick*>(obj);
-					brick->Break();
-				}
-			}
+		////Static collision handling here because it doesnt really change pos and kinda just suddenly appear.
+		//// Act more like a scanner
+		//float t, l, b, r;
+		//GetBoundingBox(l, t, r, b);
+		//for (size_t i = 0; i < coObjects->size(); i++)
+		//{
+		//	LPGAMEOBJECT obj = coObjects->at(i);
+		//	float oX, oY;
+		//	obj->GetPosition(oX, oY);
+		//	if ((oX > l && oX < r) && (oY > t && oY < b))
+		//	{
+		//		if (dynamic_cast<CSecretBrickWithButton*>(obj))
+		//		{
+		//							CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(obj);
+		//			brick->Break();
+		//		}
+		//		else
+		//		if (dynamic_cast<CBrick*>(obj))
+		//		{
+		//			CBrick* brick = dynamic_cast<CBrick*>(obj);
+		//			brick->Break();
+		//		}
+		//	}
 
 
-		}
+		//}
 
 	}
 
-
+	CCollision::GetInstance ()->Process(this, dt, coObjects);
 }
 
 void CMarioTailAttack::Attack(int dir)

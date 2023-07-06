@@ -63,7 +63,8 @@ public:
 
 	// When collision with an object has been detected (triggered by CCollision::Process)
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
-	
+	virtual void OnTriggerEnter(LPCOLLISIONEVENT e) {};
+
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
 	virtual int IsBlocking() { return 1; }
 	// Is this object collide with other object at certain direction ( like ColorBox )
@@ -73,4 +74,6 @@ public:
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
 	virtual int GetObjectType() = 0;
 	virtual int IsStatic() { return 0; }
+	virtual int IsTrigger () { return 0; }
+	
 };
