@@ -200,9 +200,7 @@ public:
 	}
 	
 
-	int IsStatic() {
-		return 1;
-	}
+	
 	
 	
 };

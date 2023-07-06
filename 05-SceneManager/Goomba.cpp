@@ -52,7 +52,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if ( (state==GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
+	if ( (state==GOOMBA_STATE_DIE || state == GOOMBA_STATE_DIE_BY_ATTACK) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
 	{
 		isDeleted = true;
 		return;
@@ -66,12 +66,18 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CGoomba::Render()
 {
 	int aniId = ID_ANI_GOOMBA_WALKING;
+	float rotation = 0;
 	if (state == GOOMBA_STATE_DIE) 
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
+		if (GOOMBA_STATE_DIE_BY_ATTACK)
+		{
+			rotation = 180;
+		}
 	}
+	
 
-	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
+	CAnimations::GetInstance()->Get(aniId)->Render(x,y,rotation);
 	/*RenderBoundingBox();*/
 }
 
@@ -86,6 +92,14 @@ void CGoomba::SetState(int state)
 			vx = 0;
 			vy = 0;
 			ay = 0; 
+			break;
+		case GOOMBA_STATE_DIE_BY_ATTACK:
+			die_start = GetTickCount64();
+			vy -= GOOMBA_DIE_BY_ATTACK_VY_DEFLECT;
+			if (vx >= 0)
+			vx = GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
+			else
+				vx = -GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
 			break;
 		case GOOMBA_STATE_WALKING: 
 			vx = -GOOMBA_WALKING_SPEED;
