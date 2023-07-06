@@ -1,6 +1,9 @@
 #include "MarioTailAttack.h"
 #include "PlayScene.h"
 #include "SecretBrickWithButton.h"
+#include "FlyingGoomba.h"
+#include "FlyingTurtle.h"
+#include "Turtle.h"
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -56,7 +59,7 @@ void CMarioTailAttack::OnNoCollision(DWORD dt)
 
 void CMarioTailAttack::OnTriggerEnter(LPCOLLISIONEVENT e)
 {
-	DebugOut(L"Ontrigger function object type: %d\n", e->obj->GetObjectType());
+	/*DebugOut(L"Ontrigger function object type: %d\n", e->obj->GetObjectType());*/
 	if (dynamic_cast<CSecretBrickWithButton*>(e->obj))
 	{
 		CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
@@ -69,9 +72,24 @@ void CMarioTailAttack::OnTriggerEnter(LPCOLLISIONEVENT e)
 	}
 	else if (dynamic_cast<CGoomba*>(e->obj))
 	{
-		CGoomba *goomba = dynamic_cast<CGoomba*>(e->obj);
+		CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+
 		goomba->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
 	}
+	else if (dynamic_cast<CFlyingGoomba*>(e->obj))
+	{
+		CFlyingGoomba* goomba = dynamic_cast<CFlyingGoomba*>(e->obj);
+		goomba->SetState(FLYING_GOOMBA_STATE_DIE_BY_ATTACK);
+	}
+	/*else if (dynamic_cast<CFlyingTurtle*>(e->obj))
+	{
+		CFlyingTurtle* turtle = dynamic_cast<CFlyingTurtle*>(e->obj);
+		turtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
+	}
+	else if (dynamic_cast <CTurtle*>(e->obj))
+	{
+
+	};*/
 }
 void CMarioTailAttack::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {

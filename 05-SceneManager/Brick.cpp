@@ -19,7 +19,7 @@ void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 
 void CBrick::Break()
 {
-	DebugOut(L"Brick break\n");
+
 	ParticleSystem *ps = ParticleSystem::GetInstance();
 	ps->SpawnStaticParticle(x, y, BRICK_PARTICLE_SPAWN_COUNT, ID_SPRITE_BRICK_BREAK_PARTICLE);
 	this->Delete();

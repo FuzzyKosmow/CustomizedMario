@@ -67,13 +67,17 @@ void CGoomba::Render()
 {
 	int aniId = ID_ANI_GOOMBA_WALKING;
 	float rotation = 0;
-	if (state == GOOMBA_STATE_DIE) 
+	if (state == GOOMBA_STATE_DIE ) 
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
-		if (GOOMBA_STATE_DIE_BY_ATTACK)
-		{
-			rotation = 180;
-		}
+		
+	}
+	else if(state == GOOMBA_STATE_DIE_BY_ATTACK)
+	{
+		
+		aniId = ID_ANI_GOOMBA_WALKING;
+		rotation = 180;
+
 	}
 	
 
@@ -96,8 +100,9 @@ void CGoomba::SetState(int state)
 		case GOOMBA_STATE_DIE_BY_ATTACK:
 			die_start = GetTickCount64();
 			vy -= GOOMBA_DIE_BY_ATTACK_VY_DEFLECT;
-			if (vx >= 0)
-			vx = GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
+			
+			if (vx >0)
+				vx = GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
 			else
 				vx = -GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
 			break;

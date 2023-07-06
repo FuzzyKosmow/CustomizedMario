@@ -268,7 +268,7 @@ groundButton.txt
 
 # MARIO
 0	2000	10
-
+14	2075	10
 
 #COIN
 4	100	120	1

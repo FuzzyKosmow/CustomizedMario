@@ -98,7 +98,7 @@ void CFlyingGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		
 	}
 
-	if ((state == FLYING_GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > FLYING_GOOMBA_DIE_TIMEOUT))
+	if ((state == FLYING_GOOMBA_STATE_DIE || state == FLYING_GOOMBA_STATE_DIE_BY_ATTACK) && (GetTickCount64() - die_start > FLYING_GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
@@ -112,11 +112,19 @@ void CFlyingGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CFlyingGoomba::Render()
 {
 	
-
+	int rotation = 0;
 	int aniId = -1;
-	if (state == FLYING_GOOMBA_STATE_DIE)
+	if (state == FLYING_GOOMBA_STATE_DIE )
 	{
 		aniId = ID_ANI_FLYING_GOOMBA_DIE;
+		
+	}
+	else if (state == FLYING_GOOMBA_STATE_DIE_BY_ATTACK)
+	{
+
+		aniId = ID_ANI_FLYING_GOOMBA_WALKING;
+		rotation = 180;
+		
 	}
 	else if (state == FLYING_GOOMBA_STATE_WALKING)
 	{
@@ -127,7 +135,7 @@ void CFlyingGoomba::Render()
 		aniId = ID_ANI_FLYING_GOOMBA_FLYING;
 	}
 
-	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y,rotation);
 	RenderBoundingBox();
 }
 
@@ -154,6 +162,14 @@ void CFlyingGoomba::SetState(int state)
 		
 		vx = -FLYING_GOOMBA_WALKING_SPEED;
 		break;
+	case FLYING_GOOMBA_STATE_DIE_BY_ATTACK:
+		die_start = GetTickCount64();
+		ay = FLYING_GOOMBA_WALKING_GRAVITY;
+		vy -= FLYING_GOOMBA_DIE_BY_ATTACK_VY_DEFLECT;
+		if (vx>0)
+			 vx = FLYING_GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
+		else
+			vx = -FLYING_GOOMBA_DIE_BY_ATTACK_VX_DEFLECT;
 	}
 }
 

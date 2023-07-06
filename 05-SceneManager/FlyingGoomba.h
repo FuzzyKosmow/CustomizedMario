@@ -8,6 +8,10 @@
 #define FLYING_GOOMBA_WALKING_SPEED 0.05f
 #define FLYING_GOOMBA_JUMP_SPEED 0.1f
 
+#define FLYING_GOOMBA_DIE_BY_ATTACK_VY_DEFLECT 0.1f
+#define FLYING_GOOMBA_DIE_BY_ATTACK_VX_DEFLECT 0.1f
+
+
 #define FLYING_GOOMBA_DEFLECT_SPEED 0.2f
 #define FLYING_GOOMBA_BBOX_WIDTH 16
 #define FLYING_GOOMBA_BBOX_HEIGHT 20
@@ -18,6 +22,7 @@
 #define FLYING_GOOMBA_STATE_FLYING 100
 #define FLYING_GOOMBA_STATE_WALKING 200
 #define FLYING_GOOMBA_STATE_DIE 300
+#define FLYING_GOOMBA_STATE_DIE_BY_ATTACK 400
 
 
 #define ID_ANI_FLYING_GOOMBA_FLYING 5003
@@ -46,7 +51,7 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return state != FLYING_GOOMBA_STATE_DIE; };
+	virtual int IsCollidable() { return state != FLYING_GOOMBA_STATE_DIE && state != FLYING_GOOMBA_STATE_DIE_BY_ATTACK; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 
