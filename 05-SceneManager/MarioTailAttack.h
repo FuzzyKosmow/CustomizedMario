@@ -28,6 +28,6 @@ public:
 	void Attack(int dir = 1);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	int GetObjectType() { return OBJECT_TYPE_MARIO_TAIL_ATTACK; }
-	int IsStatic () { return 1; }
+
 	int IsTrigger () { return 1; }
 };

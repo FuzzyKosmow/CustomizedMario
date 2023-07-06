@@ -67,6 +67,11 @@ void CMarioTailAttack::OnTriggerEnter(LPCOLLISIONEVENT e)
 		CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 		brick->Break();
 	}
+	else if (dynamic_cast<CGoomba*>(e->obj))
+	{
+		CGoomba *goomba = dynamic_cast<CGoomba*>(e->obj);
+		goomba->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
+	}
 }
 void CMarioTailAttack::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
