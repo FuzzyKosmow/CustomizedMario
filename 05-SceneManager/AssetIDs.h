@@ -51,6 +51,13 @@
 //System
 #define OBJECT_TYPE_SYSTEM 99999 // Anything that is not visible, but is used to control the game. EX: Camera, HUD, etc...
 
+
+
+//Variable for scenes
+#define VARIABLE_TYPE_CAMERA_LIMIT 0
+
+
+
 #pragma region MARIO 
 
 #define ID_SPRITE_MARIO 10000

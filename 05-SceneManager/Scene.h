@@ -5,6 +5,8 @@
 /*
 *  Abstract class for a game scene
 */
+
+
 class CScene
 {
 protected:
@@ -39,6 +41,7 @@ public:
 	virtual void OnKeyDown(int KeyCode) = 0;
 	virtual void OnKeyUp(int KeyCode) = 0;
 	CSceneKeyHandler(LPSCENE s) :CKeyEventHandler() { scence = s; }
+	
 };
 
 typedef CSceneKeyHandler* LPSCENEKEYHANDLER;

@@ -67,7 +67,7 @@ CMario::CMario (float x, float y) : CGameObject(x, y)
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 
-	DebugOutTitle(L"coin: %d", coin);
+
 
 	//Handle the set colliable by time
 	if (GetTickCount64() == toBeColliableAgainAt)
@@ -179,7 +179,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		untouchable = 0;
 	}
 	isOnPlatform = false;
-
+	DebugOutTitle(L"Mario pos: %f, %f\n", x, y);	
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 

@@ -40,7 +40,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define ASSETS_SECTION_UNKNOWN -1
 #define ASSETS_SECTION_SPRITES 1
 #define ASSETS_SECTION_ANIMATIONS 2
-
+#define ASSETS_SECTION_VARIABLES 3
 #define MAX_SCENE_LINE 1024
 
 void CPlayScene::_ParseSection_SPRITES(string line)
@@ -65,7 +65,33 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 
 	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
 }
+void CPlayScene::_ParseSection_VARIABLES(string line)
+{
+	vector<string> tokens = split(line);
+	if (tokens.size() < 1)
+		return;
+	int typeOfVariable = atoi(tokens[0].c_str());
+	switch (typeOfVariable)
+	{
+	case VARIABLE_TYPE_CAMERA_LIMIT:
+	{
+		float left = (float)atof(tokens[1].c_str());
+		float top = (float)atof(tokens[2].c_str());
+		float right = (float)atof(tokens[3].c_str());
+		float bottom = (float)atof(tokens[4].c_str());
+		float sky = (float)atof(tokens[5].c_str());
 
+		SceneCameraLimit newCamLimit =  SceneCameraLimit(left, top, right, bottom, sky);
+		this->cameraLimit = newCamLimit;
+		DebugOut(L"Loaded camera limit");
+		break;
+	}
+	default:
+		break;
+	}
+
+
+}
 void CPlayScene::_ParseSection_ASSETS(string line)
 {
 	vector<string> tokens = split(line);
@@ -349,8 +375,9 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 
 		if (line == "[SPRITES]") { section = ASSETS_SECTION_SPRITES; continue; };
 		if (line == "[ANIMATIONS]") { section = ASSETS_SECTION_ANIMATIONS; continue; };
+		
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
-
+		
 		//
 		// data section
 		//
@@ -358,6 +385,7 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 		{
 		case ASSETS_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
 		case ASSETS_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
+		
 		}
 	}
 
@@ -384,6 +412,7 @@ void CPlayScene::Load()
 		if (line[0] == '#') continue;	// skip comment lines	
 		if (line == "[ASSETS]") { section = SCENE_SECTION_ASSETS; continue; };
 		if (line == "[OBJECTS]") { section = SCENE_SECTION_OBJECTS; continue; };
+		if (line == "[VARIABLES]") { section = ASSETS_SECTION_VARIABLES; continue; };
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }	
 
 		//
@@ -393,6 +422,7 @@ void CPlayScene::Load()
 		{ 
 			case SCENE_SECTION_ASSETS: _ParseSection_ASSETS(line); break;
 			case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
+			case ASSETS_SECTION_VARIABLES: _ParseSection_VARIABLES(line); break;
 		}
 	}
 
@@ -426,10 +456,34 @@ void CPlayScene::Update(DWORD dt)
 
 	CGame *game = CGame::GetInstance();
 	cx -= game->GetBackBufferWidth() / 2;
-	cy -= game->GetBackBufferHeight() / 2;
+	
 
-	if (cx < 0) cx = 0;
-	if (cy >= -5.0) cy = -5.0;
+	if (cameraLimit == SceneCameraLimit().Empty())
+	{
+		if (cx < 0) cx = 0;
+		if (cy >= 0) cy = 0;
+	}
+	else
+	{
+		CMario* mario = (CMario*) this->GetPlayer();
+		if (cx < cameraLimit.left) cx = cameraLimit.left;
+		else if (cx >= cameraLimit.right)  cx = cameraLimit.right;
+
+		
+		
+		if (cy <= cameraLimit.top) cy = cameraLimit.top; //Block at the very high above
+		else if (mario->IsFlying())
+		{
+			cy -= game->GetBackBufferHeight() / 2;
+
+		}
+		else
+			cy = cameraLimit.bottom;
+		/*cy -= game->GetBackBufferHeight() / 2;*/
+		//Debug cam limit all properties
+		/*DebugOut(L" Camera limit: %f, %f, %f, %f\n", cameraLimit.left, cameraLimit.top, cameraLimit.right, cameraLimit.bottom);*/
+
+	}
 
 	CGame::GetInstance()->SetCamPos(cx, cy);
 

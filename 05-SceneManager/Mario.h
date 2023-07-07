@@ -13,7 +13,7 @@
 
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
-#define MARIO_RACCOON_FLY_SPEED_Y	0.4f
+#define MARIO_RACCOON_FLY_SPEED_Y	0.2f
 #define MARIO_RACCOON_FLY_SPEED_X	0.1f
 
 #define MARIO_RACCOON_GRAVITY	0.0005f
@@ -253,7 +253,7 @@ public:
 	}
 
 	int IsBlocking() { return 0; }
-
+	bool IsFlying() { return isFlying; }
 	void OnNoCollision(DWORD dt);
 	//All collision is proactive, meaning for this to be called the object must be moving, apparently
 	void OnCollisionWith(LPCOLLISIONEVENT e);
