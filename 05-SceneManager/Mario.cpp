@@ -178,9 +178,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+	
+	DebugOutTitle(L"Can travel tunne:%d", isOnTravelableTunnel);
 	isOnPlatform = false;
-	DebugOutTitle(L"Mario pos: %f, %f\n", x, y);	
+	
+		
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+	
 }
 
 

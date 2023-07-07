@@ -15,6 +15,7 @@ struct SceneCameraLimit
 	float right;
 	float bottom;
 	float sky;
+	
 	SceneCameraLimit Empty()
 	{
 		SceneCameraLimit limit;
@@ -51,6 +52,8 @@ struct SceneCameraLimit
 class CPlayScene: public CScene
 {
 protected: 
+
+	bool controlLocked = false;
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;					
 	SceneCameraLimit cameraLimit = SceneCameraLimit().Empty();
@@ -73,6 +76,9 @@ public:
 	virtual void Render();
 	virtual void Unload();
 
+	bool ControlLocked() { return controlLocked; }
+	void LockControl() { controlLocked = true; }
+	void UnlockControl() { controlLocked = false; }
 	LPGAMEOBJECT GetPlayer() { return player; }
 
 	void Clear();

@@ -28,3 +28,32 @@ void CTunnel::GetBoundingBox(float& l, float& t, float& r, float& b)
 	r = l + TUNNEL_TOP_BLOCK_WIDTH * 2;
 	b = t + TUNNEL_TOP_BLOCK_HEIGHT + (height - 1) * TUNNEL_BOTTOM_BLOCK_HEIGHT;
 }
+
+void CTunnel::Update(DWORD dt , vector<LPGAMEOBJECT>* coObjects)
+{
+	if (canBeUsed)
+	{
+		
+		if (marioDetector->ObjectDetected())
+		{
+			CGame *game = CGame::GetInstance();
+			LPSCENE scene = game->GetCurrentScene();
+			CMario* mario =(CMario*) ((CPlayScene*)scene)->GetPlayer();
+			mario->SetOnTravelableTunnel(true);
+			hasJustSetTravelable = true;
+		}
+		else
+		{
+			if (hasJustSetTravelable)
+			{
+				CGame *game = CGame::GetInstance();
+				LPSCENE scene = game->GetCurrentScene();
+				CMario* mario = (CMario*)((CPlayScene*)scene)->GetPlayer();
+				mario->SetOnTravelableTunnel(false);
+				hasJustSetTravelable = false;
+			}
+		}
+	}
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+	
+}

@@ -79,7 +79,7 @@ public:
 	}
 	void MakeVisible() { visible = true; }
 	void MakeInvisible() { visible = false; }
-
+	bool ObjectDetected() { return objectDetected; }
 	void RenderBoundingBox();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	vector<LPGAMEOBJECT> GetDetectedObjects() { return detectedObjects; }

@@ -209,6 +209,11 @@ class CMario : public CGameObject
 	//Raccoon attack
 	ULONGLONG raccoonAttack_start;
 	bool isRaccoonAttacking = false;
+
+	//If mario is standing on top of a travelable tunnel, set this to true
+	bool isOnTravelableTunnel = false;
+
+	
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
@@ -265,6 +270,10 @@ public:
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void AddCoin(int num) { coin += num; }
 	void TakeDamage(); // 1 unit of damage = 1 level
+
+	//Travelling between place/scenes
+	bool OnTravelableTunnel() { return isOnTravelableTunnel; }
+	void SetOnTravelableTunnel(bool b) { isOnTravelableTunnel = b; }
 	int GetObjectType () { return OBJECT_TYPE_MARIO; }
 };
 

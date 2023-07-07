@@ -11,18 +11,30 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	CGame* game = CGame::GetInstance();
+	LPPLAYSCENE scene = (LPPLAYSCENE)game->GetCurrentScene();
+
+	if (scene->ControlLocked())
+		return;
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-
-
-		mario->SetState(MARIO_STATE_JUMP);
+		if (game->IsKeyDown(DIK_DOWN))
+		{
+			//Set up for travelling tunnel down here
+			//Process:s Lock control -> Set uncolliable for a set time -> Play animation -> Dim screen -> Change location -> Play animation go up -> Set colliable -> Unlock control
+			//For tunnel going up, simply jumping in the middle of the tunnel will do the same thing : Lock control-> Set uncolliable -> Play animation go up -> Dim screen->  Change location -> Play animation go up-> Set colliable  -> Unlock control
+		}
+		else
+			mario->SetState(MARIO_STATE_JUMP);
 		break;
 	case DIK_A:
 		//Tail attack if level raccoon
+		
+		
+		
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
 		{
 			//Set mario state to tail attack
