@@ -191,11 +191,26 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int sprite_begin = atoi(tokens[6].c_str());
 		int sprite_middle = atoi(tokens[7].c_str());
 		int sprite_end = atoi(tokens[8].c_str());
-		obj = new CVerticalObject(
-		 x, y,
-			cell_width, cell_height, height,
-			sprite_begin, sprite_middle, sprite_end
-		);
+		if (tokens.size() >= 10)
+		{
+			int blocking = atoi(tokens[9].c_str());
+			obj = new CVerticalObject(
+				x, y,
+				cell_width, cell_height, height,
+				sprite_begin, sprite_middle, sprite_end,
+				blocking
+			);
+			break;
+		}
+		else
+		{
+			obj = new CVerticalObject(
+				x, y,
+				cell_width, cell_height, height,
+				sprite_begin, sprite_middle, sprite_end
+			);
+		}
+		
 		break;
 
 	}
@@ -247,7 +262,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int color = atoi(tokens[3].c_str());
 	
 		int height = atoi(tokens[4].c_str());
-		obj = new CTunnel(x, y, color, height);
+		if (tokens.size() >= 6)
+		{ 
+			int usable = atoi(tokens[5].c_str());
+			obj = new CTunnel(x, y, color, height,usable);
+		}
+		else
+		{
+			obj = new CTunnel(x, y, color, height);
+		}
+		
 		break;
 	}
 	case OBJECT_TYPE_SHOOTING_PLANT:

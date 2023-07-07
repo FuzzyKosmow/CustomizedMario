@@ -181,6 +181,11 @@
 //Ground button
 #define ID_SPRITE_GROUND_BUTTON 130000
 
+
+//End game zone stuffs
+#define ID_SPRITE_END_ZONE_START_SPIKE 600000
+
+
 //Particle stuffs/ Effects
 #define ID_SPRITE_PARTICLE_BRICK 900000
 

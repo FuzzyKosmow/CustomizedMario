@@ -21,7 +21,7 @@ height	240
 40	textures\misc2.png
 50	textures\enemies2.png
 60	textures\enemies3.png
-
+70	textures\bg_goal.png
 
 
 

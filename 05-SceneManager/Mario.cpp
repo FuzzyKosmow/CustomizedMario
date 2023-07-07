@@ -111,6 +111,22 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 
 			}
+			else if (dynamic_cast<CFlyingTurtle*>(holdObject))
+			{
+				CFlyingTurtle * turtle = dynamic_cast<CFlyingTurtle*>(holdObject);
+				turtle->SetState(FLYING_TURTLE_STATE_SHELL_MOVING);
+				if (nx == 1)
+				{
+					//Nothing, default direction is on the right
+				}
+				else
+
+				{
+					float turtleVx = 0, turtlVy = 0;
+					turtle->GetSpeed(vx, vy);
+					turtle->SetSpeed(vx * -1, vy);
+				}
+			}
 			holdingObject = false;
 			holdObject = nullptr;
 		}

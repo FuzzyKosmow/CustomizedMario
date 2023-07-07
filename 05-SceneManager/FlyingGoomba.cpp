@@ -135,7 +135,7 @@ void CFlyingGoomba::Render()
 		aniId = ID_ANI_FLYING_GOOMBA_FLYING;
 	}
 
-	CAnimations::GetInstance()->Get(aniId)->Render(x, y,rotation);
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y, (float)rotation);
 	RenderBoundingBox();
 }
 

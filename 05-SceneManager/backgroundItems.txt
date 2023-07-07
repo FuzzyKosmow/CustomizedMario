@@ -25,7 +25,14 @@
 
 71100	161	34	210	59	40
 
+##End game zone
+##Spike at the start
+600000	507	176	596	345	70
 
+##Blankzone
+600001	525	176	596	345	70
+#Loot zone type 1
+600002	4	4	253	173	70
 
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...

@@ -43,11 +43,14 @@ protected:
 	float cellWidth;
 	float cellHeight;
 	int spriteIdBegin, spriteIdMiddle, spriteIdEnd;
+	int blocking = 1;
 
 public:
 	CVerticalObject(float x, float y,
 		float cell_width, float cell_height, int height,
-		int sprite_id_begin, int sprite_id_middle, int sprite_id_end) :CGameObject(x, y)
+		int sprite_id_begin, int sprite_id_middle, int sprite_id_end,
+		int blockinging = 1
+	) :CGameObject(x, y)
 	{
 		this->height = height;
 		this->cellWidth = cell_width;
@@ -55,11 +58,13 @@ public:
 		this->spriteIdBegin = sprite_id_begin;
 		this->spriteIdMiddle = sprite_id_middle;
 		this->spriteIdEnd = sprite_id_end;
+		this -> blocking = blockinging;
 	}
 
 	void Render();
 	void Update(DWORD dt) {}
-	int IsBlocking() { return 1; }
+	int IsBlocking() { return blocking; }
+	void SetBlocking(int blocking) { this->blocking = blocking; }
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void RenderBoundingBox();
 	int GetObjectType() { return OBJECT_TYPE_VERTICAL_OBJECT; }

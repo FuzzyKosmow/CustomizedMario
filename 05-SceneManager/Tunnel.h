@@ -28,12 +28,14 @@ class CTunnel : public CGameObject {
 		int  idSpriteTopBlockRight;
 		int idSpriteBottomBlockLeft;
 		int idSpriteBottomBlockRight;
+		bool canBeUsed = 0; //If the tunnel can be used, stand on top of it and press S (jump) to move to the next scene
 public:
-	CTunnel(float x, float y, int color, int height) {
+	CTunnel(float x, float y, int color, int height, int usable = 0) {
 		this->x = x;
 		this->y = y;
 		this->color = color;
 		this->height = height;
+		canBeUsed = usable;
 		switch (color)
 		{
 		case TUNNEL_COLOR_MID_GREEN:
