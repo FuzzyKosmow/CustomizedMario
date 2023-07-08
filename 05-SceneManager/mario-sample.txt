@@ -13,6 +13,7 @@ height	240
 
 # id	file 
 [TEXTURES]
+-200	textures\black.png
 -100	textures\bbox.png
 0	textures\mario.png
 10	textures\enemies.png

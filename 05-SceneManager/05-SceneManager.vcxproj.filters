@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Mario">
       <UniqueIdentifier>{643f7247-5261-4c72-99b3-0e72a378696e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\System\Effects">
+      <UniqueIdentifier>{17fb1a4e-64e2-47bd-b189-46520eebeee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Effects">
+      <UniqueIdentifier>{08a5f9d7-2506-4a4b-be17-63073141e989}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -158,6 +164,9 @@
     </ClCompile>
     <ClCompile Include="MairoTailAttack.cpp">
       <Filter>Source Files\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="Dimscreen.cpp">
+      <Filter>Source Files\System\Effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="MarioTailAttack.h">
       <Filter>Header Files\Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="Dimscreen.h">
+      <Filter>Header Files\System\Effects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

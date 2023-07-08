@@ -475,7 +475,9 @@ void CPlayScene::Update(DWORD dt)
 		else if (mario->IsFlying())
 		{
 			cy -= game->GetBackBufferHeight() / 2;
-
+			//Make sure its not out of camera limit
+			if (cy > cameraLimit.bottom)
+				cy = cameraLimit.bottom;
 		}
 		else
 			cy = cameraLimit.bottom;

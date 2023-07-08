@@ -5,7 +5,7 @@
 
 #include "Mario.h"
 #include "PlayScene.h"
-
+#include "Tunnel.h"
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
@@ -18,23 +18,27 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
-		mario->SetState(MARIO_STATE_SIT);
-		break;
-	case DIK_S:
-		if (game->IsKeyDown(DIK_DOWN))
+		if (mario->OnTravelableTunnel())
 		{
-			//Set up for travelling tunnel down here
-			//Process:s Lock control -> Set uncolliable for a set time -> Play animation -> Dim screen -> Change location -> Play animation go up -> Set colliable -> Unlock control
-			//For tunnel going up, simply jumping in the middle of the tunnel will do the same thing : Lock control-> Set uncolliable -> Play animation go up -> Dim screen->  Change location -> Play animation go up-> Set colliable  -> Unlock control
+			CTunnel* tunnel = (CTunnel*) mario->GetTravelableTunnel();
+			tunnel->Travel();
 		}
 		else
-			mario->SetState(MARIO_STATE_JUMP);
+		{
+			mario->SetState(MARIO_STATE_SIT);
+		}
+	
 		break;
+	case DIK_S:
+
+		mario->SetState(MARIO_STATE_JUMP);
+		break;
+
 	case DIK_A:
 		//Tail attack if level raccoon
-		
-		
-		
+
+
+
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
 		{
 			//Set mario state to tail attack
@@ -65,11 +69,11 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		CGame::GetInstance()->TogglePause();
 		break;
 	case DIK_L:
-		
+
 		CGame::GetInstance()->PauseFor(2000);
 		break;
 		// Pause indefinitely and unpause when pressed again
-	
+
 	//case DIK_R: // reset
 	//	/*Reload();*/
 	//	break;
@@ -82,6 +86,9 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+	if (scene->ControlLocked())
+		return;
 	switch (KeyCode)
 	{
 	case DIK_S:
@@ -97,39 +104,44 @@ void CSampleKeyHandler::KeyState(BYTE* states)
 {
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-	if (mario->GetState() == MARIO_STATE_TAIL_ATTACK_LEFT || mario->GetState() == MARIO_STATE_TAIL_ATTACK_RIGHT)
+	LPPLAYSCENE scene = (LPPLAYSCENE)game->GetCurrentScene();
+	if (!scene->ControlIsLocked())
 	{
-		//Let it do it's state thing.
-		return;
-	}
-	if (game->IsKeyDown(DIK_RIGHT))
-	{
-		if (game->IsKeyDown(DIK_A))
+		if (mario->GetState() == MARIO_STATE_TAIL_ATTACK_LEFT || mario->GetState() == MARIO_STATE_TAIL_ATTACK_RIGHT)
 		{
-			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+			//Let it do it's state thing.
+			return;
+		}
+		if (game->IsKeyDown(DIK_RIGHT))
+		{
+			if (game->IsKeyDown(DIK_A))
+			{
+				mario->SetState(MARIO_STATE_RUNNING_RIGHT);
 
+			}
+			else
+			{
+				mario->SetState(MARIO_STATE_WALKING_RIGHT);
+			}
 		}
-		else
+		else if (game->IsKeyDown(DIK_LEFT))
 		{
-			mario->SetState(MARIO_STATE_WALKING_RIGHT);
-		}
-	}
-	else if (game->IsKeyDown(DIK_LEFT))
-	{
-		if (game->IsKeyDown(DIK_A))
+			if (game->IsKeyDown(DIK_A))
 
-		{
-			mario->SetState(MARIO_STATE_RUNNING_LEFT);
+			{
+				mario->SetState(MARIO_STATE_RUNNING_LEFT);
+			}
+			else
+			{
+				mario->SetState(MARIO_STATE_WALKING_LEFT);
+			}
 		}
-		else
+		else 
 		{
-			mario->SetState(MARIO_STATE_WALKING_LEFT);
-		}
-	}
-	else
 
-	{
-		mario->SetState(MARIO_STATE_IDLE);
+			mario->SetState(MARIO_STATE_IDLE);
+		}
 	}
+	
 
 }

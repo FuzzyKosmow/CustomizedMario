@@ -46,6 +46,7 @@ struct SceneCameraLimit
 		this->bottom = 0;
 		this->sky = 0;
 	}
+	
 };
 
 
@@ -67,6 +68,8 @@ protected:
 	void _ParseSection_OBJECTS(string line);
 
 	void LoadAssets(LPCWSTR assetFile);
+
+	
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
@@ -77,8 +80,7 @@ public:
 	virtual void Unload();
 
 	bool ControlLocked() { return controlLocked; }
-	void LockControl() { controlLocked = true; }
-	void UnlockControl() { controlLocked = false; }
+	
 	LPGAMEOBJECT GetPlayer() { return player; }
 
 	void Clear();
@@ -87,7 +89,11 @@ public:
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 	void AddObject (LPGAMEOBJECT object);
 	void SwapObjectOrderToLast(LPGAMEOBJECT object);
-	
+	//Control
+	bool ControlIsLocked() { return controlLocked; }
+	void LockControl() { controlLocked = true;  DebugOut(L"Control locked"); }
+	void UnlockControl() { controlLocked = false;  DebugOut (L"Control unlocked"); }
+	void PlayDimscreenEffectFor(int time); //Dim in half time, then undim in half time
 };
 
 typedef CPlayScene* LPPLAYSCENE;

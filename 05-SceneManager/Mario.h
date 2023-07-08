@@ -40,6 +40,7 @@
 #define MARIO_STATE_FLY_LEFT		701
 #define MARIO_STATE_TAIL_ATTACK_RIGHT	800
 #define MARIO_STATE_TAIL_ATTACK_LEFT	801
+#define MARIO_STATE_FACING_FRONT	900
 
 #pragma region ANIMATION_ID
 
@@ -209,10 +210,11 @@ class CMario : public CGameObject
 	//Raccoon attack
 	ULONGLONG raccoonAttack_start;
 	bool isRaccoonAttacking = false;
-
+	
 	//If mario is standing on top of a travelable tunnel, set this to true
 	bool isOnTravelableTunnel = false;
-
+	LPGAMEOBJECT travelableTunnel = NULL;
+	
 	
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -241,17 +243,25 @@ class CMario : public CGameObject
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRaccoon();
-	
+	bool colliable = true;
+	ULONGLONG uncolliableTime = 0;
+	ULONGLONG uncolliableStart = 0;
+	bool hasJustSetUncolliable = false;
 public:
 	
-	bool colliable = true;
-	ULONGLONG toBeColliableAgainAt;
+	
 	CMario(float x, float y);
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
-	void SetUnColliableFor(ULONGLONG time) { colliable = false; toBeColliableAgainAt = GetTickCount64() + time; }
+	void SetUnColliableFor(ULONGLONG time)
+	{
+			colliable = false;
+		uncolliableTime = time;
+		uncolliableStart = GetTickCount64();
+		hasJustSetUncolliable = true;
+	}
 	int IsCollidable()
 	{
 		return (state != MARIO_STATE_DIE && colliable);
@@ -274,6 +284,11 @@ public:
 	//Travelling between place/scenes
 	bool OnTravelableTunnel() { return isOnTravelableTunnel; }
 	void SetOnTravelableTunnel(bool b) { isOnTravelableTunnel = b; }
+	LPGAMEOBJECT GetTravelableTunnel() { return travelableTunnel; }
+	void SetTravelableTunnel(LPGAMEOBJECT t) { travelableTunnel = t; }
+
+
+	///
 	int GetObjectType () { return OBJECT_TYPE_MARIO; }
 };
 

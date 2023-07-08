@@ -66,13 +66,23 @@ CMario::CMario (float x, float y) : CGameObject(x, y)
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
-
-
+	DebugOutTitle(L"state %d", state);
+	LPPLAYSCENE scene = (LPPLAYSCENE) CGame::GetInstance()->GetCurrentScene();
+	if (scene->ControlIsLocked())
+	{
+		
+		return;
+	}
+	
 	//Handle the set colliable by time
-	if (GetTickCount64() == toBeColliableAgainAt)
+	if (GetTickCount64() - uncolliableStart >= uncolliableTime && hasJustSetUncolliable)
 	{
 		colliable = true;
+		hasJustSetUncolliable = false;
+		uncolliableStart = 0;
+		uncolliableTime = 0;
+
+
 	}
 	//Control the holding object here
 	if (holdingObject)
@@ -169,6 +179,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			raccoonAttack_start = 0;
 			isRaccoonAttacking = false;
 			SetState(MARIO_STATE_IDLE);
+			
 		}
 
 	}
@@ -179,7 +190,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		untouchable = 0;
 	}
 	
-	DebugOutTitle(L"Can travel tunne:%d", isOnTravelableTunnel);
+	
 	isOnPlatform = false;
 	
 		
@@ -565,6 +576,7 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 int CMario::GetAniIdSmall()
 {
 	int aniId = -1;
+
 	if (!isOnPlatform)
 	{
 		if (nx >= 0)
@@ -686,6 +698,11 @@ int CMario::GetAniIdSmall()
 int CMario::GetAniIdBig()
 {
 	int aniId = -1;
+	if (state == MARIO_STATE_FACING_FRONT)
+	{
+		return 403;
+	}
+	else
 	if (!isOnPlatform)
 	{
 		if (nx >= 0)
@@ -1106,8 +1123,14 @@ void CMario::SetState(int state)
 	case MARIO_STATE_IDLE:
 
 		ax = 0.0f;
+		
 		vx = 0.0f;
 		break;
+	case MARIO_STATE_FACING_FRONT:
+	
+
+		break;
+	
 	case MARIO_STATE_FLY_RIGHT:
 	{
 
