@@ -8,6 +8,7 @@
 #include "Goomba.h"
 #include <string>
 //#include "Koopas.h"
+#define MAXIMUM_CAMERA_LIMIT 5
 struct SceneCameraLimit
 {
 	float left;
@@ -57,6 +58,7 @@ protected:
 	bool controlLocked = false;
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;					
+	vector <SceneCameraLimit> cameraLimits;
 	SceneCameraLimit cameraLimit = SceneCameraLimit().Empty();
 	vector<LPGAMEOBJECT> objects;
 
@@ -97,6 +99,8 @@ public:
 	void PlayDimscreenEffectFor(int time); //Dim in half time, then undim in half time
 	void LockCamera() { cameraLocked = true; }
 	void UnlockCamera() { cameraLocked = false; }
+
+	void SwitchCameraLimit(int i) { cameraLimit = cameraLimits[i]; }
 
 };
 

@@ -11,7 +11,7 @@
 #define TUNNEL_BOTTOM_BLOCK_WIDTH 14
 #define TUNNEL_BOTTOM_BLOCK_HEIGHT 15
 #define TUNNEL_COLOR_MID_GREEN 2
-
+#define TUNNEL_COLOR_BLACK_INVERTED 3
 
 //Sprites
 #define ID_SPRITE_TOP_BLOCK_LEFT_MID_GREEN 100001
@@ -19,13 +19,16 @@
 #define ID_SPRITE_BOTTOM_BLOCK_LEFT_MID_GREEN 100003
 #define ID_SPRITE_BOTTOM_BLOCK_RIGHT_MID_GREEN 100004
 
-
+#define ID_SPRITE_TOP_BLOCK_LEFT_BLACK 101300
+#define ID_SPRITE_TOP_BLOCK_RIGHT_BLACK 101301
+#define ID_SPRITE_BOTTOM_BLOCK_LEFT_BLACK 101302
+#define ID_SPRITE_BOTTOM_BLOCK_RIGHT_BLACK 101303
 
 //Stats for getting in and out of tunnel
 
 #define TUNNEL_TRAVEL_TIME_TO_FINISH_ANIMATION 1000 //How long does it take to finish animation to go up or down tunnel
 
-#define TUNNEL_MAX_TRAVEL_DISTANCE 40
+#define TUNNEL_MAX_TRAVEL_DISTANCE 30
 #define TUNNEL_TRAVEL_STEP 0.1
 
 
@@ -38,6 +41,9 @@
 
 #define TUNNEL_MOVE_MARIO_DOWN_TIME_ESTIMATION 500
 #define TUNNEL_MOVE_MARIO_UP_TIME_ESTIMATION 500
+
+#define	TUNNEL_MARIO_DETECTOR_WIDTH_UNIT 2
+#define	TUNNEL_MARIO_DETECTOR_HEIGHT_UNIT 2
 
 #define TUNNEL_TRAVEL_TIME TUNNEL_MOVE_MARIO_DOWN_TIME_ESTIMATION + TUNNEL_MOVE_MARIO_UP_TIME_ESTIMATION + TUNNEL_DELAY_TIME + TUNNEL_GO_DOWN_TIME + TUNNEL_GO_UP_TIME
 class CTunnel : public CGameObject {
@@ -57,7 +63,8 @@ class CTunnel : public CGameObject {
 		float xDestination = 0;
 		float yDestination = 0;
 
-		bool travelDown = true;
+		bool firstPhaseTravelDown = true;
+		bool secondPhaseTravelDown = false;
 		
 		bool travelling = false;
 		
@@ -71,11 +78,17 @@ class CTunnel : public CGameObject {
 
 		bool travelFirstPhaseDone = false;
 		bool travelSecondPhaseDone = false;
+
+		int cameraLimitToSwitchTo = 0; //Immeadiately after dimmed, switch to this camera limit
+		bool isInverted = false;
 		
 public:
 	CTunnel(float x, float y, int color, int height, bool usable = false,
-		bool goUp = false,
-		float xDestination = 2405, float yDestination = 180
+		bool inverted = false,
+		bool firstPhaseGoDown = true, bool secondPhaseGoDown = false,
+		float xDestination = 2405, float yDestination = 180,
+		int cameraLimitToSwitchTo = 0
+		
 	) {
 		this->x = x;
 		this->y = y;
@@ -84,23 +97,46 @@ public:
 		canBeUsed = usable;
 		if (canBeUsed)
 		{
-			marioDetector = new ObjectDetector(x + TUNNEL_TOP_BLOCK_WIDTH/2, y - TUNNEL_TOP_BLOCK_HEIGHT,2,1, OBJECT_TYPE_MARIO);
-			marioDetector->MakeVisible();
+			if (inverted)
+			{
+				marioDetector = new ObjectDetector(x + TUNNEL_TOP_BLOCK_WIDTH / 2, y + TUNNEL_TOP_BLOCK_HEIGHT/ 2  + TUNNEL_TOP_BLOCK_HEIGHT * height, TUNNEL_MARIO_DETECTOR_WIDTH_UNIT, TUNNEL_MARIO_DETECTOR_HEIGHT_UNIT, OBJECT_TYPE_MARIO);
+				marioDetector->MakeVisible();
+				this->isInverted = true;
+			}
+			else
+			{
+				
+				marioDetector = new ObjectDetector(x + TUNNEL_TOP_BLOCK_WIDTH / 2, y - TUNNEL_TOP_BLOCK_HEIGHT, TUNNEL_MARIO_DETECTOR_WIDTH_UNIT, TUNNEL_MARIO_DETECTOR_HEIGHT_UNIT, OBJECT_TYPE_MARIO);
+				marioDetector->MakeVisible();
+				this->isInverted = false;
+			}
+			
 			LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
 			scene->AddObject(marioDetector);
 
 			this->xDestination = xDestination;
 			this->yDestination = yDestination;
-			if (goUp)
+			if (firstPhaseGoDown)
 			{
-				travelDown = false;
+				firstPhaseTravelDown = true;
+		
 			}
 			else
 			{
-								travelDown = true;
+				firstPhaseTravelDown = false;
+
+			}
+			if (secondPhaseGoDown)
+			{
+				secondPhaseTravelDown = true;
+			}
+			else
+			{
+				secondPhaseTravelDown = false;
 			}
 
 		}
+		this->cameraLimitToSwitchTo = cameraLimitToSwitchTo;
 		switch (color)
 		{
 		case TUNNEL_COLOR_MID_GREEN:
@@ -109,7 +145,16 @@ public:
 			idSpriteTopBlockRight = ID_SPRITE_TOP_BLOCK_RIGHT_MID_GREEN;
 			idSpriteBottomBlockLeft = ID_SPRITE_BOTTOM_BLOCK_LEFT_MID_GREEN;
 			idSpriteBottomBlockRight = ID_SPRITE_BOTTOM_BLOCK_RIGHT_MID_GREEN;
-
+			break;
+		}
+		case TUNNEL_COLOR_BLACK_INVERTED:
+		{
+			idSpriteTopBlockLeft = ID_SPRITE_TOP_BLOCK_LEFT_BLACK;
+			idSpriteTopBlockRight = ID_SPRITE_TOP_BLOCK_RIGHT_BLACK;
+			idSpriteBottomBlockLeft = ID_SPRITE_BOTTOM_BLOCK_LEFT_BLACK;
+			idSpriteBottomBlockRight = ID_SPRITE_BOTTOM_BLOCK_RIGHT_BLACK;
+			
+			break;
 		}
 		}
 		
@@ -117,7 +162,9 @@ public:
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	
 	int GetObjectType () { return OBJECT_TYPE_TUNNEL; }
 	void Travel();
+	bool IsInverted() { return isInverted; };
 
 };

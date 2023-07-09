@@ -21,7 +21,8 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		if (mario->OnTravelableTunnel())
 		{
 			CTunnel* tunnel = (CTunnel*) mario->GetTravelableTunnel();
-			tunnel->Travel();
+			if (!tunnel->IsInverted()) //Inverted tunnnel is travelled automatically upon collision
+				tunnel->Travel();
 		}
 		else
 		{
@@ -32,6 +33,12 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_S:
 
 		mario->SetState(MARIO_STATE_JUMP);
+		if (mario->OnTravelableTunnel())
+		{
+			CTunnel* tunnel = (CTunnel*)mario->GetTravelableTunnel();
+			if (tunnel->IsInverted()) //Inverted tunnnel is travelled automatically upon collision
+				tunnel->Travel();
+		}
 		break;
 
 	case DIK_A:

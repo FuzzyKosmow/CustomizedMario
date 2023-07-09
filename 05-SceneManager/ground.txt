@@ -17,7 +17,8 @@
 ###Small vertical layer between plaform , left and right  ratio 3-7
 61001	222	230	225	237	30
 
-
+##Secret zone world 1 brick sprite
+68000	290	205	305	220	30	
 
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...

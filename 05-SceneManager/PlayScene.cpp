@@ -82,8 +82,8 @@ void CPlayScene::_ParseSection_VARIABLES(string line)
 		float sky = (float)atof(tokens[5].c_str());
 
 		SceneCameraLimit newCamLimit =  SceneCameraLimit(left, top, right, bottom, sky);
-		this->cameraLimit = newCamLimit;
-		DebugOut(L"Loaded camera limit");
+		cameraLimits.push_back(newCamLimit);
+		
 		break;
 	}
 	default:
@@ -288,10 +288,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int color = atoi(tokens[3].c_str());
 	
 		int height = atoi(tokens[4].c_str());
-		if (tokens.size() >= 6)
+		if (tokens.size() >= 12)
 		{ 
 			int usable = atoi(tokens[5].c_str());
-			obj = new CTunnel(x, y, color, height,usable);
+			bool inverted = atoi(tokens[6].c_str());
+			bool firstPhaseGoDown = atoi (tokens[7].c_str());
+			bool secondPhaseGoDown = atoi(tokens[8].c_str());
+			float xDestination = (float)atof(tokens[9].c_str());
+			float yDestination = (float)atof(tokens[10].c_str());
+			int cameraLimitToSwitchTo = atoi(tokens[11].c_str());
+			obj = new CTunnel(x, y, color, height, usable,inverted,firstPhaseGoDown, secondPhaseGoDown, xDestination, yDestination, cameraLimitToSwitchTo);
 		}
 		else
 		{
@@ -425,7 +431,7 @@ void CPlayScene::Load()
 			case ASSETS_SECTION_VARIABLES: _ParseSection_VARIABLES(line); break;
 		}
 	}
-
+	this->cameraLimit = cameraLimits[0];
 	f.close();
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);

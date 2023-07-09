@@ -36,12 +36,15 @@ void CTunnel::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (marioDetector->ObjectDetected())
 		{
-			CGame* game = CGame::GetInstance();
-			LPSCENE scene = game->GetCurrentScene();
-			CMario* mario = (CMario*)((CPlayScene*)scene)->GetPlayer();
-			mario->SetOnTravelableTunnel(true);
-			mario->SetTravelableTunnel(this);
-			hasJustSetTravelable = true;
+			
+				CGame* game = CGame::GetInstance();
+				LPSCENE scene = game->GetCurrentScene();
+				CMario* mario = (CMario*)((CPlayScene*)scene)->GetPlayer();
+				mario->SetOnTravelableTunnel(true);
+				mario->SetTravelableTunnel(this);
+				hasJustSetTravelable = true;
+			
+				
 		}
 		else
 		{
@@ -86,7 +89,7 @@ void CTunnel::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (!travelFirstPhaseDone )
 			{
 				
-				if (travelDown)
+				if (firstPhaseTravelDown)
 				{
 
 			
@@ -97,8 +100,8 @@ void CTunnel::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else
 				{
 	
-					mario->SetPosition(mx, my - TUNNEL_TRAVEL_STEP);
-					travelledDistance += TUNNEL_TRAVEL_STEP;
+					mario->SetPosition(mx, my - TUNNEL_TRAVEL_STEP*dt);
+					travelledDistance += TUNNEL_TRAVEL_STEP*dt;
 				}
 
 				if (travelledDistance > TUNNEL_MAX_TRAVEL_DISTANCE)
@@ -119,19 +122,24 @@ void CTunnel::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				mario->SetPosition(xDestination, yDestination);
 				posSet = true;
+				scene->SwitchCameraLimit(cameraLimitToSwitchTo);
+				DebugOut(L"Switched to cam limit number %d\n", cameraLimitToSwitchTo);
 				scene->UnlockCamera();
 			}
 			else if (GetTickCount64() - dim_start > TUNNEL_GO_DOWN_TIME + TUNNEL_DELAY_TIME && !travelSecondPhaseDone)
 			{
 				
-				if (travelDown)
+				if (secondPhaseTravelDown)
 				{
 					//Go up section
-					mario->SetPosition(mx, my - TUNNEL_TRAVEL_STEP*dt);
+					
+					mario->SetPosition(mx, my + TUNNEL_TRAVEL_STEP * dt);
 				}
 				else
 				{
-					mario ->SetPosition(mx, my + TUNNEL_TRAVEL_STEP*dt);
+					
+					
+					mario->SetPosition(mx, my - TUNNEL_TRAVEL_STEP * dt);
 				}
 				travelledDistance += TUNNEL_TRAVEL_STEP*dt;
 				if (travelledDistance > TUNNEL_MAX_TRAVEL_DISTANCE)
@@ -151,6 +159,7 @@ void CTunnel::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 
+
 void CTunnel::Travel()
 {
 	if (canBeUsed)
@@ -165,9 +174,6 @@ void CTunnel::Travel()
 			travelling = true;
 			travel_start = GetTickCount64();
 			mario->SetUncolliable();
-	
-		
-		
 		
 	}
 }

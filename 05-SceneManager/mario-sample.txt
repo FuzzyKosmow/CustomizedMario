@@ -23,7 +23,7 @@ height	240
 50	textures\enemies2.png
 60	textures\enemies3.png
 70	textures\bg_goal.png
-
+80	textures\tiles3.png
 
 
 900	textures\particle.png
