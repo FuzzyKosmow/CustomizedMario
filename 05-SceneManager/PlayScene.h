@@ -69,6 +69,7 @@ protected:
 
 	void LoadAssets(LPCWSTR assetFile);
 
+	bool cameraLocked = false;
 	
 	
 public: 
@@ -94,6 +95,9 @@ public:
 	void LockControl() { controlLocked = true;  DebugOut(L"Control locked"); }
 	void UnlockControl() { controlLocked = false;  DebugOut (L"Control unlocked"); }
 	void PlayDimscreenEffectFor(int time); //Dim in half time, then undim in half time
+	void LockCamera() { cameraLocked = true; }
+	void UnlockCamera() { cameraLocked = false; }
+
 };
 
 typedef CPlayScene* LPPLAYSCENE;

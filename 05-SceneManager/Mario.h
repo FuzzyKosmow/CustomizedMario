@@ -13,7 +13,7 @@
 
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
-#define MARIO_RACCOON_FLY_SPEED_Y	0.2f
+#define MARIO_RACCOON_FLY_SPEED_Y	0.3f
 #define MARIO_RACCOON_FLY_SPEED_X	0.1f
 
 #define MARIO_RACCOON_GRAVITY	0.0005f
@@ -262,6 +262,8 @@ public:
 		uncolliableStart = GetTickCount64();
 		hasJustSetUncolliable = true;
 	}
+	void SetColliable() { colliable = true; }
+	void SetUncolliable() { colliable = false; }
 	int IsCollidable()
 	{
 		return (state != MARIO_STATE_DIE && colliable);

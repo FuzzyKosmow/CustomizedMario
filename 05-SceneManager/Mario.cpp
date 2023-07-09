@@ -66,7 +66,9 @@ CMario::CMario (float x, float y) : CGameObject(x, y)
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	DebugOutTitle(L"state %d", state);
+	float camX, camY;
+	CGame::GetInstance()->GetCamPos(camX, camY);
+	DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);
 	LPPLAYSCENE scene = (LPPLAYSCENE) CGame::GetInstance()->GetCurrentScene();
 	if (scene->ControlIsLocked())
 	{

@@ -22,11 +22,24 @@
 
 
 //Stats for getting in and out of tunnel
-#define TUNNEL_TRAVEL_TIME 4000 //How long does it take to finish animation, dim the screen then change location
+
 #define TUNNEL_TRAVEL_TIME_TO_FINISH_ANIMATION 1000 //How long does it take to finish animation to go up or down tunnel
 
-#define TUNNEL_MAX_TRAVEL_DISTANCE 30
+#define TUNNEL_MAX_TRAVEL_DISTANCE 40
 #define TUNNEL_TRAVEL_STEP 0.1
+
+
+#define TUNNEL_TYPE_GO_DOWN_WITH_TRIGGER 1
+#define TUNNEL_TYPE_GO_UP_WITH_TRIGGER 2
+
+#define TUNNEL_GO_DOWN_TIME 1000
+#define TUNNEL_DELAY_TIME 1200
+#define TUNNEL_GO_UP_TIME 200
+
+#define TUNNEL_MOVE_MARIO_DOWN_TIME_ESTIMATION 500
+#define TUNNEL_MOVE_MARIO_UP_TIME_ESTIMATION 500
+
+#define TUNNEL_TRAVEL_TIME TUNNEL_MOVE_MARIO_DOWN_TIME_ESTIMATION + TUNNEL_MOVE_MARIO_UP_TIME_ESTIMATION + TUNNEL_DELAY_TIME + TUNNEL_GO_DOWN_TIME + TUNNEL_GO_UP_TIME
 class CTunnel : public CGameObject {
 
 	protected:
@@ -45,15 +58,24 @@ class CTunnel : public CGameObject {
 		float yDestination = 0;
 
 		bool travelDown = true;
+		
 		bool travelling = false;
+		
 		bool finishedTravelling = false;
 		ULONGLONG travel_start = 0;
 		float travelledDistance = 0;
+
 		bool dimActivated = false;
+		ULONGLONG dim_start = 0;
+		bool posSet = false;
+
+		bool travelFirstPhaseDone = false;
+		bool travelSecondPhaseDone = false;
 		
 public:
-	CTunnel(float x, float y, int color, int height, bool usable = false, bool goUp = false,
-		float xDestination = 0, float yDestination = 0
+	CTunnel(float x, float y, int color, int height, bool usable = false,
+		bool goUp = false,
+		float xDestination = 2405, float yDestination = 180
 	) {
 		this->x = x;
 		this->y = y;
@@ -69,6 +91,14 @@ public:
 
 			this->xDestination = xDestination;
 			this->yDestination = yDestination;
+			if (goUp)
+			{
+				travelDown = false;
+			}
+			else
+			{
+								travelDown = true;
+			}
 
 		}
 		switch (color)

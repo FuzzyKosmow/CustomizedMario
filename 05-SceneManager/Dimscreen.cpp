@@ -30,9 +30,9 @@ void CDimScreenEffect::Render()
 		LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
 		CMario* mario = (CMario*)scene->GetPlayer();
 		mario->GetPosition(marioX, marioY);
-		CGame::GetInstance()->Draw(marioX-cx, marioY-cy, tex, &rect, alpha);
+	/*	CGame::GetInstance()->Draw(marioX-cx, marioY - cy, tex, &rect, alpha);*/
 		
-
+		CGame::GetInstance()->Draw(screenHeight/2, screenWidth/2, tex, &rect, alpha);
 		
 	}
 }

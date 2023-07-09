@@ -450,44 +450,54 @@ void CPlayScene::Update(DWORD dt)
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
 
+
+
 	// Update camera to follow mario
-	float cx, cy;
-	player->GetPosition(cx, cy);
-
-	CGame *game = CGame::GetInstance();
-	cx -= game->GetBackBufferWidth() / 2;
-	
-
-	if (cameraLimit == SceneCameraLimit().Empty())
+	if (!cameraLocked)
 	{
-		if (cx < 0) cx = 0;
-		if (cy >= 0) cy = 0;
-	}
-	else
-	{
-		CMario* mario = (CMario*) this->GetPlayer();
-		if (cx < cameraLimit.left) cx = cameraLimit.left;
-		else if (cx >= cameraLimit.right)  cx = cameraLimit.right;
+		float cx, cy;
+		player->GetPosition(cx, cy);
 
-		
-		
-		if (cy <= cameraLimit.top) cy = cameraLimit.top; //Block at the very high above
-		else if (mario->IsFlying())
+		CGame* game = CGame::GetInstance();
+		cx -= game->GetBackBufferWidth() / 2;
+
+
+		if (cameraLimit == SceneCameraLimit().Empty())
 		{
-			cy -= game->GetBackBufferHeight() / 2;
-			//Make sure its not out of camera limit
-			if (cy > cameraLimit.bottom)
-				cy = cameraLimit.bottom;
+			if (cx < 0) cx = 0;
+			if (cy >= 0) cy = 0;
 		}
 		else
-			cy = cameraLimit.bottom;
-		/*cy -= game->GetBackBufferHeight() / 2;*/
-		//Debug cam limit all properties
-		/*DebugOut(L" Camera limit: %f, %f, %f, %f\n", cameraLimit.left, cameraLimit.top, cameraLimit.right, cameraLimit.bottom);*/
+		{
+			CMario* mario = (CMario*)this->GetPlayer();
+			if (cx < cameraLimit.left) cx = cameraLimit.left;
+			else if (cx >= cameraLimit.right)  cx = cameraLimit.right;
 
+
+
+			if (cy <= cameraLimit.top) cy = cameraLimit.top; //Block at the very high above
+			else if (mario->IsFlying())
+			{
+				cy -= game->GetBackBufferHeight() / 2;
+				//Make sure its not out of camera limit
+				if (cy > cameraLimit.bottom)
+					cy = cameraLimit.bottom;
+			}
+			else if (cy <= cameraLimit.sky)
+				cy -= game->GetBackBufferHeight() / 2;
+			else
+				cy = cameraLimit.bottom;
+			/*cy -= game->GetBackBufferHeight() / 2;*/
+			//Debug cam limit all properties
+			/*DebugOut(L" Camera limit: %f, %f, %f, %f\n", cameraLimit.left, cameraLimit.top, cameraLimit.right, cameraLimit.bottom);*/
+
+		}
+		CGame::GetInstance()->SetCamPos(cx, cy);
 	}
 
-	CGame::GetInstance()->SetCamPos(cx, cy);
+	
+
+	
 
 	PurgeDeletedObjects();
 }

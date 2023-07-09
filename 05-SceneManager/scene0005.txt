@@ -274,17 +274,17 @@ groundButton.txt
 ##Plaform with brick sprite on top
 5	2345	145	15	15	2	67000	-1	67000
 
-## Usable tunnel at very high attitude
-10	2345	-200	2	19	1
+## Usable tunnel at very high attitude 2345 -200 // Moved below to render after mario
+
 ##Plaform with brick sprite on top
 5	2345	70	15	15	2	67000	-1	67000
 
-##Second small tunnel
-10	2405	160	2	19	1
+##Second small tunnel to get up from 2405 160
+
 ##Cloud
 7	2435	40	14	14	1	71100	-1	-1
-##Bushes
-###These giant bushes after the loot
+
+##Last bush before endzone
 7	2480	70	15	15	2	70000	-1	70001
 7	2480	85	15	15	2	70010	-1	70011
 7	2480	100	15	15	2	70010	-1	70200
@@ -340,7 +340,9 @@ groundButton.txt
 4	180	120	1
 
 
-
+#Usable tunnel at very high attitude 2345 -200
+10	2345	-200	2	19	1
+10	2405	160	2	19	1
 
 # Ground sprite first floor is 13, second is 10. Meaning the first ground and second ground should have 13 y unit difference, while the second and third and so forth have 10 y unit difference
 #All the sprite width is 15.
