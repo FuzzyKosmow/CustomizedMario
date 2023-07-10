@@ -9,6 +9,10 @@
 // In case where there is little space left, say , walking is ~600, running is ~ 700, but you need walking while grabbing. So if walking is 600, 601,602,
 // 610,611,612, then the walking grab could be 620, 621, 622, 630, 631 , 632
 
+
+#define SCENE_ID_OVERWORLD 1
+#define SCENE_ID_INTRO 0
+
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
@@ -37,6 +41,11 @@
 
 
 #define OBJECT_TYPE_PORTAL	50
+
+//Overworld >200
+#define OBJECT_TYPE_MARIO_OVERWORLD 200
+#define OBJECT_TYPE_OVERWORLD_NODE 201
+#define	OBJECT_TYPE_OVERWORLD_BLOCKING_OBJECT 202
 //Projectile (>500)
 #define OBJECT_TYPE_PLANT_PROJECTILE 500 //Plant fireballs
 #define OBJECT_TYPE_MARIO_TAIL_ATTACK 501
@@ -47,6 +56,7 @@
 #define OBJECT_TYPE_PARTICLE 1100
 //Secret 10000>
 #define OBJECT_TYPE_SECRET_BRICK_WORLD_1_1 10001 //Brick that has a button that turn brick around it into coin
+
 
 //System
 #define OBJECT_TYPE_SYSTEM 99999 // Anything that is not visible, but is used to control the game. EX: Camera, HUD, etc...
@@ -205,6 +215,12 @@
 //Particle stuffs/ Effects
 #define ID_SPRITE_PARTICLE_BRICK 900000
 
+#define ID_SPRITE_OVERWORLD_PATH_HORIZONTAL 1000000
+#define ID_SPRITE_OVERWORLD_PATH_VERTICAL 1000001
+#define ID_SPRITE_OVERWORLD_PLANT_1 1000010
+#define ID_SPRITE_OVERWORLD_PLANT_2 1000011
+#define ID_SPRITE_OVERWORLD_PLANT_3 1000012
+#define ID_SPRITE_OVERWORLD_PLANT_4 1000013
 
 
 #define ID_SPRITE_INVISIBLE_BLOCK 999999

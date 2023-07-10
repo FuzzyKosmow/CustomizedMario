@@ -1,0 +1,58 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#World 1-1
+
+
+
+
+#Dacnin bushes
+1000010	0	27	17	42	90
+1000011	17	27	34	42	90
+1000012	34	27	51	42	90
+1000013	51	27	68	42	90
+
+#Door
+
+#Orange castle
+
+#Big castle
+		
+#Rock
+
+#Card
+
+#Start node // Non-interactive
+
+#Node 1
+1007001	19	254	34	269	100
+#Node 2
+1007002	36	254	51	269	100
+#Node 3
+1007003	53	254	68	269	100
+#Node 4
+1007004	70	254	85	269	100
+#Node 5
+1007005	87	254	102	269	100
+#Node 6
+1007006	104	254	119	269	100
+#Coin node
+#Horizontal path
+1008000	69	304	85	311	100
+#Vertical path
+1008001	90	299	95	314	100
+##BG
+#Black with bigger solution
+1009997	0	0	360	360	-200
+
+#Black with smaller solution
+1009996	0	0	235	155	-200
+
+#Yellow small solution
+1009998	0	0	230	150	110
+#Yellow big solution
+1009999	0	0	240	160	110
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+#Bushes animation
+10069	1000010	300	1000011	300	1000012	300	1000013	300

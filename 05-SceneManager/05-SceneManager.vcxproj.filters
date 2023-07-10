@@ -55,6 +55,18 @@
     <Filter Include="Source Files\System\Effects">
       <UniqueIdentifier>{08a5f9d7-2506-4a4b-be17-63073141e989}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Overworld">
+      <UniqueIdentifier>{a55eca6c-fc8a-478a-aa96-64d38a58ce5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Overworld">
+      <UniqueIdentifier>{d23fd78a-45b4-4749-ba64-fcbcdf69132e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System\Key handlers">
+      <UniqueIdentifier>{c7fa8f9b-7dfe-4aa1-80b6-1a92625568f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Key handlers">
+      <UniqueIdentifier>{51ba23df-d43f-45ac-bb0e-8f118976ea76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -117,9 +129,6 @@
     <ClCompile Include="PlayScene.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="SampleKeyEventHandler.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
@@ -167,6 +176,15 @@
     </ClCompile>
     <ClCompile Include="Dimscreen.cpp">
       <Filter>Source Files\System\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="OverworldMario.cpp">
+      <Filter>Source Files\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleKeyEventHandler.cpp">
+      <Filter>Source Files\System\Key handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="OverworldNode.cpp">
+      <Filter>Source Files\Overworld</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,9 +254,6 @@
     <ClInclude Include="PlayScene.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="SampleKeyEventHandler.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
@@ -289,6 +304,18 @@
     </ClInclude>
     <ClInclude Include="Dimscreen.h">
       <Filter>Header Files\System\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="OverworldMario.h">
+      <Filter>Header Files\Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleKeyEventHandler.h">
+      <Filter>Header Files\System\Key handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="OverworldNode.h">
+      <Filter>Header Files\Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="OverworldBlockingObject.h">
+      <Filter>Header Files\Overworld</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -347,6 +374,12 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="groundButton.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="overworld_level.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="overworld_object.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

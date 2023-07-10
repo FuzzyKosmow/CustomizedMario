@@ -146,54 +146,6 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 
 	return hWnd;
 }
-//void DimInScreen(float dimSpeed)
-//{
-//	
-//	CGame* g = CGame::GetInstance();
-//	ID3D10Device *g_pd3dDevice = CGame::GetInstance()->GetDirect3DDevice();
-//	ID3D10BlendState* oldBlendState = g ->GetAlphaBlending();
-//
-//	// Increase the alpha value gradually
-//	float g_fDimAlpha = g->GetAlphaBlending()[0];
-//	g_fDimAlpha -= dimSpeed;
-//
-//	// Clamp the alpha value between 0 and 1
-//	g_fDimAlpha = max(0.0f, min(1.0f, g_fDimAlpha));
-//	
-//	// Set the alpha value as the blend factor for the entire screen
-//	float blendFactor[4] = { g_fDimAlpha, g_fDimAlpha, g_fDimAlpha, g_fDimAlpha };
-//	g_pd3dDevice->OMSetBlendState(g->GetAlphaBlending(), blendFactor, 0xFFFFFFFF);
-//}
-//void DimOutScreen(float dimSpeed)
-//{
-//	CGame* game = CGame::GetInstance();
-//	ID3D10Device* g_pd3dDevice = game->GetDirect3DDevice();
-//	ID3D10BlendState* oldBlendState = game->GetAlphaBlending();
-//
-//	// Increase the alpha value gradually
-//	float g_fDimAlpha = game->GetAlphaBlendingAlpha();
-//	g_fDimAlpha += dimSpeed;
-//
-//	// Clamp the alpha value between 0 and 1
-//	g_fDimAlpha = max(0.0f, min(1.0f, g_fDimAlpha));
-//
-//	// Create a new blend state with the updated alpha value
-//	ID3D10BlendState* newBlendState;
-//	D3D10_BLEND_DESC blendDesc;
-//	oldBlendState->GetDesc(&blendDesc);
-//	blendDesc.RenderTarget[0].BlendFactor[0] = g_fDimAlpha;
-//	g_pd3dDevice->CreateBlendState(&blendDesc, &newBlendState);
-//
-//	// Set the new blend state as the blend factor for the entire screen
-//	float blendFactor[4] = { g_fDimAlpha, g_fDimAlpha, g_fDimAlpha, g_fDimAlpha };
-//	g_pd3dDevice->OMSetBlendState(newBlendState, blendFactor, 0xFFFFFFFF);
-//
-//	// Release the old blend state
-//	oldBlendState->Release();
-//
-//	// Store the new blend state in your game instance
-//	game->SetAlphaBlending(newBlendState);
-//}
 
 int Run()
 {

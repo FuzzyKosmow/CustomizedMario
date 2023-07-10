@@ -169,6 +169,8 @@
     <ClCompile Include="MairoTailAttack.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="OverworldMario.cpp" />
+    <ClCompile Include="OverworldNode.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -209,6 +211,9 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioTailAttack.h" />
     <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="OverworldBlockingObject.h" />
+    <ClInclude Include="OverworldMario.h" />
+    <ClInclude Include="OverworldNode.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
@@ -240,6 +245,8 @@
     <Text Include="mario-sample.txt" />
     <Text Include="mario.txt" />
     <Text Include="mushroom.txt" />
+    <Text Include="overworld_level.txt" />
+    <Text Include="overworld_object.txt" />
     <Text Include="scene0005.txt" />
     <Text Include="scene01.txt" />
     <Text Include="scene02.txt" />

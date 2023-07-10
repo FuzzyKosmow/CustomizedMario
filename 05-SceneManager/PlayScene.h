@@ -9,6 +9,9 @@
 #include <string>
 //#include "Koopas.h"
 #define MAXIMUM_CAMERA_LIMIT 5
+#define INTRO_SCENE_ID 0
+#define OVERWORLD_SCENE_ID 1
+
 struct SceneCameraLimit
 {
 	float left;
@@ -101,7 +104,7 @@ public:
 	void UnlockCamera() { cameraLocked = false; }
 
 	void SwitchCameraLimit(int i) { cameraLimit = cameraLimits[i]; }
-
+	int GetSceneID() { return id; }
 };
 
 typedef CPlayScene* LPPLAYSCENE;

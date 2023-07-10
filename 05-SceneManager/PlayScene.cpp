@@ -23,13 +23,17 @@
 #include "FlyingTurtle.h"
 #include "SecretBrickWithButton.h"
 #include "GroundButton.h"
+#include "OverworldMario.h"
+#include "OverworldNode.h"
+#include "OverworldBlockingObject.h"
 using namespace std;
 
-CPlayScene::CPlayScene(int id, LPCWSTR filePath):
+CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
+
 }
 
 
@@ -60,7 +64,7 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 	if (tex == NULL)
 	{
 		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
-		return; 
+		return;
 	}
 
 	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
@@ -81,9 +85,9 @@ void CPlayScene::_ParseSection_VARIABLES(string line)
 		float bottom = (float)atof(tokens[4].c_str());
 		float sky = (float)atof(tokens[5].c_str());
 
-		SceneCameraLimit newCamLimit =  SceneCameraLimit(left, top, right, bottom, sky);
+		SceneCameraLimit newCamLimit = SceneCameraLimit(left, top, right, bottom, sky);
 		cameraLimits.push_back(newCamLimit);
-		
+
 		break;
 	}
 	default:
@@ -99,7 +103,7 @@ void CPlayScene::_ParseSection_ASSETS(string line)
 	if (tokens.size() < 1) return;
 
 	wstring path = ToWSTR(tokens[0]);
-	
+
 	LoadAssets(path.c_str());
 }
 
@@ -117,7 +121,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	for (int i = 1; i < static_cast<int>(tokens.size()); i += 2)	// why i+=2 ?  sprite_id | frame_time  
 	{
 		int sprite_id = atoi(tokens[i].c_str());
-		int frame_time = atoi(tokens[i+1].c_str());
+		int frame_time = atoi(tokens[i + 1].c_str());
 		ani->Add(sprite_id, frame_time);
 	}
 
@@ -125,7 +129,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 }
 
 /*
-	Parse a line in section [OBJECTS] 
+	Parse a line in section [OBJECTS]
 */
 void CPlayScene::_ParseSection_OBJECTS(string line)
 {
@@ -138,29 +142,43 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	float x = (float)atof(tokens[1].c_str());
 	float y = (float)atof(tokens[2].c_str());
 
-	CGameObject *obj = NULL;
+	CGameObject* obj = NULL;
 
 	switch (object_type)
 	{
-	case OBJECT_TYPE_MARIO:
-		if (player!=NULL) 
+	case OBJECT_TYPE_MARIO_OVERWORLD:
+	{
+		if (player != NULL)
 		{
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CMario(x,y); 
-		player = (CMario*)obj;  
+		obj = new COverworldMario(x, y);
+		player = (COverworldMario*)obj;
+		break;
+	}
+	case OBJECT_TYPE_MARIO:
 
+	{
+		obj = new CMario(x, y);
+		player = (CMario*)obj;
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
+	}
+
+		
+
+
+
+		
+	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
 	case OBJECT_TYPE_FLYING_GOOMBA:
 	{
 		obj = new CFlyingGoomba(x, y);
 		break;
 	}
-	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
-	case OBJECT_TYPE_COIN: 
+	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
+	case OBJECT_TYPE_COIN:
 	{
 		int activate = atoi(tokens[3].c_str());
 		obj = new CCoin(x, y, activate); break;
@@ -173,7 +191,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CBigColorBrick(x, y, color, width, height); break;
 		break;
 	}
-		
+
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -196,7 +214,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		float cell_width = (float)atof(tokens[3].c_str());
 		float cell_height = (float)atof(tokens[4].c_str());
-		int length =	atoi(tokens[5].c_str());
+		int length = atoi(tokens[5].c_str());
 		int sprite_begin = atoi(tokens[6].c_str());
 		int sprite_middle = atoi(tokens[7].c_str());
 		int sprite_end = atoi(tokens[8].c_str());
@@ -208,7 +226,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		break;
 	}
-	
+
 	case OBJECT_TYPE_VERTICAL_OBJECT:
 	{
 		float cell_width = (float)atof(tokens[3].c_str());
@@ -236,7 +254,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 				sprite_begin, sprite_middle, sprite_end
 			);
 		}
-		
+
 		break;
 
 	}
@@ -271,7 +289,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		default:
 			break;
 		}
-		
+
 		objects.push_back(loot);
 
 		obj = new CLootBrick(x, y, lootType);
@@ -286,24 +304,24 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_TUNNEL:
 	{
 		int color = atoi(tokens[3].c_str());
-	
+
 		int height = atoi(tokens[4].c_str());
 		if (tokens.size() >= 12)
-		{ 
+		{
 			int usable = atoi(tokens[5].c_str());
 			bool inverted = atoi(tokens[6].c_str());
-			bool firstPhaseGoDown = atoi (tokens[7].c_str());
+			bool firstPhaseGoDown = atoi(tokens[7].c_str());
 			bool secondPhaseGoDown = atoi(tokens[8].c_str());
 			float xDestination = (float)atof(tokens[9].c_str());
 			float yDestination = (float)atof(tokens[10].c_str());
 			int cameraLimitToSwitchTo = atoi(tokens[11].c_str());
-			obj = new CTunnel(x, y, color, height, usable,inverted,firstPhaseGoDown, secondPhaseGoDown, xDestination, yDestination, cameraLimitToSwitchTo);
+			obj = new CTunnel(x, y, color, height, usable, inverted, firstPhaseGoDown, secondPhaseGoDown, xDestination, yDestination, cameraLimitToSwitchTo);
 		}
 		else
 		{
 			obj = new CTunnel(x, y, color, height);
 		}
-		
+
 		break;
 	}
 	case OBJECT_TYPE_SHOOTING_PLANT:
@@ -342,7 +360,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		obj = new CGroundButton(x, y);
 		break;
-	
+
 	}
 	//Secret go here
 	case OBJECT_TYPE_SECRET_BRICK_WORLD_1_1:
@@ -350,7 +368,21 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CSecretBrickWithButton(x, y);
 		break;
 	}
-	
+	case OBJECT_TYPE_OVERWORLD_NODE:
+	{
+		float spriteID = (float)atof(tokens[3].c_str());
+		int sceneID = atoi(tokens[4].c_str());
+
+
+		obj = new COverworldNode(x, y, spriteID, sceneID);
+		break;
+	}
+	case OBJECT_TYPE_OVERWORLD_BLOCKING_OBJECT:
+	{
+		int aniID = atoi(tokens[3].c_str());
+		obj = new COverworldBlockingObject(x, y, aniID);
+		break;
+	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
@@ -381,9 +413,9 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 
 		if (line == "[SPRITES]") { section = ASSETS_SECTION_SPRITES; continue; };
 		if (line == "[ANIMATIONS]") { section = ASSETS_SECTION_ANIMATIONS; continue; };
-		
+
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
-		
+
 		//
 		// data section
 		//
@@ -391,7 +423,7 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 		{
 		case ASSETS_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
 		case ASSETS_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
-		
+
 		}
 	}
 
@@ -408,7 +440,7 @@ void CPlayScene::Load()
 	f.open(sceneFilePath);
 
 	// current resource section flag
-	int section = SCENE_SECTION_UNKNOWN;					
+	int section = SCENE_SECTION_UNKNOWN;
 
 	char str[MAX_SCENE_LINE];
 	while (f.getline(str, MAX_SCENE_LINE))
@@ -419,19 +451,21 @@ void CPlayScene::Load()
 		if (line == "[ASSETS]") { section = SCENE_SECTION_ASSETS; continue; };
 		if (line == "[OBJECTS]") { section = SCENE_SECTION_OBJECTS; continue; };
 		if (line == "[VARIABLES]") { section = ASSETS_SECTION_VARIABLES; continue; };
-		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }	
+		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
 		// data section
 		//
 		switch (section)
-		{ 
-			case SCENE_SECTION_ASSETS: _ParseSection_ASSETS(line); break;
-			case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
-			case ASSETS_SECTION_VARIABLES: _ParseSection_VARIABLES(line); break;
+		{
+		case SCENE_SECTION_ASSETS: _ParseSection_ASSETS(line); break;
+		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
+		case ASSETS_SECTION_VARIABLES: _ParseSection_VARIABLES(line); break;
 		}
 	}
-	this->cameraLimit = cameraLimits[0];
+	if (cameraLimits.size() > 0)
+		this->cameraLimit = cameraLimits[0];
+
 	f.close();
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
@@ -454,7 +488,7 @@ void CPlayScene::Update(DWORD dt)
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
-	if (player == NULL) return; 
+	if (player == NULL) return;
 
 
 
@@ -501,9 +535,9 @@ void CPlayScene::Update(DWORD dt)
 		CGame::GetInstance()->SetCamPos(cx, cy);
 	}
 
-	
 
-	
+
+
 
 	PurgeDeletedObjects();
 }
@@ -530,7 +564,7 @@ void CPlayScene::Clear()
 /*
 	Unload scene
 
-	TODO: Beside objects, we need to clean up sprites, animations and textures as well 
+	TODO: Beside objects, we need to clean up sprites, animations and textures as well
 
 */
 void CPlayScene::Unload()
