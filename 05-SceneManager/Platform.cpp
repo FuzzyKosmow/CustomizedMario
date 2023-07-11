@@ -97,11 +97,15 @@ void CVerticalObject::Render()
 
 void CVerticalObject::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	float cellHeight_div_2 = this->cellHeight / 2;
-	l = x - this->cellWidth / 2;
-	t = y - cellHeight_div_2;
-	r = l + this->cellWidth;
-	b = t + this->cellHeight * this->height;
+	if (blocking)
+	{
+		float cellHeight_div_2 = this->cellHeight / 2;
+		l = x - this->cellWidth / 2;
+		t = y - cellHeight_div_2;
+		r = l + this->cellWidth;
+		b = t + this->cellHeight * this->height;
+	}
+	
 }
 
 

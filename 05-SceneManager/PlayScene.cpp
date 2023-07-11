@@ -379,8 +379,19 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_OVERWORLD_BLOCKING_OBJECT:
 	{
-		int aniID = atoi(tokens[3].c_str());
-		obj = new COverworldBlockingObject(x, y, aniID);
+		if (tokens.size() >= 6)
+		{
+			int aniID = atoi(tokens[3].c_str());
+			int bbwidth = atoi(tokens[4].c_str());
+			int bbheight = atoi(tokens[5].c_str());
+			obj = new COverworldBlockingObject(x, y, aniID, bbwidth, bbheight);
+		}
+		else
+		{
+			int aniID = atoi(tokens[3].c_str());
+			obj = new COverworldBlockingObject(x, y, aniID);
+		}
+		
 		break;
 	}
 	default:

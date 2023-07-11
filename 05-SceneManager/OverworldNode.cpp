@@ -12,25 +12,29 @@ COverworldNode::COverworldNode(float x, float y, int spriteID, int sceneIDToLoad
 
 void COverworldNode::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (marioDetector->ObjectDetected())
+	if (sceneIdToLoad != -1)
 	{
-			CGame* game = CGame::GetInstance();
-		LPSCENE scene = game->GetCurrentScene();
-		COverworldMario* mario = (COverworldMario*)((CPlayScene*)scene)->GetPlayer();
-		mario->SetOnNode(this);
-		hasJustSetNode = true;
-	}
-	else
-	{
-		if (hasJustSetNode)
+		if (marioDetector->ObjectDetected())
 		{
-					CGame* game = CGame::GetInstance();
+			CGame* game = CGame::GetInstance();
 			LPSCENE scene = game->GetCurrentScene();
 			COverworldMario* mario = (COverworldMario*)((CPlayScene*)scene)->GetPlayer();
-			mario->SetOnNode(NULL);
-			hasJustSetNode = false;
+			mario->SetOnNode(this);
+			hasJustSetNode = true;
+		}
+		else
+		{
+			if (hasJustSetNode)
+			{
+				CGame* game = CGame::GetInstance();
+				LPSCENE scene = game->GetCurrentScene();
+				COverworldMario* mario = (COverworldMario*)((CPlayScene*)scene)->GetPlayer();
+				mario->SetOnNode(NULL);
+				hasJustSetNode = false;
+			}
 		}
 	}
+	
 }
 
 void COverworldNode::Render()

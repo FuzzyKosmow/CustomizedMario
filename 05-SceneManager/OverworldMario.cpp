@@ -5,8 +5,7 @@ void COverworldMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//Move mario. Check if mario has moved enough distance, if enough, stop.
 	if (isMoving)
 	{
-		vy += ay * dt;
-		vx += ax * dt;
+		
 		if (travelledDistance >= OVERWORLD_MARIO_TRAVEL_DISTANCE_BETWEEN_NODE)
 		{
 			isMoving = false;
@@ -16,6 +15,8 @@ void COverworldMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 		{
+			vy += ay * dt;
+			vx += ax * dt;
 			travelledDistance += sqrt(vx * vx + vy * vy) * dt;
 		}
 

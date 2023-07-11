@@ -26,5 +26,5 @@ height	240
 90	textures\overworld_icon.png
 100	textures\overworld_icon2.png
 110	textures\overworld_bg.png
-
+120	textures\overworld_icon3.png
 900	textures\particle.png

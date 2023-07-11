@@ -9,11 +9,15 @@
 class COverworldBlockingObject : public CGameObject
 {
 	int aniID = -1;
+	int bbHeight = 0;
+	int bbWidth = 0;
 public:
 
-	COverworldBlockingObject(float x, float y, int aniID) : CGameObject(x, y)
+	COverworldBlockingObject(float x, float y, int aniID, int width = OVERWORLD_BLOCKING_OBJECT_BBOX_WIDTH,int height = OVERWORLD_BLOCKING_OBJECT_BBOX_HEIGHT) : CGameObject(x, y)
 	{
 		this->aniID = aniID;
+		this->bbHeight = height;
+		this->bbWidth = width;
 	}
 
 	virtual int IsCollidable() { return 1; };
@@ -27,10 +31,10 @@ public:
 
 	void GetBoundingBox(float& l, float& t, float& r, float& b)
 	{
-		l = x - OVERWORLD_BLOCKING_OBJECT_BBOX_WIDTH / 2;
-		t = y - OVERWORLD_BLOCKING_OBJECT_BBOX_HEIGHT / 2;
-		r = x + OVERWORLD_BLOCKING_OBJECT_BBOX_WIDTH;
-		b = y + OVERWORLD_BLOCKING_OBJECT_BBOX_HEIGHT;
+		l = x - bbWidth / 2;
+		t = y - bbHeight / 2;
+		r = x + bbWidth;
+		b = y + bbHeight;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {};
 	int GetObjectType() { return OBJECT_TYPE_OVERWORLD_BLOCKING_OBJECT; }
