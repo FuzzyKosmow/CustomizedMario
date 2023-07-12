@@ -1,0 +1,14 @@
+[ASSETS]
+overworld_object.txt
+backgroundItems.txt
+mario.txt
+[VARIABLES]
+0	0	0	0	0	0
+[OBJECTS]
+300	150	120
+202	80	35	10069
+202	80	50	10069
+202	65	35	10069
+202	65	50	10069
+202	50	35	10069
+202	50	50	10069

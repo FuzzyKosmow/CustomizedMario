@@ -186,6 +186,9 @@
     <ClCompile Include="OverworldNode.cpp">
       <Filter>Source Files\Overworld</Filter>
     </ClCompile>
+    <ClCompile Include="TitleScreenChoice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetIDs.h">
@@ -317,6 +320,9 @@
     <ClInclude Include="OverworldBlockingObject.h">
       <Filter>Header Files\Overworld</Filter>
     </ClInclude>
+    <ClInclude Include="TitleScreenChoice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="backgroundItems.txt">
@@ -380,6 +386,12 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="overworld_object.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="intro.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="introScene.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
