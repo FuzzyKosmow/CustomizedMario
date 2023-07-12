@@ -1,5 +1,5 @@
 #include "SampleKeyEventHandler.h"
-
+#include "AssetIDs.h"
 #include "debug.h"
 #include "Game.h"
 
@@ -8,6 +8,7 @@
 #include "Tunnel.h"
 #include "OverworldMario.h"
 #include "OverworldNode.h"
+#include "TitleScreenChoice.h"
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
@@ -19,7 +20,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		return;
 	int sceneID = scene->GetSceneID();
 
-	if (sceneID != INTRO_SCENE_ID && sceneID != OVERWORLD_SCENE_ID)
+	if (sceneID != SCENE_ID_INTRO && sceneID != SCENE_ID_OVERWORLD)
 	{
 		switch (KeyCode)
 		{
@@ -47,6 +48,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 			}
 			break;
 
+		case DIK_P:
+			CGame::GetInstance()->InitiateSwitchScene(2);
+			break;
 		case DIK_A:
 			//Tail attack if level raccoon
 			if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
@@ -89,7 +93,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		//	/*Reload();*/
 		//	break;
 	}
-	else if (sceneID == OVERWORLD_SCENE_ID) //Overworld controls
+	else if (sceneID == SCENE_ID_OVERWORLD) //Overworld controls
 	{
 		COverworldMario* marioO = (COverworldMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 		switch (KeyCode)
@@ -116,6 +120,24 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 			break;
 		}
 
+	} 
+	else if (sceneID == SCENE_ID_INTRO)
+	{
+		CTitleChoice* choice = (CTitleChoice*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		switch (KeyCode)
+		{
+		case DIK_S:
+			choice->SelectChoice();
+			/*game->InitiateSwitchScene(2);*/
+			break;
+		case DIK_UP:
+			choice->MoveChoiceUp();
+			break;
+		case DIK_DOWN:
+
+			choice-> MoveChoiceDown();
+			break;
+		}
 	}
 
 }
@@ -129,7 +151,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	if (scene->ControlLocked())
 		return;
 	int sceneID = scene->GetSceneID();
-	if (sceneID != INTRO_SCENE_ID || sceneID != OVERWORLD_SCENE_ID)
+	if (sceneID != SCENE_ID_INTRO || sceneID != SCENE_ID_OVERWORLD)
 	{
 		switch (KeyCode)
 		{

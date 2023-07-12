@@ -23,7 +23,7 @@
 #include "MarioTailAttack.h"
 #include <algorithm>
 #include "debug.h"
-
+#include "Dimscreen.h"
 
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -66,9 +66,26 @@ CMario::CMario (float x, float y) : CGameObject(x, y)
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	float camX, camY;
+
+	/*float camX, camY;
 	CGame::GetInstance()->GetCamPos(camX, camY);
-	DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);
+	DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);*/
+	DebugOutTitle(L"Dead started at %d\n", dead_start);
+	//Go back to overworld if dead
+	if (state == MARIO_STATE_DIE)
+	{
+		if (GetTickCount64() - dead_start >= MARIO_DIE_TIME && !deadDimmed)
+		{
+			CDimScreenEffect::GetInstance()->MakeDimFor(MARIO_DIM_TIME, MARIO_DELAY_TIME, 0);
+			deadDimmed = true;
+		}
+		else if (GetTickCount64() - dead_start >= MARIO_DIE_TIME + MARIO_DELAY_TIME+ MARIO_DIM_TIME)
+		{
+			CGame::GetInstance()->InitiateSwitchScene(SCENE_ID_OVERWORLD);
+		}
+		
+	}
+
 	LPPLAYSCENE scene = (LPPLAYSCENE) CGame::GetInstance()->GetCurrentScene();
 	if (scene->ControlIsLocked())
 	{
@@ -1012,7 +1029,18 @@ void CMario::Render()
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
-	if (this->state == MARIO_STATE_DIE) return;
+	if (this->state == MARIO_STATE_DIE)
+
+	{
+		if (!deadTimerStarted)
+		{
+			dead_start = GetTickCount64();
+			deadTimerStarted = true;
+		}
+			
+		return;
+	}
+		
 
 	switch (state)
 	{

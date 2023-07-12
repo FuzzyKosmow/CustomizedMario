@@ -183,6 +183,11 @@
 #define MARIO_UNTOUCHABLE_TIME 2500
 
 
+//Death to overworld stats
+#define MARIO_DIE_TIME 1500
+#define MARIO_DIM_TIME	1000
+#define MARIO_DELAY_TIME 500
+
 class CMarioTailAttack;
 
 class CMario : public CGameObject
@@ -247,6 +252,12 @@ class CMario : public CGameObject
 	ULONGLONG uncolliableTime = 0;
 	ULONGLONG uncolliableStart = 0;
 	bool hasJustSetUncolliable = false;
+
+	//To overworld stats
+	ULONGLONG dead_start = 0;
+	ULONGLONG dim_start = 0;
+	bool deadDimmed = false;
+	bool deadTimerStarted = false;
 public:
 	
 	
