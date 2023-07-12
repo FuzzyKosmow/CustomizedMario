@@ -34,6 +34,28 @@
 #Loot zone type 1
 600002	4	4	253	173	70
 
-
+## Title screen
+#Back ground
+600003	59	318	210	351	140
+#Choice 1
+600004	30	303	143	334	130
+#Choice 2
+600005	155	303	268	334	130
+#Striped ground
+600006	58	318	145	351	140
+#Nitendo line
+600007	72	279	177	290	140
+#Hem after animation
+600008	15	226	256	245	140
+#Intro cloud
+600009	232	274	263	291	140
+#Title
+600010	54	367	243	488	140
+#Left bush
+600011	332	325	399	388	140
+#Right bush
+600012	337	131	404	226	140
+#Small cloud
+600013	302	277	319	286	140
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]

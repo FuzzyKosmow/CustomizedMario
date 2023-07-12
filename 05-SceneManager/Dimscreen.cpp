@@ -2,6 +2,7 @@
 #include "Dimscreen.h"
 #include "Textures.h"
 #include "PlayScene.h"
+#include "Game.h"
 CDimScreenEffect::CDimScreenEffect() 
 {
 	__instance = this;

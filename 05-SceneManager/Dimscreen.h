@@ -1,8 +1,8 @@
 #pragma once
-#include "Game.h"
 #include "GameObject.h"
 
 #define	ID_TEXTURE_DIMSCREEN -200
+
 
 class CDimScreenEffect : public CGameObject
 {
