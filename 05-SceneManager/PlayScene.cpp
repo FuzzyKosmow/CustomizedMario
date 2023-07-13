@@ -628,11 +628,22 @@ void CPlayScene::Unload()
 
 	for (int i = 0; i < static_cast<int> (objects.size()); i++)
 	{
-
+		int OBJECT_TYPE = objects[i]->GetObjectType();
+		if (OBJECT_TYPE == OBJECT_TYPE_DIMSCREEN)
+		{
+			CDimScreenEffect* dimScreen = dynamic_cast<CDimScreenEffect*>(objects[i]);
+			if (dimScreen != NULL)
+			{
+				dimScreen->Unload();
+			}
+		}
+		else
 		delete objects[i];
 	}
-
-
+	CSprites * sprites = CSprites::GetInstance();
+	sprites->Clear();
+	CAnimations * animations = CAnimations::GetInstance();
+	animations->Clear();
 	objects.clear();
 	player = NULL;
 

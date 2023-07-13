@@ -33,6 +33,11 @@ class CDimScreenEffect : public CGameObject
 	
 		void MakeDimFor(DWORD dimTime, DWORD delayTime,DWORD undimTime);
 		static CDimScreenEffect* GetInstance();
-		int GetObjectType() { return OBJECT_TYPE_SYSTEM; };
+		int GetObjectType() { return OBJECT_TYPE_DIMSCREEN; };
+		void Unload()
+		{
+					__instance = NULL;
+					this-> Delete();
+		}
 
 };

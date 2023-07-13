@@ -75,6 +75,7 @@ void CDimScreenEffect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				doneUndimming = true;
 				enabled = false;
+				this->Delete();
 			}
 			else
 			{
