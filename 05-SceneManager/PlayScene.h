@@ -119,7 +119,12 @@ public:
 		AddObject(hud);
 		SwapObjectOrderToLast(hud);
 	}
-	int GetSceneTimeLeftInSecond() { return (int)(MAXIMUM_SCENE_TIME - (GetTickCount64() - sceneStartTime)) / 1000; }
+	int GetSceneTimeLeftInSecond() { 
+		//If its negative, return 0. Else the number
+		return (int)(MAXIMUM_SCENE_TIME - (GetTickCount64() - sceneStartTime)) / 1000 > 0 ? (int)(MAXIMUM_SCENE_TIME - (GetTickCount64() - sceneStartTime)) / 1000 : 0;
+
+	
+	}
 };
 
 typedef CPlayScene* LPPLAYSCENE;

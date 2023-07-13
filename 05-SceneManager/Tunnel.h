@@ -28,8 +28,8 @@
 
 #define TUNNEL_TRAVEL_TIME_TO_FINISH_ANIMATION 1000 //How long does it take to finish animation to go up or down tunnel
 
-#define TUNNEL_MAX_TRAVEL_DISTANCE 30
-#define TUNNEL_TRAVEL_STEP 0.1
+#define TUNNEL_MAX_TRAVEL_DISTANCE 30.0f
+#define TUNNEL_TRAVEL_STEP 0.1f
 
 
 #define TUNNEL_TYPE_GO_DOWN_WITH_TRIGGER 1

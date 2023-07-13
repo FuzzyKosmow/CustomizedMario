@@ -10,8 +10,10 @@
 #define HUD_SCORE_OFFSET_X -60
 #define HUD_SCORE_OFFSET_Y 6
 
-#define HUD_TIME_OFFSET_X -60
+#define HUD_TIME_OFFSET_X 12
 #define HUD_TIME_OFFSET_Y 6
+#define HUD_TIME_MAX_CHAR 3
+
 
 #define HUD_NUMBER_WIDTH	10
 
@@ -25,10 +27,11 @@ void HUD::Render()
 	
 	s->Get(ID_SPRITE_HUD_GENERAL)->Draw(x, y);
 	s->Get(ID_SPRITE_HUD_MARIO_ICON)->Draw(x+ HUD_MARIO_ICON_OFFSET_X, y+ HUD_MARIO_ICON_OFFSET_Y);
-	DrawNumberAt( 12, x + HUD_SCORE_OFFSET_X, y + HUD_SCORE_OFFSET_Y, 3);
+	
 	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
 	int timeLeft = scene->GetSceneTimeLeftInSecond();
-	/*DrawNumberAt(timeLeft, x + HUD_SCORE_OFFSET_X, y + HUD_SCORE_OFFSET_Y, 3);*/
+	
+	DrawNumberAt(timeLeft, x + HUD_TIME_OFFSET_X, y + HUD_TIME_OFFSET_Y, HUD_TIME_MAX_CHAR);
 }
 
 
