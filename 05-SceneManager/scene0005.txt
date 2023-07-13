@@ -173,6 +173,19 @@ hud.txt
 4	1135	120	1
 4	1165	90	1
 4	1195	60	1
+4	1225	30	1
+4	1255	0	1
+
+##Sky zone #############################################
+##Color box 
+9	1380	-90	3	5	2
+#Plaform as cloud
+5	1500	-50	15	15	4	54000	54000	54000
+5	1600	-65	15	15	11	54000	54000	54000
+
+
+
+
 
 ##Cloud at the start of lower plaform (3)
 7	1225	40	14	14	2	71001	-1	71000
@@ -346,11 +359,12 @@ hud.txt
 6	2520	300	15	169	3	600001	600001	600001	0
 6	2590	300	15	169	3	600001	600001	600001	0
 
-#Ending loot
+
 
 
 # MARIO
-0	2700	10
+0	1450	-250
+#Ending loot
 52	2804	113
 #Death zones
 51	2310	205	60	15
@@ -366,7 +380,7 @@ hud.txt
 
 
 #Usable tunnels x y color  height usable inverted firstPhaseGoDown secondPhaseGoDown xDestinaition yDestination cameraLimitSwitchTo
-10	2345	-200	2	19	1	0	1	1	2195	285	1
+10	2345	-95	2	12	1	0	1	1	2195	285	1
 10	2405	160	2	2	0	0	1	1	2195	285	1
 ##Inverted tunnel at secret zone
 10	2390	310	3	2	1	1	0	0	2410	170	0

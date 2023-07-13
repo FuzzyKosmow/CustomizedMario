@@ -46,7 +46,7 @@ public:
 		if (state == SECRET_BRICK_WITH_BUTTON_STATE_NORMAL)
 		{
 			SetState (SECRET_BRICK_WITH_BUTTON_STATE_SHOW_BUTTON);
-			
+			HUD::GetInstance()->PopUpScoreAtMario(SECRET_BRICK_WITH_BUTTON_BREAK_SCORE);
 		}
 		
 	}

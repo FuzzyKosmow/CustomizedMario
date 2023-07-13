@@ -207,6 +207,7 @@
 #define SCORE_MAX	9999999
 #define LIVES_MAX	99
 #define COIN_MAX	99
+#define LIVE_VALUE_START 4
 class CMarioTailAttack;
 
 class CMario : public CGameObject
@@ -287,7 +288,7 @@ class CMario : public CGameObject
 
 	//Score and lives
 	int score = 0;
-	int lives = 4;
+	int lives = LIVE_VALUE_START;
 public:
 	
 	

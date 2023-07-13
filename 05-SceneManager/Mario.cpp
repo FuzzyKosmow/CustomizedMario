@@ -562,7 +562,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 		if (e->ny > 0) {
 			CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
 			brick->Break();
-			AddScoreWithPopUp(SECRET_BRICK_WITH_BUTTON_BREAK_SCORE);
+			
 		}
 
 	}
