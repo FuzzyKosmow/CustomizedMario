@@ -3,7 +3,7 @@
 #include "Textures.h"
 #include "PlayScene.h"
 #include "Game.h"
-CDimScreenEffect::CDimScreenEffect() 
+CDimScreenEffect::CDimScreenEffect()
 {
 	__instance = this;
 	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
@@ -24,17 +24,17 @@ void CDimScreenEffect::Render()
 		rect.left = 0;
 		rect.top = 0;
 		rect.right = screenWidth * 2; //To make sure it cover the whole screen regardless of where the camera is
-		rect.bottom =  screenHeight*2;
+		rect.bottom = screenHeight * 2;
 		float cx, cy;
 		CGame::GetInstance()->GetCamPos(cx, cy);
-		float marioX, marioY; 
+		float marioX, marioY;
 		LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
 		CMario* mario = (CMario*)scene->GetPlayer();
 		mario->GetPosition(marioX, marioY);
-	/*	CGame::GetInstance()->Draw(marioX-cx, marioY - cy, tex, &rect, alpha);*/
-		
-		CGame::GetInstance()->Draw(screenHeight/2, screenWidth/2, tex, &rect, alpha);
-		
+		/*	CGame::GetInstance()->Draw(marioX-cx, marioY - cy, tex, &rect, alpha);*/
+
+		CGame::GetInstance()->Draw(screenHeight / 2, screenWidth / 2, tex, &rect, alpha);
+
 	}
 }
 
@@ -44,7 +44,7 @@ void CDimScreenEffect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (enabled)
 	{
-		
+
 		if (!doneDimming)
 		{
 			DWORD now = GetTickCount();
@@ -75,7 +75,18 @@ void CDimScreenEffect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				doneUndimming = true;
 				enabled = false;
-				this->Delete();
+
+				dimTime = 0;
+				delayTime = 0;
+				undimTime = 0;
+				dimStart = 0;
+				undimStart = 0;
+				delayStart = 0;
+				alpha = 0;
+				doneDimming = false;
+				doneUndimming = false;
+				doneDelaying = false;
+
 			}
 			else
 			{
@@ -90,14 +101,14 @@ void CDimScreenEffect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		doneUndimming = false;
 		alpha = 0;
 	}
-	
+
 }
 
-void CDimScreenEffect::MakeDimFor(DWORD dimTime, DWORD delayTime,DWORD undimTime)
+void CDimScreenEffect::MakeDimFor(DWORD dimTime, DWORD delayTime, DWORD undimTime)
 {
 	enabled = true;
 	this->dimTime = dimTime;
-	this ->delayTime = delayTime;
+	this->delayTime = delayTime;
 	this->undimTime = undimTime;
 	dimStart = GetTickCount();
 

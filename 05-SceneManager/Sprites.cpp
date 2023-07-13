@@ -26,11 +26,12 @@ LPSPRITE CSprites::Get(int id)
 */
 void CSprites::Clear()
 {
+	DebugOut(L"Clearing %d sprites\n", sprites.size());
 	for (auto x : sprites)
 	{
 		LPSPRITE s = x.second;
 		delete s;
 	}
-
+	DebugOut(L"Cleared. Current %d sprites \n", sprites.size());
 	sprites.clear();
 }
