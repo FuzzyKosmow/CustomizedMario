@@ -153,6 +153,7 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="DeathBlock.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Detection.cpp" />
     <ClCompile Include="Dimscreen.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="BackgroundObject.h" />
     <ClInclude Include="BigColorBrick.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="DeathBlock.h" />
     <ClInclude Include="Dimscreen.h" />
     <ClInclude Include="GroundButton.h" />
     <ClInclude Include="Coin.h" />

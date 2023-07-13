@@ -67,10 +67,10 @@ CMario::CMario (float x, float y) : CGameObject(x, y)
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 
-	/*float camX, camY;
+	float camX, camY;
 	CGame::GetInstance()->GetCamPos(camX, camY);
-	DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);*/
-	DebugOutTitle(L"Dead started at %d\n", dead_start);
+	DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);
+	/*DebugOutTitle(L"Dead started at %d\n", dead_start)*/;
 	//Go back to overworld if dead
 	if (state == MARIO_STATE_DIE)
 	{
@@ -1186,6 +1186,9 @@ void CMario::SetState(int state)
 		vx = 0;
 		ax = 0;
 		break;
+	case MARIO_ENDING_MOVE_RIGHT:
+		vy = 0;
+		vx = MARIO_WALKING_SPEED;
 	}
 
 	CGameObject::SetState(state);

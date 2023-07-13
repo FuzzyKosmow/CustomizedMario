@@ -189,6 +189,9 @@
     <ClCompile Include="TitleScreenChoice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DeathBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetIDs.h">
@@ -321,6 +324,9 @@
       <Filter>Header Files\Overworld</Filter>
     </ClInclude>
     <ClInclude Include="TitleScreenChoice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeathBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
