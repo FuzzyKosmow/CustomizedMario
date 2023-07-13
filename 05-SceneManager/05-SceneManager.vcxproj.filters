@@ -195,6 +195,9 @@
     <ClCompile Include="EndLevelLoot.cpp">
       <Filter>Source Files\Loot</Filter>
     </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetIDs.h">
@@ -335,6 +338,9 @@
     <ClInclude Include="EndLevelLoot.h">
       <Filter>Header Files\Loot</Filter>
     </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="backgroundItems.txt">
@@ -400,10 +406,10 @@
     <Text Include="overworld_object.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="intro.txt">
+    <Text Include="introScene.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="introScene.txt">
+    <Text Include="ui.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

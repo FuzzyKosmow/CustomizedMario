@@ -27,6 +27,7 @@ LPANIMATION CAnimations::Get(int id)
 
 void CAnimations::Clear()
 {
+	DebugOut(L"Clearing %d animations\n", animations.size());
 	for (auto x : animations)
 	{
 		LPANIMATION ani = x.second;
@@ -34,4 +35,5 @@ void CAnimations::Clear()
 	}
 
 	animations.clear();
+	DebugOut(L"cleared %d. Current animations\n", animations.size());
 }

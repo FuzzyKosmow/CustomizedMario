@@ -29,6 +29,7 @@
 #include "TitleScreenChoice.h"
 #include "DeathBlock.h"
 #include "EndLevelLoot.h"
+#include "HUD.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
@@ -430,13 +431,19 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"Object title choice created!\n");
 		break;
 	}
+	case OBJECT_TYPE_HUD:
+	{
+		obj = new HUD();
+		break;
+	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
 	}
 
 	// General object setup
-	obj->SetPosition(x, y);
+	if (object_type != OBJECT_TYPE_HUD) //Because hud follow the camera
+		obj->SetPosition(x, y);
 
 
 	objects.push_back(obj);
@@ -589,6 +596,22 @@ void CPlayScene::Update(DWORD dt)
 
 		}
 		CGame::GetInstance()->SetCamPos(cx, cy);
+		//If there is hud , set it to follow cam to reduce latency
+		if (GetSceneID() != SCENE_ID_INTRO)
+		{
+			if (!addedHud)
+			{
+				hud = HUD::GetInstance();
+				addedHud = true;
+				SwapObjectOrderToLast(hud);
+			}
+			if (id != SCENE_ID_OVERWORLD)
+				hud->SetPosition(cx+155, cy+219);
+			else
+				hud->SetPosition(cx+160, cy+205);
+		}
+		
+		
 	}
 
 
@@ -637,14 +660,25 @@ void CPlayScene::Unload()
 				dimScreen->Unload();
 			}
 		}
+		else if (OBJECT_TYPE == OBJECT_TYPE_HUD)
+		{
+			addedHud = false;
+			if (hud != NULL)
+			{
+				hud->Unload();
+				hud = NULL;
+			}
+			
+		}
 		else
 		delete objects[i];
 	}
+	objects.clear();
 	CSprites * sprites = CSprites::GetInstance();
 	sprites->Clear();
 	CAnimations * animations = CAnimations::GetInstance();
 	animations->Clear();
-	objects.clear();
+	
 	player = NULL;
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);

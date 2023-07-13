@@ -165,6 +165,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="GroundButton.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="LootBrick.cpp" />
     <ClCompile Include="main.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Leaf.h" />
     <ClInclude Include="LootBrick.h" />
@@ -246,7 +248,6 @@
     <Text Include="goomba.txt" />
     <Text Include="ground.txt" />
     <Text Include="groundButton.txt" />
-    <Text Include="intro.txt" />
     <Text Include="introScene.txt" />
     <Text Include="invisibleBlock.txt" />
     <Text Include="leaf.txt" />
@@ -260,6 +261,7 @@
     <Text Include="scene02.txt" />
     <Text Include="tunnel.txt" />
     <Text Include="turtle.txt" />
+    <Text Include="ui.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

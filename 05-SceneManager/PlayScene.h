@@ -7,6 +7,7 @@
 #include "Mario.h"
 #include "Goomba.h"
 #include <string>
+#include "HUD.h"
 //#include "Koopas.h"
 #define MAXIMUM_CAMERA_LIMIT 5
 
@@ -75,6 +76,8 @@ protected:
 
 	bool cameraLocked = false;  //Change to only lock for cutscene and lock for control
 	
+	bool addedHud = false;
+	HUD* hud = NULL;
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
@@ -104,6 +107,13 @@ public:
 
 	void SwitchCameraLimit(int i) { cameraLimit = cameraLimits[i]; }
 	int GetSceneID() { return id; }
+	int HasHud () { return addedHud; }
+	void AddHud(HUD* hud) { 
+		this->hud = hud;
+		addedHud = true;
+		AddObject(hud);
+		SwapObjectOrderToLast(hud);
+	}
 };
 
 typedef CPlayScene* LPPLAYSCENE;

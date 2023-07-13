@@ -4,6 +4,7 @@ mario.txt
 overworld_object.txt
 invisibleBlock.txt
 backgroundItems.txt
+hud.txt
 [VARIABLES]
 #
 0	0	0	0	5	0

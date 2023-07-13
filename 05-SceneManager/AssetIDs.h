@@ -43,6 +43,7 @@
 #define OBJECT_TYPE_PORTAL	50
 #define OBJECT_TYPE_DEATH_BLOCK 51
 #define OBJECT_TYPE_END_LEVEL_LOOT 52
+#define OBJECT_TYPE_HUD 53
 //Overworld >200
 #define OBJECT_TYPE_MARIO_OVERWORLD 200
 #define OBJECT_TYPE_OVERWORLD_NODE 201
@@ -64,7 +65,7 @@
 
 //System
 #define OBJECT_TYPE_SYSTEM 99999 // Anything that is not visible, but is used to control the game. EX: Camera, HUD, etc...
-
+#define OBJECT_TYPE_DIMSCREEN 100000
 
 
 //Variable for scenes
@@ -217,6 +218,10 @@
 
 //End zone loot 600100 > items.txt
 #define ID_SPRITE_END_GAME_LOOT 600100
+
+//Hud stuffs
+#define ID_SPRITE_HUD_GENERAL 700000
+
 //Particle stuffs/ Effects
 #define ID_SPRITE_PARTICLE_BRICK 900000
 
@@ -226,6 +231,8 @@
 #define ID_SPRITE_OVERWORLD_PLANT_2 1000011
 #define ID_SPRITE_OVERWORLD_PLANT_3 1000012
 #define ID_SPRITE_OVERWORLD_PLANT_4 1000013
+
+
 
 
 #define ID_SPRITE_INVISIBLE_BLOCK 999999

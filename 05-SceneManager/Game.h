@@ -147,7 +147,7 @@ public:
 	void InitiateSwitchScene(int scene_id);
 
 	void _ParseSection_TEXTURES(string line);
-
+	int GetNextScene() { return next_scene; }
 
 	~CGame();
 };

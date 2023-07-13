@@ -7,7 +7,7 @@
 #include "Texture.h"
 #include "Animations.h"
 #include "PlayScene.h"
-
+#include "Dimscreen.h"
 CGame * CGame::__instance = NULL;
 
 /*
@@ -555,9 +555,9 @@ void CGame::SwitchScene()
 	
 	LPPLAYSCENE cs = (LPPLAYSCENE)scenes[current_scene];
 	cs->UnlockControl();
-
+	
 	scenes[current_scene]->Unload();
-
+	
 	CSprites::GetInstance()->Clear();
 	CAnimations::GetInstance()->Clear();
 
@@ -570,6 +570,7 @@ void CGame::SwitchScene()
 void CGame::InitiateSwitchScene(int scene_id)
 {
 	next_scene = scene_id;
+
 }
 
 
