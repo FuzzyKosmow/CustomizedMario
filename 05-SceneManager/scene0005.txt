@@ -16,9 +16,10 @@ leaf.txt
 flyingGoomba.txt
 particle.txt
 groundButton.txt
+items.txt
 #
 [VARIABLES]
-0	0	-500	2700	0	-20
+0	0	-500	2650	0	-20
 0	0	50	2700	300	-20
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -341,9 +342,13 @@ groundButton.txt
 6	2450	300	15	169	3	600001	600001	600001	0
 6	2520	300	15	169	3	600001	600001	600001	0
 6	2590	300	15	169	3	600001	600001	600001	0
-# MARIO
-0	1400	10
 
+#Ending loot
+
+
+# MARIO
+0	2700	10
+52	2804	113
 #Death zones
 51	2310	200	60	15
 51	1700	205	120	15

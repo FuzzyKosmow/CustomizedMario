@@ -41,7 +41,7 @@
 #define MARIO_STATE_TAIL_ATTACK_RIGHT	800
 #define MARIO_STATE_TAIL_ATTACK_LEFT	801
 #define MARIO_STATE_FACING_FRONT	900
-
+#define MARIO_ENDING_MOVE_RIGHT 1000
 #pragma region ANIMATION_ID
 
 #define ID_ANI_MARIO_IDLE_RIGHT 400
@@ -184,9 +184,14 @@
 
 
 //Death to overworld stats
-#define MARIO_DIE_TIME 1500
-#define MARIO_DIM_TIME	1000
-#define MARIO_DELAY_TIME 500
+#define MARIO_DIE_TIME 1000
+#define MARIO_DIM_TIME	500
+#define MARIO_DELAY_TIME 1000
+#define MARIO_UNDIM_TIME	0
+
+//Move to back to overworld after completetting level
+#define MARIO_WALK_TIME_BEFORE_DIME	2500
+
 
 class CMarioTailAttack;
 
@@ -242,7 +247,7 @@ class CMario : public CGameObject
 
 	void OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e);
-
+	void OnCollisionWithEndLevelLoot(LPCOLLISIONEVENT e);
 
 
 	int GetAniIdBig();
@@ -258,6 +263,12 @@ class CMario : public CGameObject
 	ULONGLONG dim_start = 0;
 	bool deadDimmed = false;
 	bool deadTimerStarted = false;
+
+	//Compelted level stats
+	ULONGLONG end_level_walk_start = 0;
+	bool endLevelDimmed = false;
+
+	bool levelFinished = false;
 public:
 	
 	

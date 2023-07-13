@@ -208,7 +208,7 @@ void CSampleKeyHandler::KeyState(BYTE* states)
 					mario->SetState(MARIO_STATE_WALKING_LEFT);
 				}
 			}
-			else
+			else if (mario->GetState() != MARIO_ENDING_MOVE_RIGHT)
 			{
 
 				mario->SetState(MARIO_STATE_IDLE);

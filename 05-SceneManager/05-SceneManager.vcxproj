@@ -158,6 +158,7 @@
     <ClCompile Include="Detection.cpp" />
     <ClCompile Include="Dimscreen.cpp" />
     <ClCompile Include="EatingPlant.cpp" />
+    <ClCompile Include="EndLevelLoot.cpp" />
     <ClCompile Include="FlyingGoomba.cpp" />
     <ClCompile Include="FlyingTurtle.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="DeathBlock.h" />
     <ClInclude Include="Dimscreen.h" />
+    <ClInclude Include="EndLevelLoot.h" />
     <ClInclude Include="GroundButton.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />

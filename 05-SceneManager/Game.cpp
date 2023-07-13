@@ -552,6 +552,9 @@ void CGame::SwitchScene()
 	if (next_scene < 0 || next_scene == current_scene) return; 
 
 	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
+	
+	LPPLAYSCENE cs = (LPPLAYSCENE)scenes[current_scene];
+	cs->UnlockControl();
 
 	scenes[current_scene]->Unload();
 

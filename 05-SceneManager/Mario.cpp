@@ -24,7 +24,7 @@
 #include <algorithm>
 #include "debug.h"
 #include "Dimscreen.h"
-
+#include "EndLevelLoot.h"
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -72,6 +72,27 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);
 	/*DebugOutTitle(L"Dead started at %d\n", dead_start)*/;
 	//Go back to overworld if dead
+	//DebugOutTitle(L"State %d\n", state);
+	
+	//Handler ending after getting the loot
+	if (state == MARIO_ENDING_MOVE_RIGHT)
+	{
+		if (GetTickCount64() - end_level_walk_start > MARIO_WALK_TIME_BEFORE_DIME && !endLevelDimmed)
+		{
+			CDimScreenEffect::GetInstance()->MakeDimFor(MARIO_DIM_TIME, MARIO_DELAY_TIME,  MARIO_UNDIM_TIME);
+			endLevelDimmed = true;
+			dim_start = GetTickCount64();
+		}
+		if ((GetTickCount64() - dim_start > MARIO_DIM_TIME + MARIO_DIM_TIME )&& endLevelDimmed)
+		{
+			CGame::GetInstance()->InitiateSwitchScene(SCENE_ID_OVERWORLD);
+		}
+		vx = MARIO_WALKING_SPEED;
+		vy += ay * dt;
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+
+		return;
+	}
 	if (state == MARIO_STATE_DIE)
 	{
 		if (GetTickCount64() - dead_start >= MARIO_DIE_TIME && !deadDimmed)
@@ -170,8 +191,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 	//Handling speed
-	vy += ay * dt;
-	vx += ax * dt;
+	
+		vy += ay * dt;
+		vx += ax * dt;
+	
+
 
 	if (isOnPlatform)
 	{
@@ -271,9 +295,19 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFlyingTurtle(e);
 	else if (dynamic_cast<CGroundButton*> (e->obj))
 		OnCollisionWithGroundButton(e);
-
+	else if (dynamic_cast<EndLevelLoot*>(e->obj))
+		OnCollisionWithEndLevelLoot (e);
 
 }
+
+void CMario::OnCollisionWithEndLevelLoot (LPCOLLISIONEVENT e)
+{
+	
+	e->obj->Delete();
+	this->SetState(MARIO_ENDING_MOVE_RIGHT);
+
+}
+
 void CMario::OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e)
 {
 	CFlyingTurtle* turtle = dynamic_cast<CFlyingTurtle*>(e->obj);
@@ -705,7 +739,7 @@ int CMario::GetAniIdSmall()
 				aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
 		}
 	}
-
+	if (state == MARIO_ENDING_MOVE_RIGHT) aniId = ID_ANI_MARIO_SMALL_WALKING_RIGHT;
 	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
 
 	return aniId;
@@ -843,6 +877,7 @@ int CMario::GetAniIdBig()
 
 			}
 
+			if (state == MARIO_ENDING_MOVE_RIGHT) aniId = ID_ANI_MARIO_WALKING_RIGHT;
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
 
 	return aniId;
@@ -995,7 +1030,7 @@ int CMario::GetAniIdRaccoon()
 			}
 		}
 	}
-
+	if (state == MARIO_ENDING_MOVE_RIGHT) aniId = ID_ANI_MARIO_RACCOON_WALKING_RIGHT;
 	if (aniId == -1)
 	{
 		aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
@@ -1187,8 +1222,14 @@ void CMario::SetState(int state)
 		ax = 0;
 		break;
 	case MARIO_ENDING_MOVE_RIGHT:
+		
 		vy = 0;
 		vx = MARIO_WALKING_SPEED;
+		LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+		scene->LockControl();
+		end_level_walk_start = GetTickCount64();
+		levelFinished= true;
+		break;
 	}
 
 	CGameObject::SetState(state);

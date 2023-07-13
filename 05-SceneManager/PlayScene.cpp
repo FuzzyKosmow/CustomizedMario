@@ -26,6 +26,9 @@
 #include "OverworldMario.h"
 #include "OverworldNode.h"
 #include "OverworldBlockingObject.h"
+#include "TitleScreenChoice.h"
+#include "DeathBlock.h"
+#include "EndLevelLoot.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
@@ -166,11 +169,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 
-		
 
 
 
-		
+
+
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
 	case OBJECT_TYPE_FLYING_GOOMBA:
 	{
@@ -257,6 +260,26 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		break;
 
+	}
+	case OBJECT_TYPE_DEATH_BLOCK:
+	{
+		if (tokens.size() >= 5)
+		{
+			float width = (float)atof(tokens[3].c_str());
+			float height = (float)atof(tokens[4].c_str());
+			obj = new DeathBlock(x, y, width, height);
+			DebugOut(L"Cusom death zone\n");
+		}
+		else
+		{
+			obj = new DeathBlock(x, y);
+		}
+		break;
+	}
+	case OBJECT_TYPE_END_LEVEL_LOOT:
+	{
+		obj = new EndLevelLoot(x, y);
+		break;
 	}
 	case OBJECT_TYPE_LOOT_BRICK:
 	{
@@ -382,8 +405,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		if (tokens.size() >= 6)
 		{
 			int aniID = atoi(tokens[3].c_str());
-			int bbwidth = atoi(tokens[4].c_str());
-			int bbheight = atoi(tokens[5].c_str());
+			float bbwidth = atoi(tokens[4].c_str());
+			float bbheight = atoi(tokens[5].c_str());
 			obj = new COverworldBlockingObject(x, y, aniID, bbwidth, bbheight);
 		}
 		else
@@ -391,7 +414,20 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			int aniID = atoi(tokens[3].c_str());
 			obj = new COverworldBlockingObject(x, y, aniID);
 		}
-		
+
+		break;
+	}
+	case OBJECT_TYPE_SCREEN_TITLE_CHOICE:
+	{
+		if (player != NULL)
+		{
+			DebugOut(L"[ERROR] Player already initialized\n");
+			return;
+		}
+		obj = new CTitleChoice(x, y);
+
+		player = obj;
+		DebugOut(L"Object title choice created!\n");
 		break;
 	}
 	default:
@@ -520,27 +556,36 @@ void CPlayScene::Update(DWORD dt)
 		}
 		else
 		{
+
 			CMario* mario = (CMario*)this->GetPlayer();
-			if (cx < cameraLimit.left) cx = cameraLimit.left;
-			else if (cx >= cameraLimit.right)  cx = cameraLimit.right;
-
-
-
-			if (cy <= cameraLimit.top) cy = cameraLimit.top; //Block at the very high above
-			else if (mario->IsFlying())
+			if (mario != NULL)
 			{
-				cy -= game->GetBackBufferHeight() / 2;
-				//Make sure its not out of camera limit
-				if (cy > cameraLimit.bottom)
+				if (cx < cameraLimit.left) cx = cameraLimit.left;
+				else if (cx >= cameraLimit.right)  cx = cameraLimit.right;
+
+
+
+				if (cy <= cameraLimit.top) cy = cameraLimit.top; //Block at the very high above
+				else if (mario->IsFlying())
+				{
+					cy -= game->GetBackBufferHeight() / 2;
+					//Make sure its not out of camera limit
+					if (cy > cameraLimit.bottom)
+						cy = cameraLimit.bottom;
+				}
+				else if (cy <= cameraLimit.sky)
+					cy -= game->GetBackBufferHeight() / 2;
+				else
 					cy = cameraLimit.bottom;
+				/*cy -= game->GetBackBufferHeight() / 2;*/
+				//Debug cam limit all properties
+				/*DebugOut(L" Camera limit: %f, %f, %f, %f\n", cameraLimit.left, cameraLimit.top, cameraLimit.right, cameraLimit.bottom);*/
 			}
-			else if (cy <= cameraLimit.sky)
-				cy -= game->GetBackBufferHeight() / 2;
 			else
-				cy = cameraLimit.bottom;
-			/*cy -= game->GetBackBufferHeight() / 2;*/
-			//Debug cam limit all properties
-			/*DebugOut(L" Camera limit: %f, %f, %f, %f\n", cameraLimit.left, cameraLimit.top, cameraLimit.right, cameraLimit.bottom);*/
+			{
+				if (cx < 0) cx = 0;
+				if (cy >= 0) cy = 0;
+			}
 
 		}
 		CGame::GetInstance()->SetCamPos(cx, cy);
@@ -580,8 +625,13 @@ void CPlayScene::Clear()
 */
 void CPlayScene::Unload()
 {
+
 	for (int i = 0; i < static_cast<int> (objects.size()); i++)
+	{
+
 		delete objects[i];
+	}
+
 
 	objects.clear();
 	player = NULL;

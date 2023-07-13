@@ -57,5 +57,8 @@
 600012	337	131	404	226	140
 #Small cloud
 600013	302	277	319	286	140
+
+##End zone loot
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]

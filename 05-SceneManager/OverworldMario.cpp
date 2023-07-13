@@ -5,7 +5,7 @@ void COverworldMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//Move mario. Check if mario has moved enough distance, if enough, stop.
 	if (isMoving)
 	{
-		
+
 		if (travelledDistance >= OVERWORLD_MARIO_TRAVEL_DISTANCE_BETWEEN_NODE)
 		{
 			isMoving = false;
@@ -15,21 +15,26 @@ void COverworldMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 		{
+
+
 			vy += ay * dt;
 			vx += ax * dt;
 			travelledDistance += sqrt(vx * vx + vy * vy) * dt;
+
+
 		}
 
 	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 	/*DebugOutTitle(L"Pos: %f %f", x, y);*/
-	DebugOutTitle(L"Is on node: %d", isOnNode);
+	/*DebugOutTitle(L"Is on node: %d", isOnNode);*/
+	DebugOutTitle(L"POS: %f %f\n", x, y);
 }
 
 
 void COverworldMario::Render()
 {
-	CAnimations * animations = CAnimations::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
 
 	animations->Get(ANI_ID_OVERWORLD_MARIO_SMALL)->Render(x, y);
 	RenderBoundingBox();
@@ -58,14 +63,14 @@ int COverworldMario::Move(OverworldMovementDirection direction)
 		vy = 0;
 		break;
 	case OverworldMovementDirection_Right:
-		 vx = OVERWORLD_MARIO_TRAVEL_SPEED;
-		 vy = 0;
-	
+		vx = OVERWORLD_MARIO_TRAVEL_SPEED;
+		vy = 0;
+
 		break;
 	case OverworldMovementDirection_Up:
 		vx = 0;
 		vy = -OVERWORLD_MARIO_TRAVEL_SPEED;
-	
+
 		break;
 	case OverworldMovementDirection_Down:
 		vx = 0;
@@ -75,6 +80,6 @@ int COverworldMario::Move(OverworldMovementDirection direction)
 		break;
 	}
 	isMoving = true;
-	
-		return 1;
+
+	return 1;
 }

@@ -192,6 +192,9 @@
     <ClCompile Include="DeathBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EndLevelLoot.cpp">
+      <Filter>Source Files\Loot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetIDs.h">
@@ -328,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="DeathBlock.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EndLevelLoot.h">
+      <Filter>Header Files\Loot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

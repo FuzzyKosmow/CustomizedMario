@@ -41,7 +41,8 @@
 
 
 #define OBJECT_TYPE_PORTAL	50
-
+#define OBJECT_TYPE_DEATH_BLOCK 51
+#define OBJECT_TYPE_END_LEVEL_LOOT 52
 //Overworld >200
 #define OBJECT_TYPE_MARIO_OVERWORLD 200
 #define OBJECT_TYPE_OVERWORLD_NODE 201
@@ -214,7 +215,8 @@
 //End game zone stuffs
 #define ID_SPRITE_END_ZONE_START_SPIKE 600000
 
-
+//End zone loot 600100 > items.txt
+#define ID_SPRITE_END_GAME_LOOT 600100
 //Particle stuffs/ Effects
 #define ID_SPRITE_PARTICLE_BRICK 900000
 
