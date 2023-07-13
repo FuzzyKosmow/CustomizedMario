@@ -412,5 +412,8 @@
     <Text Include="ui.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="hud.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

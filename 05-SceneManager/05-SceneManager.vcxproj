@@ -248,6 +248,7 @@
     <Text Include="goomba.txt" />
     <Text Include="ground.txt" />
     <Text Include="groundButton.txt" />
+    <Text Include="hud.txt" />
     <Text Include="introScene.txt" />
     <Text Include="invisibleBlock.txt" />
     <Text Include="leaf.txt" />

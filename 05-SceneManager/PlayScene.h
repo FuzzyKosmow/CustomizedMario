@@ -10,7 +10,7 @@
 #include "HUD.h"
 //#include "Koopas.h"
 #define MAXIMUM_CAMERA_LIMIT 5
-
+#define MAXIMUM_SCENE_TIME 5000
 
 struct SceneCameraLimit
 {
@@ -79,6 +79,11 @@ protected:
 	bool addedHud = false;
 	HUD* hud = NULL;
 	
+	ULONGLONG sceneStartTime = -1;
+	bool sceneStarted = false;
+	
+		
+
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
 
@@ -114,6 +119,7 @@ public:
 		AddObject(hud);
 		SwapObjectOrderToLast(hud);
 	}
+	int GetSceneTimeLeftInSecond() { return (MAXIMUM_SCENE_TIME - (GetTickCount64() - sceneStartTime)) / 1000; }
 };
 
 typedef CPlayScene* LPPLAYSCENE;

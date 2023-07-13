@@ -51,6 +51,12 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
 #define ASSETS_SECTION_VARIABLES 3
 #define MAX_SCENE_LINE 1024
 
+#define HUD_OVERWORLD_POS_OFFSET_X 160
+#define HUD_OVERWORLD_POS_OFFSET_Y 205
+
+#define HUD_OFFSET_X 155
+#define HUD_OFFSET_Y 219
+
 void CPlayScene::_ParseSection_SPRITES(string line)
 {
 	vector<string> tokens = split(line);
@@ -523,6 +529,9 @@ void CPlayScene::Load()
 	f.close();
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
+	sceneStarted = true;
+	sceneStartTime = GetTickCount64();
+	DebugOut(L"Scene started at %d\n", sceneStartTime);
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -543,7 +552,16 @@ void CPlayScene::Update(DWORD dt)
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
-
+	if ((id != SCENE_ID_INTRO && id != SCENE_ID_OVERWORLD) )
+	{
+		if (GetTickCount64() - sceneStartTime > MAXIMUM_SCENE_TIME)
+		{
+			//Since this is normal scene, get mario and set state dead, he will transfer back to overworld automatically
+			CMario* mario = (CMario*)player;
+			mario->SetState(MARIO_STATE_DIE);
+		}
+		
+	}
 
 
 	// Update camera to follow mario
@@ -596,7 +614,7 @@ void CPlayScene::Update(DWORD dt)
 
 		}
 		CGame::GetInstance()->SetCamPos(cx, cy);
-		//If there is hud , set it to follow cam to reduce latency
+		//If there is hud , set it to follow cam to reduce latency of hud
 		if (GetSceneID() != SCENE_ID_INTRO)
 		{
 			if (!addedHud)
@@ -606,9 +624,9 @@ void CPlayScene::Update(DWORD dt)
 				SwapObjectOrderToLast(hud);
 			}
 			if (id != SCENE_ID_OVERWORLD)
-				hud->SetPosition(cx+155, cy+219);
+				hud->QuickUpdate(cx+ HUD_OFFSET_X, cy+HUD_OFFSET_Y);
 			else
-				hud->SetPosition(cx+160, cy+205);
+				hud->QuickUpdate(cx+HUD_OVERWORLD_POS_OFFSET_X, cy+HUD_OVERWORLD_POS_OFFSET_Y);
 		}
 		
 		
