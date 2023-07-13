@@ -25,5 +25,16 @@
 #9
 700109	209	38	220	49	150
 
+#Speed normal node empty
+700200	56	301	67	310	150
+#Speed normal node full
+700201	90	301	101	310	150
+
+#Speed last node empty
+700203	56	301	87	310	150
+
+#Speed last node full
+700204	90	301	121	310	150
+
 
 

@@ -192,7 +192,18 @@
 //Move to back to overworld after completetting level
 #define MARIO_WALK_TIME_BEFORE_DIME	2500
 
+//Score value to be used when adding
+#define SCORE_DEFAULT_ADD	100
+#define SCORE_TURTLE_KILL	300
+#define SCORE_GOOMBA_KILL	200
+#define SCORE_FLYING_GOOMBA_KILL	200
+#define SCORE_MUSHROOM	500
+#define SCORE_GREEN_MUSHROOM	1000
+#define SCORE_JUMP_ON	100
 
+#define SCORE_MAX	9999999
+#define LIVES_MAX	99
+#define COIN_MAX	99
 class CMarioTailAttack;
 
 class CMario : public CGameObject
@@ -270,6 +281,10 @@ class CMario : public CGameObject
 
 	bool levelFinished = false;
 	bool sceneSwitchActivated = false;
+
+	//Score and lives
+	int score = 0;
+	int lives = 4;
 public:
 	
 	
@@ -303,8 +318,41 @@ public:
 	int GetXDirection() { return nx; }; //X > 0: right, X < 0: left
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	void AddCoin(int num) { coin += num; }
+	void AddCoin(int num) { 
+		//No more than 99
+		if (coin + num > COIN_MAX)
+			coin = COIN_MAX;
+		else
+			coin += num;
+	}
+	int GetLive() { return lives; }
+	void AddLive(int num) { 
+		//No more than 99
+		if (lives + num > LIVES_MAX)
+			lives = LIVES_MAX;
+		else
+			lives += num;
+	}
+	void MinusLive() { 
+		//No less than 0
+		if (lives - 1 < 0)
+			lives = 0;
+		else
+			lives -= 1;
+	}
+	int GetCoin() { return coin; }
+	int GetScore() { return score; }
+	void AddScore(int num) { 
+		//No more than 9999999. Because of rendering
+		if (score + num > SCORE_MAX)
+			score = SCORE_MAX;
+		else
+			score += num;
+
+	}
 	void TakeDamage(); // 1 unit of damage = 1 level
+
+	
 
 	//Travelling between place/scenes
 	bool OnTravelableTunnel() { return isOnTravelableTunnel; }
@@ -312,6 +360,7 @@ public:
 	LPGAMEOBJECT GetTravelableTunnel() { return travelableTunnel; }
 	void SetTravelableTunnel(LPGAMEOBJECT t) { travelableTunnel = t; }
 
+	float SpeedXRatio() { return vx / maxVx; }
 
 	///
 	int GetObjectType () { return OBJECT_TYPE_MARIO; }

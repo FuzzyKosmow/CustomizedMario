@@ -24,6 +24,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	{
 		switch (KeyCode)
 		{
+		case DIK_T:
+			mario->AddScore(105);
+			break;
 		case DIK_DOWN:
 			if (mario->OnTravelableTunnel())
 			{

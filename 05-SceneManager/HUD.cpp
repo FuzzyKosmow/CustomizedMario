@@ -4,34 +4,100 @@
 #define HUD_MARIO_ICON_OFFSET_X -134
 #define HUD_MARIO_ICON_OFFSET_Y 6
 
-#define HUD_WORLD_OFFSET_X -134
-#define HUD_WORLD_OFFSET_Y 6
+#define HUD_WORLD_OFFSET_X -98
+#define HUD_WORLD_OFFSET_Y -3.3f
 
-#define HUD_SCORE_OFFSET_X -60
+#define HUD_SCORE_OFFSET_X -83
 #define HUD_SCORE_OFFSET_Y 6
+
+#define HUD_SPEED_OFFSET_X -83
+#define HUD_SPEED_OFFSET_Y -3.3f
+#define	HUD_SPEED_MAX_NODE	6
+#define HUD_SPEED_NODE_WIDTH	10
+
 
 #define HUD_TIME_OFFSET_X 12
 #define HUD_TIME_OFFSET_Y 6
 #define HUD_TIME_MAX_CHAR 3
 
+#define HUD_COIN_OFFSET_X 21
+#define HUD_COIN_OFFSET_Y -3.3f
+
+#define HUD_LIVE_OFFSET_X -105
+#define HUD_LIVE_OFFSET_Y 6
 
 #define HUD_NUMBER_WIDTH	10
 
 #define CURRENT_WORLD 1
+#define WORLD_MAX_CHAR 1
+
+#define SCORE_MAX_CHAR 7
+
 
 //Render
 void HUD::Render()
 {
 	//Render general hud zone 
-	CSprites * s = CSprites::GetInstance();
-	
-	s->Get(ID_SPRITE_HUD_GENERAL)->Draw(x, y);
-	s->Get(ID_SPRITE_HUD_MARIO_ICON)->Draw(x+ HUD_MARIO_ICON_OFFSET_X, y+ HUD_MARIO_ICON_OFFSET_Y);
-	
+	CSprites* s = CSprites::GetInstance();
 	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
-	int timeLeft = scene->GetSceneTimeLeftInSecond();
+
+	int world = CURRENT_WORLD;
+
+
+	//general background render
+	s->Get(ID_SPRITE_HUD_GENERAL)->Draw(x, y);
+	s->Get(ID_SPRITE_HUD_MARIO_ICON)->Draw(x + HUD_MARIO_ICON_OFFSET_X, y + HUD_MARIO_ICON_OFFSET_Y);
+	//World
+	DrawNumberAt(world, x + HUD_WORLD_OFFSET_X, y + HUD_WORLD_OFFSET_Y, WORLD_MAX_CHAR);
+
+	if (scene->GetSceneID() != SCENE_ID_OVERWORLD)
+	{
+		CMario* mario = (CMario*)scene->GetPlayer();
+		int coin = mario->GetCoin();
+		int score;
+		int live;
+		int timeLeft = scene->GetSceneTimeLeftInSecond();
+		float speedXRatio = mario->SpeedXRatio();
+		//Speed . There are six speed node using the ratio get from mario. Last node use a different sprite. When ever a node is full, it will be rendered with a different sprite
+		for (int i =0; i< HUD_SPEED_MAX_NODE; i++)
+		{
+			if (i < HUD_SPEED_MAX_NODE - 1)
+			{
+				if (speedXRatio >= (i + 1) * 1.0f / HUD_SPEED_MAX_NODE)
+					s->Get(ID_SPRITE_HUD_SPEED_NORMAL_FULL)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
+				else
+					s->Get(ID_SPRITE_HUD_SPEED_NORMAL_EMPTY)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
+			}
+			else
+			{
+				if (speedXRatio >= (i + 1) * 1.0f / HUD_SPEED_MAX_NODE)
+					s->Get(ID_SPRITE_HUD_SPEED_LAST_FULL)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
+				else
+					s->Get(ID_SPRITE_HUD_SPEED_LAST_EMPTY)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
+			}
+
+		}
+		//Time
+		DrawNumberAt(timeLeft, x + HUD_TIME_OFFSET_X, y + HUD_TIME_OFFSET_Y, HUD_TIME_MAX_CHAR);
 	
-	DrawNumberAt(timeLeft, x + HUD_TIME_OFFSET_X, y + HUD_TIME_OFFSET_Y, HUD_TIME_MAX_CHAR);
+		//Coin
+		int coinDigits = NumberDigits(coin);
+		DrawNumberAt(coin, x + HUD_COIN_OFFSET_X , y + HUD_COIN_OFFSET_Y, coinDigits);
+		//Live
+		live = mario->GetLive();
+		int liveDigits = NumberDigits(live);
+		DrawNumberAt(live , x + HUD_LIVE_OFFSET_X, y + HUD_LIVE_OFFSET_Y, liveDigits);
+		//Always render 6 number for score
+		score = mario->GetScore();
+		DrawNumberAt (score, x + HUD_SCORE_OFFSET_X, y + HUD_SCORE_OFFSET_Y, SCORE_MAX_CHAR);
+
+		
+	}
+	else
+	{
+		DrawNumberAt(0, x + HUD_TIME_OFFSET_X, y + HUD_TIME_OFFSET_Y, HUD_TIME_MAX_CHAR);
+	}
+	
 }
 
 
@@ -44,11 +110,7 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//this->x = cx+150;
 	//this->y = cy+230;
 	//Update random number from 1-10 and back to 1 again
-	if (GetTickCount64() - lastRandomNumberChangeTime > 1000)
-	{
-		randomNumber = rand() % 10 + 1;
-		lastRandomNumberChangeTime = GetTickCount64();
-	}
+	
 }
 
 
@@ -57,8 +119,9 @@ void HUD::QuickUpdate(float x, float y)
 	this->x = x;
 	this->y = y;
 	/*DrawNumberAt (CURRENT_WORLD, x + HUD_WORLD_OFFSET_X, y + HUD_WORLD_OFFSET_Y, 2);*/
-	CSprites * s = CSprites::GetInstance();
 	
+	
+
 }
 
 HUD::HUD()
@@ -96,4 +159,20 @@ void HUD::DrawNumberAt(int number, float x, float y, int maxNumOfDigit)
 		sprites->Get(ID_SPRITE_HUD_NUMBER_0 + digit)->Draw(x + (maxNumOfDigit - i - 1) * HUD_NUMBER_WIDTH, y);
 		number /= 10;
 	}
+}
+
+//Small utils
+int NumberDigits(int number)
+{
+	if (number == 0) return 1;
+	int numOfDigit = 0;
+	
+	int temp = number;
+	while (temp > 0)
+	{
+		temp /= 10;
+		numOfDigit++;
+	}
+	
+	return numOfDigit;
 }

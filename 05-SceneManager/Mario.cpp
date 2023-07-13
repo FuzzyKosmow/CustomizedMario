@@ -1225,6 +1225,10 @@ void CMario::SetState(int state)
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		vx = 0;
 		ax = 0;
+	
+		if (lives > 0)
+			lives--;
+		
 		break;
 	case MARIO_ENDING_MOVE_RIGHT:
 		
