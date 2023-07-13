@@ -14,6 +14,7 @@
 #define END_LEVEL_LOOT_TYPE_STAR				3
 
 #define END_LEVEL_LOOT_UPDATE_INTERVAL			300
+#define END_LEVEL_LOOT_GENERAL_SCORE			6900
 
 class EndLevelLoot : public CGameObject
 {

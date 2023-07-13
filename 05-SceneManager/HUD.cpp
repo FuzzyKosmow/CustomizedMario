@@ -139,6 +139,18 @@ HUD* HUD::GetInstance() //Also add to non-intro scene if the hud is not added ye
 	return __instance;
 }
 
+void HUD::PopUpScoreAtMario(int score)
+{
+	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+	CMario* mario = (CMario*)scene->GetPlayer();
+	float x, y;
+	mario->AddScore(score);
+	mario->GetPosition(x, y);
+	PopUpScore* popUpScore = new PopUpScore(x,y,score);
+	scene->AddObject(popUpScore);
+	scene->SwapObjectOrderToLast(popUpScore);
+	
+}
 
 void HUD::DrawNumberAt(int number, float x, float y, int maxNumOfDigit)
 {
@@ -175,4 +187,36 @@ int NumberDigits(int number)
 	}
 	
 	return numOfDigit;
+}
+
+//Popup score: Use x, y to as start render location. Slowly float up and disapear after 1s
+void PopUpScore::Render()
+{
+	
+	HUD::GetInstance()->DrawNumberAt(score, x, y, scoreDigits);
+	
+	
+}
+
+PopUpScore::PopUpScore(float x, float y, int score)
+{
+	this->score = score;
+	this->x = x;
+	this->y = y;
+	this->scoreDigits = NumberDigits(score);
+	LPPLAYSCENE scene = (LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene();
+	
+	timeStart = GetTickCount64();
+}
+
+void PopUpScore::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	//Update position
+	y -= HUD_POPUP_SCORE_SPEED_Y * dt;
+	//Update time
+	ULONGLONG now = GetTickCount64();
+	if (now - timeStart > HUD_POPUP_SCORE_TIME)
+	{
+		this->Delete();
+	}
 }

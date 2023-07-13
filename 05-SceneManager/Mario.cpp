@@ -304,11 +304,15 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithEndLevelLoot (e);
 
 }
-
+void CMario::AddScoreWithPopUp(int num)
+{
+	HUD::GetInstance()->PopUpScoreAtMario(num);
+}
 void CMario::OnCollisionWithEndLevelLoot (LPCOLLISIONEVENT e)
 {
 	
 	e->obj->Delete();
+	AddScoreWithPopUp(END_LEVEL_LOOT_GENERAL_SCORE);
 	this->SetState(MARIO_ENDING_MOVE_RIGHT);
 
 }
@@ -351,6 +355,7 @@ void CMario::OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e)
 			turtle->SetState(FLYING_TURTLE_STATE_SHELL);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
+		AddScoreWithPopUp(SCORE_JUMP_ON);
 	}
 	else if (e->nx != 0 && turtle->GetState() == FLYING_TURTLE_STATE_SHELL && //Holding
 		game->IsKeyDown(DIK_A)
@@ -386,13 +391,16 @@ void CMario::OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e)
 		{
 			e->obj->SetState(FLYING_GOOMBA_STATE_WALKING);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			AddScoreWithPopUp(SCORE_JUMP_ON*3);
 		}
 		else if (e->obj->GetState() == FLYING_GOOMBA_STATE_WALKING)
 		{
 			e->obj->SetState(FLYING_GOOMBA_STATE_DIE);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			AddScoreWithPopUp(SCORE_JUMP_ON);
 
 		}
+
 
 	}
 	else if (e->obj->GetState() != FLYING_GOOMBA_STATE_DIE || e->obj->GetState() != FLYING_GOOMBA_STATE_DIE_BY_ATTACK)
@@ -412,6 +420,7 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 {
 
 	SetLevel(MARIO_LEVEL_RACCOON);
+	AddScoreWithPopUp(SCORE_LEAF);
 	e->obj->Delete();
 }
 
@@ -423,7 +432,7 @@ void CMario::OnCollisionWithGroundButton(LPCOLLISIONEVENT e)
 		if (e->obj->GetState() == GROUND_BUTTON_STATE_NORMAL)
 		{
 			e->obj->SetState(GROUND_BUTTON_STATE_PRESSED);
-
+			AddScoreWithPopUp(GROUND_BUTTON_PRESS_SCORE);
 		}
 	}
 }
@@ -438,6 +447,7 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 		{
 			turtle->SetState(TURTLE_STATE_SHELL);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			
 		}
 		else if (turtle->GetState() == TURTLE_STATE_SHELL)
 		{
@@ -451,12 +461,16 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 				turtle->SetSpeed(-TURTLE_SHELL_SPEED, 0);
 			}
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		
 		}
 		else if (turtle->GetState() == TURTLE_STATE_SHELL_MOVING)
 		{
 			turtle->SetState(TURTLE_STATE_SHELL);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			
 		}
+		AddScoreWithPopUp(SCORE_JUMP_ON);
+		
 	}
 	else if (e->nx != 0 && turtle->GetState() == TURTLE_STATE_SHELL &&
 		game->IsKeyDown(DIK_A)
@@ -529,11 +543,13 @@ void CMario::OnCollisionWithSchroom(LPCOLLISIONEVENT e)
 	if ((GetLevel() == MARIO_LEVEL_SMALL || GetLevel() == MARIO_LEVEL_BIG) && dynamic_cast<CShroom*>(e->obj)->GetState() == SHROOM_STATE_WALKING)
 	{
 		SetLevel(MARIO_LEVEL_BIG);
+		AddScoreWithPopUp(SCORE_MUSHROOM);
 		e->obj->Delete();
 	}
 	else if (level == MARIO_LEVEL_RACCOON && dynamic_cast<CShroom*>(e->obj)->GetState() == SHROOM_STATE_WALKING)
 	{
 		SetLevel(MARIO_LEVEL_RACCOON);
+		AddScoreWithPopUp(SCORE_MUSHROOM);
 		e->obj->Delete();
 	}
 
@@ -546,6 +562,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 		if (e->ny > 0) {
 			CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
 			brick->Break();
+			AddScoreWithPopUp(SECRET_BRICK_WITH_BUTTON_BREAK_SCORE);
 		}
 
 	}
@@ -554,6 +571,8 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 		{
 			CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 			brick->Break();
+			
+			AddScoreWithPopUp(BRICK_BREAK_SCORE);
 		}
 }
 
@@ -569,7 +588,8 @@ void CMario::OnCollisionWithLootBrick(LPCOLLISIONEVENT e)
 		{
 
 			lootBrick->ShowLoot();
-
+	
+			AddScoreWithPopUp(SCORE_MINI);
 		}
 
 	}
@@ -586,6 +606,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		{
 			goomba->SetState(GOOMBA_STATE_DIE);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			AddScoreWithPopUp(SCORE_JUMP_ON);
 		}
 	}
 	else // hit by Goomba
@@ -620,6 +641,8 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
+	AddScoreWithPopUp(SCORE_COIN);
+
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)

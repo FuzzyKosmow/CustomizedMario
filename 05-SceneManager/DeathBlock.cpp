@@ -1,7 +1,8 @@
 #include "DeathBlock.h"
 #include "Mario.h"
 #include "Textures.h"
-
+#include "Turtle.h"
+#include "FlyingTurtle.h"
 void DeathBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -59,5 +60,19 @@ void DeathBlock::OnCollisionWith (LPCOLLISIONEVENT e)
 		CMario* mario = dynamic_cast<CMario*>(e->obj);
 		mario->SetState(MARIO_STATE_DIE);
 	}
-
+	else if (dynamic_cast<CTurtle*> (e->obj))
+	{
+		 CTurtle * turtle = dynamic_cast<CTurtle*>(e->obj);
+		 turtle->SetState(TURTLE_STATE_DIE_BY_ATTACK);
+	}
+	else if (dynamic_cast<CFlyingTurtle*> (e->obj))
+	{
+		CFlyingTurtle * turtle = dynamic_cast<CFlyingTurtle*>(e->obj);
+		turtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
+	}
+	else if (dynamic_cast<CGoomba*> (e->obj))
+	{
+		CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+		goomba->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
+	}
 }

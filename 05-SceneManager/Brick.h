@@ -13,6 +13,7 @@
 	#define BRICK_BBOX_HEIGHT 16
 	#define ID_SPRITE_BRICK_BREAK_PARTICLE 900000
 	#define BRICK_PARTICLE_SPAWN_COUNT 4
+	#define BRICK_BREAK_SCORE 10
 	//As of now it only have one state, static. If broke, the thing is just gone. I guess?
 
 	class CBrick : public CGameObject {

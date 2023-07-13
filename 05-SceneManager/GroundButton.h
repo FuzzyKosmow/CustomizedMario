@@ -17,6 +17,7 @@
 
 #define GROUND_BUTTON_PRESSED_OFFSET_Y 6
 
+#define GROUND_BUTTON_PRESS_SCORE 100
 class CGroundButton : public CGameObject
 {
 	bool pressed;
@@ -44,7 +45,10 @@ public:
 		this ->state = state;
 
 	}
-	void SetPressed(bool pressed) { this->pressed = pressed; }
+	void SetPressed(bool pressed) { 
+		this->pressed = pressed; 
+		
+	}
 	bool GetPressed() { return pressed; }
 
 	int GetObjectType () { return OBJECT_TYPE_GROUND_BUTTON; }

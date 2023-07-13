@@ -6,8 +6,8 @@
 #define MARIO_WALKING_SPEED		0.1f
 #define MARIO_RUNNING_SPEED		0.2f
 
-#define MARIO_ACCEL_WALK_X	0.0005f
-#define MARIO_ACCEL_RUN_X	0.0007f
+#define MARIO_ACCEL_WALK_X	0.0002f
+#define MARIO_ACCEL_RUN_X	0.0003f
 #define MARIO_ACCEL_FLY_X 0.0003f
 #define MARIO_ACCEL_FLY_Y 0.0003f
 
@@ -193,12 +193,15 @@
 #define MARIO_WALK_TIME_BEFORE_DIME	2500
 
 //Score value to be used when adding
+#define SCORE_MINI	10
 #define SCORE_DEFAULT_ADD	100
+#define SCORE_COIN 50	
 #define SCORE_TURTLE_KILL	300
 #define SCORE_GOOMBA_KILL	200
 #define SCORE_FLYING_GOOMBA_KILL	200
 #define SCORE_MUSHROOM	500
 #define SCORE_GREEN_MUSHROOM	1000
+#define SCORE_LEAF	1000
 #define SCORE_JUMP_ON	100
 
 #define SCORE_MAX	9999999
@@ -342,6 +345,7 @@ public:
 	}
 	int GetCoin() { return coin; }
 	int GetScore() { return score; }
+	void AddScoreWithPopUp(int num);
 	void AddScore(int num) { 
 		//No more than 9999999. Because of rendering
 		if (score + num > SCORE_MAX)

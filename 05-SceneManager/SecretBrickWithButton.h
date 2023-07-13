@@ -22,6 +22,7 @@
 #define SECRET_BRICK_WITH_BUTTON_DETECTION_ZONE_WIDTH 5
 #define SECRET_BRICK_WITH_BUTTON_DETECTION_ZONE_HEIGHT 5
 
+#define SECRET_BRICK_WITH_BUTTON_BREAK_SCORE 420
 using namespace std;
 
 class ObjectDetector;
@@ -45,6 +46,8 @@ public:
 		if (state == SECRET_BRICK_WITH_BUTTON_STATE_NORMAL)
 		{
 			SetState (SECRET_BRICK_WITH_BUTTON_STATE_SHOW_BUTTON);
+			
 		}
+		
 	}
 };

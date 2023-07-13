@@ -9,6 +9,7 @@
 #include "OverworldMario.h"
 #include "OverworldNode.h"
 #include "TitleScreenChoice.h"
+#include "HUD.h"
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
@@ -25,7 +26,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		switch (KeyCode)
 		{
 		case DIK_T:
-			mario->AddScore(105);
+			//Add a pop up score at mario location
+			
+			HUD::GetInstance()->PopUpScoreAtMario(100);
 			break;
 		case DIK_DOWN:
 			if (mario->OnTravelableTunnel())
