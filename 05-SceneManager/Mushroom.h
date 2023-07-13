@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define SHROOM_GRAVITY 0.002f
+#define SHROOM_GRAVITY 0.001f
 #define SHROOM_WALKING_SPEED 0.05f
 
 
