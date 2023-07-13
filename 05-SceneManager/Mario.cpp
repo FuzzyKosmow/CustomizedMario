@@ -75,6 +75,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"State %d\n", state);
 	
 	//Handler ending after getting the loot
+	if (sceneSwitchActivated)
+		return;
+
 	if (state == MARIO_ENDING_MOVE_RIGHT)
 	{
 		if (GetTickCount64() - end_level_walk_start > MARIO_WALK_TIME_BEFORE_DIME && !endLevelDimmed)
@@ -83,9 +86,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			endLevelDimmed = true;
 			dim_start = GetTickCount64();
 		}
-		if ((GetTickCount64() - dim_start > MARIO_DIM_TIME + MARIO_DIM_TIME )&& endLevelDimmed)
+		if ((GetTickCount64() - dim_start > MARIO_DIM_TIME + MARIO_DIM_TIME )&& endLevelDimmed && !sceneSwitchActivated)
 		{
 			CGame::GetInstance()->InitiateSwitchScene(SCENE_ID_OVERWORLD);
+			sceneSwitchActivated = true;
+			return;
 		}
 		vx = MARIO_WALKING_SPEED;
 		vy += ay * dt;

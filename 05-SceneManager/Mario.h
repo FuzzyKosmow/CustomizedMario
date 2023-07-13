@@ -269,6 +269,7 @@ class CMario : public CGameObject
 	bool endLevelDimmed = false;
 
 	bool levelFinished = false;
+	bool sceneSwitchActivated = false;
 public:
 	
 	

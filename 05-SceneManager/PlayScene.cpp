@@ -400,7 +400,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_OVERWORLD_NODE:
 	{
-		float spriteID = (float)atof(tokens[3].c_str());
+		int spriteID = (int)atof(tokens[3].c_str());
 		int sceneID = atoi(tokens[4].c_str());
 
 
@@ -412,8 +412,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		if (tokens.size() >= 6)
 		{
 			int aniID = atoi(tokens[3].c_str());
-			float bbwidth = atoi(tokens[4].c_str());
-			float bbheight = atoi(tokens[5].c_str());
+			float bbwidth = (float)atoi(tokens[4].c_str());
+			float bbheight = (float)atoi(tokens[5].c_str());
 			obj = new COverworldBlockingObject(x, y, aniID, bbwidth, bbheight);
 		}
 		else

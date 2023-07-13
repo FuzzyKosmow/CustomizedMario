@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
-#define DEADTHBLOCK_BBOX_WIDTH  30
-#define DEADTHBLOCK_BBOX_HEIGHT 16
+#define DEADTHBLOCK_BBOX_WIDTH  30.0
+#define DEADTHBLOCK_BBOX_HEIGHT 16.0
 class DeathBlock : public CGameObject
 {
 	float customWidth = 0;

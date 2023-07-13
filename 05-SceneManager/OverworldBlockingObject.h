@@ -1,19 +1,18 @@
 #pragma once
 #include "GameObject.h"
 
-#define OVERWORLD_BLOCKING_OBJECT_BBOX_WIDTH  10
-#define OVERWORLD_BLOCKING_OBJECT_BBOX_HEIGHT 10
+
 
 #define ANI_ID_OVERWORLD_BUSHES 10001
 
 class COverworldBlockingObject : public CGameObject
 {
 	int aniID = -1;
-	int bbHeight = 0;
-	int bbWidth = 0;
+	float bbHeight = 0;
+	float bbWidth = 0;
 public:
 
-	COverworldBlockingObject(float x, float y, int aniID, int width = OVERWORLD_BLOCKING_OBJECT_BBOX_WIDTH,int height = OVERWORLD_BLOCKING_OBJECT_BBOX_HEIGHT) : CGameObject(x, y)
+	COverworldBlockingObject(float x, float y, int aniID, float width = OVERWORLD_BLOCKING_OBJECT_BBOX_WIDTH,float height = OVERWORLD_BLOCKING_OBJECT_BBOX_HEIGHT) : CGameObject(x, y)
 	{
 		this->aniID = aniID;
 		this->bbHeight = height;
@@ -31,8 +30,8 @@ public:
 
 	void GetBoundingBox(float& l, float& t, float& r, float& b)
 	{
-		l = x - bbWidth / 2;
-		t = y - bbHeight / 2;
+		l = x - (float)bbWidth / 2;
+		t = y - (float)bbHeight / 2;
 		r = x + bbWidth;
 		b = y + bbHeight;
 	}

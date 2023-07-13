@@ -33,7 +33,7 @@ void CDimScreenEffect::Render()
 		mario->GetPosition(marioX, marioY);
 		/*	CGame::GetInstance()->Draw(marioX-cx, marioY - cy, tex, &rect, alpha);*/
 
-		CGame::GetInstance()->Draw(screenHeight / 2, screenWidth / 2, tex, &rect, alpha);
+		CGame::GetInstance()->Draw((float)screenHeight / 2, (float)screenWidth / 2, tex, &rect, alpha);
 
 	}
 }

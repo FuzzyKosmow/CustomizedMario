@@ -81,12 +81,15 @@ void CVerticalObject::RenderBoundingBox()
 void CVerticalObject::Render()
 {
 	if (this->height <= 0) return;
+	if (this == NULL)
+		return;
 	float yy = y;
 	CSprites * s = CSprites::GetInstance();
 	s->Get(this->spriteIdBegin)->Draw(x, yy);
 	yy += this->cellHeight;
 	for (int i = 1; i < this->height - 1; i++)
 	{
+		
 		s->Get(this->spriteIdMiddle)->Draw(x, yy);
 		yy -= this->cellHeight;
 	}

@@ -33,8 +33,8 @@ void DeathBlock::RenderBoundingBox()
 	GetBoundingBox(l, t, r, b);
 	rect.left = 0;
 	rect.top = 0;
-	rect.right = customWidth;
-	rect.bottom = customHeight;
+	rect.right = (LONG)customWidth;
+	rect.bottom = (LONG)customHeight;
 
 	float cx, cy;
 	CGame::GetInstance()->GetCamPos(cx, cy);

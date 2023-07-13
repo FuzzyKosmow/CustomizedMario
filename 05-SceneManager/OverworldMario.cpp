@@ -59,7 +59,7 @@ int COverworldMario::Move(OverworldMovementDirection direction)
 	switch (direction)
 	{
 	case OverworldMovementDirection_Left:
-		vx = -OVERWORLD_MARIO_TRAVEL_SPEED;
+		vx =  - OVERWORLD_MARIO_TRAVEL_SPEED;
 		vy = 0;
 		break;
 	case OverworldMovementDirection_Right:
