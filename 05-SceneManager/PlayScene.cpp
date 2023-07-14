@@ -591,7 +591,7 @@ void CPlayScene::Update(DWORD dt)
 
 
 				if (cy <= cameraLimit.top) cy = cameraLimit.top; //Block at the very high above
-				else if (mario->IsFlying())
+				else if (mario->IsFlying() || mario->IsDescending())
 				{
 					cy -= game->GetBackBufferHeight() / 2;
 					//Make sure its not out of camera limit

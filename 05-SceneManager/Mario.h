@@ -18,6 +18,7 @@
 #define MARIO_RACCOON_JUMP_INVERVAL_REQUIRED 400
 #define MARIO_RACCOON_MAX_FLY_VY_PHASE_1	0.6f //Still on the ground , allow to jump press space again within interval to transition to fly and limit speed
 #define MARIO_RACCOON_MAX_FLY_VY_PHASE_2	0.15f
+#define MARIO_RACCOON_DESCEND_MAX_DROP_VY	0.1f
 
 
 
@@ -225,6 +226,7 @@ class CMario : public CGameObject
 	
 	BOOLEAN isSitting;
 	bool isFlying = false;
+	bool isDescending = false;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -376,7 +378,7 @@ public:
 	}
 	void TakeDamage(); // 1 unit of damage = 1 level
 
-	
+	bool IsDescending() { return isDescending; }
 
 	//Travelling between place/scenes
 	bool OnTravelableTunnel() { return isOnTravelableTunnel; }

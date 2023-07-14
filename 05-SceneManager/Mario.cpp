@@ -196,7 +196,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	//Handling mario raccoon flying gravity
 	DebugOutTitle(L"Gravity: %f  flying: %d : %f\n", ay, isFlying,vy);
-
+	DebugOut(L"Descend: %d\n", isDescending);
 	vy += ay * dt;
 	vx += ax * dt;
 	//Make sure it's abs value is not pass MARIO_RACCOON_MAX_VY
@@ -244,10 +244,24 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				
 				
 			}
-			else
+			else if (isDescending)
 			{
 				//Descend
 				isFlying = false;
+				//Make sure its not bigger than MARIO_RACCOON_DESCEND_MAX_DROP_VY
+				if (abs(vy) > abs(MARIO_RACCOON_DESCEND_MAX_DROP_VY))
+				{
+					if (vy > 0)
+					{
+						vy = MARIO_RACCOON_DESCEND_MAX_DROP_VY;
+					}
+					else
+					{
+						vy = -MARIO_RACCOON_DESCEND_MAX_DROP_VY;
+					}
+				}
+
+
 			}
 		}
 	}
@@ -270,7 +284,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		ay = MARIO_GRAVITY;
 		flyTookOff = false;
 		isFlying = false;
-
+		isDescending = false;
 	}
 	
 
@@ -1232,9 +1246,7 @@ void CMario::SetState(int state)
 			if (maxSpeedReached && flyTookOff) //Transition to fly
 			{
 
-				/*vy = -MARIO_JUMP_SPEED_Y;*/
-				/*ay = MARIO_RACCOON_GRAVITY;*/
-				/*ay = -MARIO_RACCOON_LIFT_GRAVITY;*/
+				
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
 				vyFlyMax = MARIO_RACCOON_MAX_FLY_VY_PHASE_2;
 				flyTookOff = true;
@@ -1244,8 +1256,7 @@ void CMario::SetState(int state)
 			else if (maxSpeedReached && !isOnPlatform) //Flying. Keeping the gravity
 			{
 
-				/*vy = -MARIO_RACCOON_FLY_SPEED_Y;
-				ay = MARIO_RACCOON_GRAVITY;*/
+			
 				isFlying = true;
 				vyFlyMax = MARIO_RACCOON_MAX_FLY_VY_PHASE_2;
 				ay = -MARIO_RACCOON_LIFT_GRAVITY;
@@ -1254,19 +1265,24 @@ void CMario::SetState(int state)
 			else if (maxSpeedReached && isOnPlatform) //Normal fast jump
 			{
 
-				/*vy = -MARIO_JUMP_SPEED_Y;*/
-				/*ay = MARIO_RACCOON_GRAVITY;*/
-				/*ay = -MARIO_RACCOON_LIFT_GRAVITY;*/
+				
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
 				flyTookOff = true;
 				flyTookOffStart = GetTickCount64();
 				
+			}
+			else if (!maxSpeedReached && !isOnPlatform) //Descend
+			{
+				/*ay = MARIO_GRAVITY * 0.25;*/
+
+				isDescending = true;
 			}
 			else if (isOnPlatform)
 			{
 				vy = -MARIO_JUMP_SPEED_Y;
 				vyFlyMax = MARIO_RACCOON_MAX_FLY_VY_PHASE_1;
 				flyTookOff = false;
+				
 			}
 			lastJumpPressed = GetTickCount64();
 			
