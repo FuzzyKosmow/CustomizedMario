@@ -25,7 +25,7 @@ void CShootingPlant::Render()
 		float dy = my - y;
 		CSprites* s = CSprites::GetInstance();
 		//Draw based on the direction
-		if (dx >= 0 && dy <= 0)
+		if (dx >= 0 && dy < 0)
 		{
 			s->Get(ID_SPRITE_PLANT_LOOK_UP_RIGHT)->Draw(x, y);
 
@@ -38,9 +38,19 @@ void CShootingPlant::Render()
 		{
 			s->Get(ID_SPRITE_PLANT_LOOK_UP_LEFT)->Draw(x, y);
 		}
-		else
+		else if (dx < 0 && dy > 0)
 		{
 			s->Get(ID_SPRITE_PLANT_LOOK_DOWN_LEFT)->Draw(x, y);
+		}
+		//Look straight left
+		else if ( dx < 0 && dy == 0)
+		{
+			s->Get(ID_SPRITE_PLANT_STRAIGHT_LEFT)->Draw(x, y);
+		}
+		//Straight right
+		else if (dx > 0 && dy == 0)
+		{
+			s->Get(ID_SPRITE_PLANT_STRAIGHT_RIGHT)->Draw(x, y);
 		}
 	}
 	/*RenderBoundingBox();*/
@@ -134,7 +144,7 @@ void CShootingPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					float xSpawnForDirection;
 					float ySpawnForDirection;
 					//Based on mario position, choose the direction to spawn the bullet, similiar to the render function of the plant
-					if (direction.x >= 0 && direction.y <= 0)
+					if (direction.x >= 0 && direction.y < 0)
 					{
 						xSpawnForDirection = x + PLANT_SPAWN_OFFSET;
 						ySpawnForDirection = y - PLANT_SPAWN_OFFSET;
@@ -156,13 +166,32 @@ void CShootingPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						xSpawn = x - PLANT_SPAWN_OFFSET;
 						ySpawn = y - PLANT_SPAWN_OFFSET;
 					}	
-					else
+					else if (direction.x < 0 && direction.y > 0)
 					{
 						xSpawnForDirection = x - PLANT_SPAWN_OFFSET;
 						ySpawnForDirection = y + PLANT_SPAWN_OFFSET;
 						xSpawn = x - PLANT_SPAWN_OFFSET;
 						ySpawn = y + PLANT_SPAWN_OFFSET_Y_DOWN;
 					}
+					//Shoot straight left
+					else if ( direction.x < 0 && direction.y == 0)
+					{
+						xSpawnForDirection = x - PLANT_SPAWN_OFFSET;
+						ySpawnForDirection = y;
+						xSpawn = x - PLANT_SPAWN_OFFSET;
+						ySpawn = y;
+					}
+					//Straight right
+					else if ( direction.x > 0 && direction.y == 0)
+					{
+						xSpawnForDirection = x + PLANT_SPAWN_OFFSET;
+						ySpawnForDirection = y;
+						xSpawn = x + PLANT_SPAWN_OFFSET;
+						ySpawn = y;
+					}
+
+
+
 					//Debug direction
 					direction = D3DXVECTOR2(xSpawnForDirection - x, ySpawnForDirection-y);
 
