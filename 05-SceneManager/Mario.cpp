@@ -25,6 +25,7 @@
 #include "debug.h"
 #include "Dimscreen.h"
 #include "EndLevelLoot.h"
+#include "Greenshroom.h"
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -623,6 +624,14 @@ void CMario::OnCollisionWithPlantBullet(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithSchroom(LPCOLLISIONEVENT e)
 {
 	if (state == MARIO_STATE_DIE) return;
+	if (dynamic_cast<CGreenshroom*>(e->obj)) // 1 UP 
+	{
+		AddScoreWithPopUp(SCORE_GREENSHROOM);
+		lives++;
+		e->obj->Delete();
+		return;
+	}
+	//Red schroom normal
 	if ((GetLevel() == MARIO_LEVEL_SMALL || GetLevel() == MARIO_LEVEL_BIG) && dynamic_cast<CShroom*>(e->obj)->GetState() == SHROOM_STATE_WALKING)
 	{
 		SetLevel(MARIO_LEVEL_BIG);

@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "PlayScene.h"
 #include "Leaf.h"
+#include "Greenshroom.h"
 void CLootBrick::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -99,6 +100,11 @@ void CLootBrick::EnableLoot() //Enable state of the actual loot
 	else if (lootType == LOOT_TYPE_LEAF) {
 		CLeaf* leaf = dynamic_cast <CLeaf*>(loot);
 		leaf->SetState(LEAF_STATE_FLYING);
+	}
+	else if (lootType == LOOT_TYPE_GREEN_MUSHROOM)
+	{
+		CGreenshroom* greenShroom = dynamic_cast <CGreenshroom*>(loot);
+		greenShroom->SetState(SHROOM_STATE_WALKING);
 	}
 }
 

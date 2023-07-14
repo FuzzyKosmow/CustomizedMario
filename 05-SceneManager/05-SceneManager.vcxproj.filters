@@ -341,6 +341,9 @@
     <ClInclude Include="HUD.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="Greenshroom.h">
+      <Filter>Header Files\Loot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="backgroundItems.txt">

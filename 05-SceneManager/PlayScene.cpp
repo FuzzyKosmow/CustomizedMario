@@ -30,6 +30,7 @@
 #include "DeathBlock.h"
 #include "EndLevelLoot.h"
 #include "HUD.h"
+#include "Greenshroom.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
@@ -322,6 +323,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		LPGAMEOBJECT loot;
 		switch (lootType)
 		{
+		case LOOT_TYPE_GREEN_MUSHROOM:
+			loot = new CGreenshroom(x, y);
+			loot->SetPosition(x - MUSHROOM_SPAWN_OFFSET, y - MUSHROOM_SPAWN_OFFSET);
+			break;
 		case LOOT_TYPE_MUSHROOM:
 			loot = new CShroom(x, y);
 			loot->SetPosition(x - MUSHROOM_SPAWN_OFFSET, y - MUSHROOM_SPAWN_OFFSET);

@@ -17,6 +17,7 @@
 #define LOOT_TYPE_MUSHROOM 1 //Mario big.
 #define LOOT_TYPE_LEAF 2 //Mario raccoon.
 #define LOOT_TYPE_COIN 3 //Coin 
+#define LOOT_TYPE_GREEN_MUSHROOM 4 //1 UP
 
 #define LOOT_BRICK_STATE_NOT_LOOTED 100
 #define LOOT_BRICK_STATE_LOOTED 200

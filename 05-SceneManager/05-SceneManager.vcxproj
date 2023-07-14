@@ -200,6 +200,7 @@
     <ClInclude Include="DeathBlock.h" />
     <ClInclude Include="Dimscreen.h" />
     <ClInclude Include="EndLevelLoot.h" />
+    <ClInclude Include="Greenshroom.h" />
     <ClInclude Include="GroundButton.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
