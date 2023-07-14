@@ -141,8 +141,12 @@ void CMarioTailAttack::OnTriggerEnter(LPCOLLISIONEVENT e)
 		CShootingPlant* plant = dynamic_cast<CShootingPlant*>(e->obj);
 		if (!plant->IsDeleted())
 		{
-			plant->Delete();
-			HUD::GetInstance()->PopUpScoreAtMario(SHOOTING_PLANT_SCORE);
+			if (plant->GetState() != SHOOTING_PLANT_STATE_IDLE)
+			{
+				plant->Delete();
+				HUD::GetInstance()->PopUpScoreAtMario(SHOOTING_PLANT_SCORE);
+			}
+			
 		}
 		
 
@@ -153,9 +157,12 @@ void CMarioTailAttack::OnTriggerEnter(LPCOLLISIONEVENT e)
 		CEatingPlant* plant = dynamic_cast<CEatingPlant*>(e->obj);
 		if (!plant->IsDeleted())
 		{
-		
-			plant->Delete();
-			HUD::GetInstance()->PopUpScoreAtMario(EATING_PLANT_SCORE);
+			if (plant->GetState() != EATING_PLANT_STATE_IDLE)
+			{
+				plant->Delete();
+				HUD::GetInstance()->PopUpScoreAtMario(EATING_PLANT_SCORE);
+			}
+			
 		}
 
 	}
