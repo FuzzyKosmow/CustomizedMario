@@ -15,7 +15,7 @@
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 #define MARIO_RACCOON_FLY_SPEED_Y	0.3f
 #define MARIO_RACCOON_FLY_SPEED_X	0.1f
-#define MARIO_RACCOON_JUMP_INVERVAL_REQUIRED 400
+#define MARIO_RACCOON_JUMP_INVERVAL_REQUIRED 300
 #define MARIO_RACCOON_MAX_FLY_VY_PHASE_1	0.6f //Still on the ground , allow to jump press space again within interval to transition to fly and limit speed
 #define MARIO_RACCOON_MAX_FLY_VY_PHASE_2	0.15f
 #define MARIO_RACCOON_DESCEND_MAX_DROP_VY	0.1f
