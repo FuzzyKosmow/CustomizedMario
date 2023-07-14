@@ -160,14 +160,9 @@ void CTurtle::OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e)
 {
 	if (this->state == TURTLE_STATE_SHELL_MOVING)
 	{
-		CFlyingTurtle* flyingTurtle = dynamic_cast<CFlyingTurtle*>(e->obj);
-		if (flyingTurtle->GetState() != FLYING_TURTLE_STATE_SHELL_MOVING)
-			flyingTurtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
-		else
-		{
-
-			this->vx = -this->vx;
-		}
+		
+		CFlyingGoomba * flyingGoomba = dynamic_cast<CFlyingGoomba*>(e->obj);
+		flyingGoomba->SetState(FLYING_GOOMBA_STATE_DIE_BY_ATTACK);
 	}
 
 }
@@ -178,7 +173,7 @@ void CTurtle::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
-		goomba->SetState(GOOMBA_STATE_DIE);
+		goomba->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
 
 	}
 
