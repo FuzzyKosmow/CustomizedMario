@@ -59,7 +59,8 @@ CMario::CMario (float x, float y) : CGameObject(x, y)
 
 	//Get stats from Game
 	CGame::GetInstance()->GetMarioStats(lives, score, coin);
-
+	//Get items
+	CGame::GetInstance()->GetItems(items);
 	LPPLAYSCENE scene = (LPPLAYSCENE) CGame::GetInstance()->GetCurrentScene();
 	
 	tailAttack = new CMarioTailAttack(x, y);
@@ -80,6 +81,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	
 	CGame::GetInstance()->UpdateMarioStats(lives, score, coin);
+	CGame::GetInstance()->UpdateItems(items);
 	//Handler ending after getting the loot
 	if (sceneSwitchActivated)
 		return;
@@ -391,10 +393,44 @@ void CMario::AddScoreWithPopUp(int num)
 }
 void CMario::OnCollisionWithEndLevelLoot (LPCOLLISIONEVENT e)
 {
+	//Check for non zero, if all there is non zero, return
+	int nonItem = 0;
+	for (int i = 0; i < items.size(); i++)
+	{
+		if (items[i] != 0)
+		{
+			nonItem++;
+		}
+	}
+	if (nonItem == items.size())
+	{
+		e->obj->Delete();
+		AddScoreWithPopUp(END_LEVEL_LOOT_GENERAL_SCORE);
+
+		this->SetState(MARIO_ENDING_MOVE_RIGHT);
+		
+	}
+	else
+	{
+		EndLevelLoot* loot = dynamic_cast<EndLevelLoot*>(e->obj);
+		int lootType = loot->GetCurrentLoot();
+		for (int i = 0; i < items.size(); i++)
+		{
+			if (items[i] == 0)
+			{
+				items[i] = lootType;
+				break;
+			}
+		}
+		e->obj->Delete();
+		AddScoreWithPopUp(END_LEVEL_LOOT_GENERAL_SCORE);
+
+		this->SetState(MARIO_ENDING_MOVE_RIGHT);
+	}
+
 	
-	e->obj->Delete();
-	AddScoreWithPopUp(END_LEVEL_LOOT_GENERAL_SCORE);
-	this->SetState(MARIO_ENDING_MOVE_RIGHT);
+	
+
 
 }
 

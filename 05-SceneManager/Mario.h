@@ -311,6 +311,8 @@ float dropDistance = 0;
 	//Score and lives
 	int score = 0;
 	int lives = LIVE_VALUE_START;
+	//Items
+	vector<int> items = vector<int>(MARIO_MAX_ITEMS, 0);
 public:
 	
 	

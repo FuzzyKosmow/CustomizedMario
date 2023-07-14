@@ -1,6 +1,6 @@
 #include "HUD.h"
 #include "PlayScene.h"
-
+#include "EndLevelLoot.h"
 #define HUD_MARIO_ICON_OFFSET_X -134
 #define HUD_MARIO_ICON_OFFSET_Y 6
 
@@ -15,6 +15,9 @@
 #define	HUD_SPEED_MAX_NODE	6
 #define HUD_SPEED_NODE_WIDTH	10
 
+#define HUD_ITEM_OFFSET_X 65
+#define HUD_ITEM_OFFSET_Y -1.3f
+#define HUD_ITEM_WIDTH 30
 
 #define HUD_TIME_OFFSET_X 12
 #define HUD_TIME_OFFSET_Y 6
@@ -57,6 +60,8 @@ void HUD::Render()
 		int coin;
 		int score;
 		int live;
+		vector<int> items = vector <int>(MARIO_MAX_ITEMS, 0);
+		CGame::GetInstance()->GetItems(items);
 		CGame::GetInstance()->GetMarioStats(live, score, coin);
 		
 		if (scene->GetSceneID() != SCENE_ID_OVERWORLD)
@@ -89,7 +94,28 @@ void HUD::Render()
 	
 		if ( scene->GetSceneID() == SCENE_ID_OVERWORLD)
 			DrawNumberAt(0, x + HUD_TIME_OFFSET_X, y + HUD_TIME_OFFSET_Y, HUD_TIME_MAX_CHAR);
+		//Items. If item value is 0, dont render. Use star, flower, mushroom sprite
+		for (int i = 0; i < MARIO_MAX_ITEMS; i++)
+		{
+			int type = items[i];
+			switch (type)
+			{
+			case END_LEVEL_LOOT_TYPE_MUSHROOM:
+				s->Get(ID_SPRITE_ENDLEVEL_LOOT_MUSHROOM)->Draw(x + HUD_ITEM_OFFSET_X + i * HUD_ITEM_WIDTH, y + HUD_ITEM_OFFSET_Y);
+				break;
+			case END_LEVEL_LOOT_TYPE_FLOWER:
+				s->Get(ID_SPRITE_ENDLEVEL_LOOT_FLOWER)->Draw(x + HUD_ITEM_OFFSET_X + i * HUD_ITEM_WIDTH, y + HUD_ITEM_OFFSET_Y);
+				break;
+			case END_LEVEL_LOOT_TYPE_STAR:
+				s->Get(ID_SPRITE_ENDLEVEL_LOOT_STAR)->Draw(x + HUD_ITEM_OFFSET_X + i * HUD_ITEM_WIDTH, y + HUD_ITEM_OFFSET_Y);
+				break;
+			}
+
+				
+
+		}
 		
+		 
 		//Coin
 		int coinDigits = NumberDigits(coin);
 		DrawNumberAt(coin, x + HUD_COIN_OFFSET_X , y + HUD_COIN_OFFSET_Y, coinDigits);

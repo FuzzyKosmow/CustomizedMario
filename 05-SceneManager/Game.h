@@ -18,7 +18,7 @@ using namespace std;
 #define KEYBOARD_STATE_SIZE 256
 
 #define MARIO_START_LIVES 4
-
+#define MARIO_MAX_ITEMS 3
 /*
 	Our simple game framework
 */
@@ -73,6 +73,8 @@ class CGame
 	int marioLives = MARIO_START_LIVES;
 	int marioScore = 0;
 	int marioCoins = 0;
+	vector<int> marioItems = vector<int>(MARIO_MAX_ITEMS, 0);
+
 
 public:
 	//Pause section
@@ -97,6 +99,17 @@ public:
 		marioLives = liveLeft;
 		marioScore = score;
 		marioCoins = coins;
+	}
+	void UpdateItems ( vector<int> items) {
+		for (int i = 0; i < MARIO_MAX_ITEMS; i++) {
+			marioItems[i] = items[i];
+		}
+	}
+	
+	void GetItems (vector<int>& items) {
+		for (int i = 0; i < MARIO_MAX_ITEMS; i++) {
+			items[i] = marioItems[i];
+		}
 	}
 	void GetMarioStats(int& liveLeft, int& score, int& coins) {
 		liveLeft = marioLives;
