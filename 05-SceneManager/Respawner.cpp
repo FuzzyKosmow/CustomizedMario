@@ -79,6 +79,7 @@ void Respawner::Respawn()
 		}
 		else
 		{
+			//This base off original position so it may looks a bit odd
 			float ox, oy;
 			float mx, my;
 			x.second->GetPosition(ox, oy);
@@ -100,6 +101,30 @@ void Respawner::Respawn()
 
 				
 			}
+			//Risk crashing if the object is deleted even after multiple checks
+		/*	float ox, oy;
+			float mx, my;
+			if (!activeObjects[x.first]->IsDeleted())
+			{
+				activeObjects[x.first]->GetPosition(ox, oy);
+				CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+				mario->GetPosition(mx, my);
+				if (abs(mx - ox) > DISTANCE_TO_RESPAWN)
+				{
+					if (!activeObjects[x.first]->IsDeleted())
+					{
+						
+						activeObjects[x.first]->Delete();
+						activeObjects[x.first] = NULL;
+					}
+					else
+					{
+						activeObjects[x.first] = NULL;
+					}
+					
+				}
+			}*/
+
 		}
 	}
 
@@ -111,17 +136,19 @@ void Respawner::Clear()
 	//Clear the object to respawn list
 	for (auto& x : objectsToSpawn)
 	{
-		delete x.second;
+		if (x.second != NULL && !x.second->IsDeleted())
+			delete x.second;
 	}
 	objectsToSpawn.clear();
 	for (auto& x : activeObjects)
 	{
-		if (x.second != NULL)
+		if (x.second != NULL && !x.second->IsDeleted())
 		{
 			delete x.second;
 		}
 	}
 	activeObjects.clear();
+	numOfObjectToRespawn = 0;
 
 
 }
