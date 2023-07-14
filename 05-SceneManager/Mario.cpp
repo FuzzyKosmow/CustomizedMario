@@ -477,16 +477,32 @@ void CMario::OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0 && turtle->GetState() == FLYING_TURTLE_STATE_SHELL && //Holding
 		game->IsKeyDown(DIK_A)
-		)
-	{
-		if (!holdingObject)
+			)
 		{
+		if (!holdingObject)
+			{
 			holdingObject = true;
 			holdObject = turtle;
+			}
+		
+
+	}
+	else if(e->nx != 0 && turtle->GetState() == FLYING_TURTLE_STATE_SHELL && //Kicking
+		!game->IsKeyDown(DIK_A)
+		)
+	{
+		turtle->SetState(FLYING_TURTLE_STATE_SHELL_MOVING);
+		if (e->nx < 0)
+		{
+			turtle->SetSpeed(FLYING_TURTLE_SHELL_SPEED, 0);
 		}
+		else
+		{
+			turtle->SetSpeed(-FLYING_TURTLE_SHELL_SPEED, 0);
+		}
+	
+	}
 
-
-	} 
 	 else if (e->obj->GetState() == FLYING_TURTLE_STATE_WALKING //Hit by turtle
 		|| e->obj->GetState() == FLYING_TURTLE_STATE_FLYING
 		 || e->obj->GetState() == FLYING_TURTLE_STATE_SHELL_MOVING)
@@ -601,8 +617,23 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
 			holdingObject = true;
 			holdObject = turtle;
 		}
+		
 
-
+	}
+	else if (e->nx != 0 && turtle->GetState() == TURTLE_STATE_SHELL && //Kicking
+		!game->IsKeyDown(DIK_A)
+		)
+	{
+		turtle->SetState(TURTLE_STATE_SHELL_MOVING);
+		if (e->nx <0)
+		{
+			turtle->SetSpeed(TURTLE_SHELL_SPEED, 0);
+		}
+		else
+		{
+			turtle->SetSpeed(-TURTLE_SHELL_SPEED, 0);
+		}
+	
 	}
 	else //Hit by turtle
 	{
