@@ -3,7 +3,7 @@
 #include "PlayScene.h"
 #include "Turtle.h"
 #include "FlyingGoomba.h"
-
+#include "HUD.h"
 
 CFlyingTurtle::CFlyingTurtle(float x, float y) : CGameObject(x, y)
 {
@@ -84,7 +84,7 @@ void CFlyingTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
 			goomba->SetState(GOOMBA_STATE_DIE);
-
+			HUD::GetInstance()->PopUpScoreAtMario(SCORE_GOOMBA_KILL);
 
 		}
 		else if (dynamic_cast<CFlyingGoomba*> (e->obj))
@@ -92,6 +92,7 @@ void CFlyingTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 			CFlyingGoomba* flyingGoomba = dynamic_cast<CFlyingGoomba*>(e->obj);
 
 			flyingGoomba->SetState(FLYING_GOOMBA_STATE_DIE_BY_ATTACK);
+			HUD::GetInstance()->PopUpScoreAtMario(SCORE_FLYING_GOOMBA_KILL);
 		}
 		else if (dynamic_cast<CLootBrick*>(e->obj))
 		{
@@ -103,30 +104,41 @@ void CFlyingTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 				lootBrick->ShowLoot();
 
 			}
+			
 		}
 		//Flying turtle and turtle
 		else if (dynamic_cast <CFlyingTurtle*>(e->obj))
 		{
 			CFlyingTurtle* flyingTurtle = dynamic_cast<CFlyingTurtle*>(e->obj);
 			if (flyingTurtle->GetState() != FLYING_TURTLE_STATE_SHELL_MOVING)
+			{
 				flyingTurtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
+				HUD::GetInstance()->PopUpScoreAtMario(SCORE_FLYING_TURTLE);
+			}
+				
 			else
 			{
 				
 				this->vx = -this->vx;
 			}
+			
 		}
 		//Turtle
 		else if (dynamic_cast <CTurtle*>(e->obj))
 		{
 			CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
 			if (turtle->GetState() != TURTLE_STATE_SHELL_MOVING)
+			{
 				turtle->SetState(TURTLE_STATE_DIE_BY_ATTACK);
+				HUD::GetInstance()->PopUpScoreAtMario(SCORE_TURTLE_KILL);
+			}
+				
 			else
 			{
 				
 				this->vx = -this->vx;
 			}
+			
 		}
 	}
 	

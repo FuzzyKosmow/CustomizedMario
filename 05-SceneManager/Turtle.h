@@ -39,6 +39,7 @@
 #define ANI_ID_TURLTE_SHELL_MOVING 7003
 
 
+
 #define TURTLE_STAY_AS_SHELL_TIME 5000
 class CTurtle : public CGameObject
 {
