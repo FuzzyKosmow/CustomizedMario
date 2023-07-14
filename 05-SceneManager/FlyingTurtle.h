@@ -54,6 +54,8 @@
 #define FLYING_FLYING_TURTLE_TIME_BETWEEN_JUMP 300
 #define FLYING_FLYING_TURTLE_JUMP_COUNT 3
 #define FLYING_FLYING_TURTLE_JUMP_SERIES_COOLDOWN FLYING_FLYING_TURTLE_TIME_BETWEEN_JUMP*FLYING_FLYING_TURTLE_JUMP_COUNT*2
+
+#define FLYING_TURTLE_STAY_AS_SHELL_TIME 5000
 class CFlyingTurtle : public CGameObject
 {
 protected:
@@ -68,7 +70,7 @@ protected:
 	ULONGLONG die_start;
 	ULONGLONG jump_series_start = 0;
 	ULONGLONG last_jump = 0;
-
+	ULONGLONG shell_start;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

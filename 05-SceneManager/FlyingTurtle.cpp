@@ -1,6 +1,6 @@
 #pragma once
 #include "FlyingTurtle.h"
-
+#include "PlayScene.h"
 
 
 
@@ -121,7 +121,27 @@ void CFlyingTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 void CFlyingTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
+	CGameObject::Update(dt, coObjects);
+	if (GetTickCount64() - shell_start > FLYING_TURTLE_STAY_AS_SHELL_TIME && (state == FLYING_TURTLE_STATE_SHELL))
+	{
+		CMario* mario = (CMario*)((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		if (mario->GetHoldObject() == this)
+		{
+			mario->DisplaceHoldObject();
+			int nx = mario->GetXDirection();
+			if (nx > 0)
+			{
+				x += FLYING_TURTLE_BBOX_WIDTH;
+			}
+			else
+			{
+				x -= FLYING_TURTLE_BBOX_WIDTH;
+			}
+		}
+		SetState(FLYING_TURTLE_STATE_WALKING);
+	}
 	vy += ay * dt;
+
 	if (state == FLYING_TURTLE_STATE_FLYING)
 	{
 		vx += ax * dt;
@@ -234,6 +254,7 @@ void CFlyingTurtle::SetState(int state)
 		ay = FLYING_TURTLE_GRAVITY;
 		vx = 0;
 		y -= JUMPED_ON_OFFSET;
+		shell_start = GetTickCount64();
 		break;
 	}
 	case FLYING_TURTLE_STATE_SHELL_MOVING:
