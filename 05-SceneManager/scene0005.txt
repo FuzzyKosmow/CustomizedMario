@@ -476,7 +476,7 @@ hud.txt
 
 ##Invisible Wall - Vertical - block at start
 6	10	30	16	15	14	999999	999999	999999
-
+6	3000	30	16	15	14	999999	999999	999999
 ###### SECRET ZONE
 
 ##Sepration layer

@@ -1051,6 +1051,10 @@ int CMario::GetAniIdRaccoon()
 			{
 				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT_GRABBING;
 			}
+			else if (isFlying || isDescending)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_FLYING_RIGHT;
+			}
 			else
 			{
 				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT;
@@ -1061,6 +1065,10 @@ int CMario::GetAniIdRaccoon()
 			if (holdingObject)
 			{
 				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT_GRABBING;
+			}
+			else if (isFlying || isDescending)
+			{
+				aniId = ID_ANI_MARIO_RACCOON_FLYING_LEFT;
 			}
 			else
 			{
