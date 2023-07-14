@@ -62,6 +62,7 @@ protected:
 	
 	void OnCollisionWithLootBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	void OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e);

@@ -1,6 +1,7 @@
 #include "Turtle.h"
 #include "SecretBrickWithButton.h"
-
+#include "FlyingTurtle.h"
+#include "FlyingGoomba.h"
 CTurtle::CTurtle(float x, float y, float limitLeft, float limitRight) : CGameObject(x, y)
 {
 	this->ax = 0;
@@ -79,6 +80,10 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		OnCollisionWithGoomba(e);
 	}
+	else if ((dynamic_cast<CFlyingGoomba*> (e->obj)))
+	{
+		OnCollisionWithFlyingGoomba(e);
+	}
 	else if (dynamic_cast<CLootBrick*>(e->obj))
 	{
 		OnCollisionWithLootBrick(e);
@@ -87,6 +92,16 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CBrick*> (e->obj))
 	{
 		OnCollisionWithBrick(e);
+	}
+	else if (dynamic_cast<CTurtle*>(e->obj))
+	{
+		OnCollisionWithTurtle(e);
+		
+	}
+	else if (dynamic_cast <CFlyingTurtle*>(e->obj))
+	{
+		OnCollisionWithFlyingTurtle(e);
+		
 	}
 
 	if (!e->obj->IsBlocking()) return;
@@ -102,6 +117,50 @@ void CTurtle::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	
 
+
+}
+
+void CTurtle::OnCollisionWithTurtle(LPCOLLISIONEVENT e)
+{
+
+	if (this->state == TURTLE_STATE_SHELL_MOVING)
+	{
+		CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+		if (turtle->GetState() != TURTLE_STATE_SHELL_MOVING)
+			turtle->SetState(TURTLE_STATE_DIE_BY_ATTACK);
+		else
+		{
+
+			this->vx = -this->vx;
+		}
+	}
+}
+
+void CTurtle::OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e)
+{
+	if (state == TURTLE_STATE_SHELL_MOVING)
+	{
+		CFlyingTurtle* flyingTurtle = dynamic_cast<CFlyingTurtle*>(e->obj);
+
+		flyingTurtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
+
+	}
+
+}
+
+void CTurtle::OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e)
+{
+	if (this->state == TURTLE_STATE_SHELL_MOVING)
+	{
+		CFlyingTurtle* flyingTurtle = dynamic_cast<CFlyingTurtle*>(e->obj);
+		if (flyingTurtle->GetState() != FLYING_TURTLE_STATE_SHELL_MOVING)
+			flyingTurtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
+		else
+		{
+
+			this->vx = -this->vx;
+		}
+	}
 
 }
 
