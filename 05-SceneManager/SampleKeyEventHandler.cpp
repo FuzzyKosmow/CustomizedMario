@@ -49,7 +49,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 			if (mario->OnTravelableTunnel())
 			{
 				CTunnel* tunnel = (CTunnel*)mario->GetTravelableTunnel();
-				if (tunnel->IsInverted()) //Inverted tunnnel is travelled automatically upon collision
+				if (tunnel->IsInverted()) //Inverted tunnnel is travelled automatically upon ujump
 					tunnel->Travel();
 			}
 			break;

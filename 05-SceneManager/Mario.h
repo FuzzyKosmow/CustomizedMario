@@ -379,7 +379,12 @@ public:
 			score += num;
 
 	}
-
+	void DisplaceHoldObject()
+	{
+		holdingObject = false;
+		holdObject = NULL;
+	}
+	LPGAMEOBJECT GetHoldObject() { return holdObject; }
 	float GetDropDistance() { return dropDistance; }
 	void TakeDamage(); // 1 unit of damage = 1 level
 

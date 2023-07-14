@@ -162,6 +162,24 @@ void CTurtle::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 void CTurtle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
+	if (GetTickCount64() - shell_start > TURTLE_STAY_AS_SHELL_TIME && (state == TURTLE_STATE_SHELL))
+	{
+		CMario* mario = (CMario*)((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		if (mario->GetHoldObject() == this)
+		{
+			mario->DisplaceHoldObject();
+			int nx = mario->GetXDirection();
+			if (nx > 0)
+			{
+				x += TURTLE_BBOX_WIDTH;
+			}
+			else
+			{
+				x -= TURTLE_BBOX_WIDTH;
+			}
+		}
+		SetState(TURTLE_STATE_WALKING);
+	}
 	vy += ay * dt;
 	if (GetState() == TURTLE_STATE_WALKING || state == TURTLE_STATE_SHELL_MOVING)
 	{
@@ -227,7 +245,7 @@ void CTurtle::SetState(int state)
 	case TURTLE_STATE_WALKING:
 	{
 		vx = TURTLE_WALKING_SPEED;
-
+		y -= TURTLE_BBOX_HEIGHT/2;
 		break;
 	}
 
@@ -235,6 +253,7 @@ void CTurtle::SetState(int state)
 	{
 		vx = 0;
 		y -= JUMPED_ON_OFFSET;
+		shell_start = GetTickCount64();
 		break;
 	}
 	case TURTLE_STATE_SHELL_MOVING:

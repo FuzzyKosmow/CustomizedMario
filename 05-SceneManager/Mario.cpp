@@ -141,7 +141,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	}
 	//Control the holding object here
-	if (holdingObject)
+	if (holdingObject && holdObject!= NULL)
 	{
 		LPGAME game = CGame::GetInstance();
 		if (game->IsKeyDown(DIK_A) && !isSitting)

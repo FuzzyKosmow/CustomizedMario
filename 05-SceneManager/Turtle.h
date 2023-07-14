@@ -38,6 +38,8 @@
 #define ANI_ID_TURLTE_SHELL 7002
 #define ANI_ID_TURLTE_SHELL_MOVING 7003
 
+
+#define TURTLE_STAY_AS_SHELL_TIME 5000
 class CTurtle : public CGameObject
 {
 protected:
@@ -46,7 +48,7 @@ protected:
 	float litmitLeft;
 	float litmitRight;
 	ULONGLONG die_start;
-
+	ULONGLONG shell_start;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
