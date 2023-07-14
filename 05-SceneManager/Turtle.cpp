@@ -173,7 +173,7 @@ void CTurtle::OnCollisionWithFlyingGoomba(LPCOLLISIONEVENT e)
 		flyingGoomba->SetState(FLYING_GOOMBA_STATE_DIE_BY_ATTACK);
 		HUD::GetInstance()->PopUpScoreAtMario(SCORE_GOOMBA_KILL);
 	}
-
+	
 }
 
 void CTurtle::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
