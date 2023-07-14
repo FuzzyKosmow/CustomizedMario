@@ -27,6 +27,23 @@ void CEatingPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		state = EATING_PLANT_STATE_IDLE;
 		return;
 	}
+	float mx, my;
+	LPPLAYSCENE scene = dynamic_cast<LPPLAYSCENE>(CGame::GetInstance()->GetCurrentScene());
+	scene->GetPlayer()->GetPosition(mx, my);
+
+	if (abs(mx - x) < EATING_PLANT_MIN_DISTANCE_TO_PLAYER && state == EATING_PLANT_STATE_IDLE)
+	{
+		x = baseX;
+		y = baseY;
+		idle_start = 0;
+		
+		show_start = 0;
+		retract_start = 0;
+		
+		state = EATING_PLANT_STATE_IDLE;
+		return;
+	}
+
 	if (state == EATING_PLANT_STATE_IDLE)
 	{
 		if (dZone->PlayerDetected() && GetTickCount64() - idle_start > EATING_PLANT_IDLE_TIME)

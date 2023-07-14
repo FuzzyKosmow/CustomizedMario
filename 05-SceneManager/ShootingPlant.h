@@ -46,6 +46,9 @@
 #define PLANT_PROJECTILE_AX 0.000011f
 #define PLANT_PROJECTILE_AY 0.00001f
 
+//If mario is too close to the plant, it wont show up
+#define SHOOTING_PLANT_MIN_DISTANCE_TO_PLAYER 30
+
 
 //Score
 #define SHOOTING_PLANT_SCORE 300

@@ -31,6 +31,9 @@
 //Score
 #define EATING_PLANT_SCORE	100
 
+//If mario is too close, dont show up
+#define EATING_PLANT_MIN_DISTANCE_TO_PLAYER 20
+
 class CEatingPlant : public CGameObject {
 protected:
 	//Time trackers

@@ -65,6 +65,24 @@ void CShootingPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		return;
 	}
+	//If player is too close, do not show up
+	float mx, my;
+	LPPLAYSCENE scene = dynamic_cast<LPPLAYSCENE>(CGame::GetInstance()->GetCurrentScene());
+	scene->GetPlayer()->GetPosition(mx, my);
+	
+	if (abs(mx - x) < SHOOTING_PLANT_MIN_DISTANCE_TO_PLAYER && state == SHOOTING_PLANT_STATE_IDLE)
+	{
+		x = baseX;
+		y = baseY;
+		idle_start = 0;
+		shoot_start = 0;
+		show_start = 0;
+		retract_start = 0;
+		last_shot = 0;
+		state = SHOOTING_PLANT_STATE_IDLE;
+		return;
+	}
+
 	if (state == SHOOTING_PLANT_STATE_IDLE)
 	{
 		if (dZone->PlayerDetected() && GetTickCount64() - idle_start > SHOOTING_PLANT_IDLE_TIME)
