@@ -395,14 +395,14 @@ void CMario::OnCollisionWithEndLevelLoot (LPCOLLISIONEVENT e)
 {
 	//Check for non zero, if all there is non zero, return
 	int nonItem = 0;
-	for (int i = 0; i < items.size(); i++)
+	for (size_t i = 0; i < items.size(); i++)
 	{
 		if (items[i] != 0)
 		{
 			nonItem++;
 		}
 	}
-	if (nonItem == items.size())
+	if ((size_t)nonItem == items.size())
 	{
 		e->obj->Delete();
 		AddScoreWithPopUp(END_LEVEL_LOOT_GENERAL_SCORE);
@@ -414,7 +414,7 @@ void CMario::OnCollisionWithEndLevelLoot (LPCOLLISIONEVENT e)
 	{
 		EndLevelLoot* loot = dynamic_cast<EndLevelLoot*>(e->obj);
 		int lootType = loot->GetCurrentLoot();
-		for (int i = 0; i < items.size(); i++)
+		for (size_t i = 0; i < items.size(); i++)
 		{
 			if (items[i] == 0)
 			{
