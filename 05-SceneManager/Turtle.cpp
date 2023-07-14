@@ -141,8 +141,16 @@ void CTurtle::OnCollisionWithFlyingTurtle(LPCOLLISIONEVENT e)
 	if (state == TURTLE_STATE_SHELL_MOVING)
 	{
 		CFlyingTurtle* flyingTurtle = dynamic_cast<CFlyingTurtle*>(e->obj);
+		if  (flyingTurtle->GetState() != FLYING_TURTLE_STATE_SHELL_MOVING)
+			flyingTurtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
+		else
+		{
 
-		flyingTurtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
+			this->vx = -this->vx;
+		}
+
+
+		
 
 	}
 
