@@ -67,9 +67,9 @@ CMario::CMario (float x, float y) : CGameObject(x, y)
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 
-	/*float camX, camY;
+	float camX, camY;
 	CGame::GetInstance()->GetCamPos(camX, camY);
-	DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);*/
+	DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);
 
 	/*DebugOutTitle(L"Dead started at %d\n", dead_start)*/;
 	//Go back to overworld if dead
@@ -195,8 +195,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	}
 	//Handling mario raccoon flying gravity
-	DebugOutTitle(L"Gravity: %f  flying: %d : %f\n", ay, isFlying,vy);
-	DebugOut(L"Descend: %d\n", isDescending);
+	/*DebugOutTitle(L"Gravity: %f  flying: %d : %f\n", ay, isFlying,vy);
+	DebugOut(L"Descend: %d\n", isDescending);*/
 	vy += ay * dt;
 	vx += ax * dt;
 	//Make sure it's abs value is not pass MARIO_RACCOON_MAX_VY
