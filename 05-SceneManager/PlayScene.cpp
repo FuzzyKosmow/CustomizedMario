@@ -552,7 +552,7 @@ void CPlayScene::Update(DWORD dt)
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
-	if ((id != SCENE_ID_INTRO && id != SCENE_ID_OVERWORLD) )
+	if ((id != SCENE_ID_INTRO && id != SCENE_ID_OVERWORLD))
 	{
 		if (GetTickCount64() - sceneStartTime > MAXIMUM_SCENE_TIME)
 		{
@@ -560,7 +560,7 @@ void CPlayScene::Update(DWORD dt)
 			CMario* mario = (CMario*)player;
 			mario->SetState(MARIO_STATE_DIE);
 		}
-		
+
 	}
 
 
@@ -599,9 +599,37 @@ void CPlayScene::Update(DWORD dt)
 						cy = cameraLimit.bottom;
 				}
 				else if (cy <= cameraLimit.sky)
+				{
+
+
 					cy -= game->GetBackBufferHeight() / 2;
+
+				}
+
+				else if (cy < cameraLimit.bottom && cy > cameraLimit.sky)
+				{
+					float mVy, mvX;
+					mario->GetSpeed(mvX, mVy);
+					//if (mario->GetDropDistance() >= MARIO_DROP_DISTANCE_FOR_CAMERA ) //been dropping long enough for cam to follow
+					//{
+					//	//Make sure its not below bottom limit.Smoothen the camera
+					//	if ((cy - game->GetBackBufferHeight() / 2) >  cameraLimit.bottom)
+					//		//Get the biggest value between the bottom limit and mario's position
+					//			cy = max(cameraLimit.bottom, cy - game->GetBackBufferHeight() / 2);
+					//	else
+					//		cy -= game->GetBackBufferHeight() / 2;
+					//}
+					cy -= game->GetBackBufferHeight() / 2;
+					
+						
+				}
 				else
+				{ 
+					
 					cy = cameraLimit.bottom;
+					
+				}
+
 				/*cy -= game->GetBackBufferHeight() / 2;*/
 				//Debug cam limit all properties
 				/*DebugOut(L" Camera limit: %f, %f, %f, %f\n", cameraLimit.left, cameraLimit.top, cameraLimit.right, cameraLimit.bottom);*/
@@ -624,12 +652,12 @@ void CPlayScene::Update(DWORD dt)
 				SwapObjectOrderToLast(hud);
 			}
 			if (id != SCENE_ID_OVERWORLD)
-				hud->QuickUpdate(cx+ HUD_OFFSET_X, cy+HUD_OFFSET_Y);
+				hud->QuickUpdate(cx + HUD_OFFSET_X, cy + HUD_OFFSET_Y);
 			else
-				hud->QuickUpdate(cx+HUD_OVERWORLD_POS_OFFSET_X, cy+HUD_OVERWORLD_POS_OFFSET_Y);
+				hud->QuickUpdate(cx + HUD_OVERWORLD_POS_OFFSET_X, cy + HUD_OVERWORLD_POS_OFFSET_Y);
 		}
-		
-		
+
+
 	}
 
 
@@ -686,17 +714,17 @@ void CPlayScene::Unload()
 				hud->Unload();
 				hud = NULL;
 			}
-			
+
 		}
 		else
-		delete objects[i];
+			delete objects[i];
 	}
 	objects.clear();
-	CSprites * sprites = CSprites::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
 	sprites->Clear();
-	CAnimations * animations = CAnimations::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
 	animations->Clear();
-	
+
 	player = NULL;
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);

@@ -20,10 +20,10 @@
 #define MARIO_RACCOON_MAX_FLY_VY_PHASE_2	0.15f
 #define MARIO_RACCOON_DESCEND_MAX_DROP_VY	0.1f
 
+#define	MARIO_DROP_DISTANCE_FOR_CAMERA		100
 
 
-
-#define MARIO_MAX_DROP_SPEED	0.4f
+#define MARIO_MAX_DROP_SPEED	0.2f
 #define MARIO_RACCOON_GRAVITY	0.0005f
 #define MARIO_GRAVITY			0.002f
 #define MARIO_RACCOON_LIFT_GRAVITY	0.0019f
@@ -291,7 +291,8 @@ class CMario : public CGameObject
 	bool hasJustSetUncolliable = false;
 
 
-	
+	//Drop distance when mario is falling
+float dropDistance = 0;
 	
 
 	//To overworld stats
@@ -376,6 +377,8 @@ public:
 			score += num;
 
 	}
+
+	float GetDropDistance() { return dropDistance; }
 	void TakeDamage(); // 1 unit of damage = 1 level
 
 	bool IsDescending() { return isDescending; }
