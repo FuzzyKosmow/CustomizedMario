@@ -15,9 +15,17 @@
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 #define MARIO_RACCOON_FLY_SPEED_Y	0.3f
 #define MARIO_RACCOON_FLY_SPEED_X	0.1f
+#define MARIO_RACCOON_JUMP_INVERVAL_REQUIRED 400
+#define MARIO_RACCOON_MAX_FLY_VY_PHASE_1	0.6f //Still on the ground , allow to jump press space again within interval to transition to fly and limit speed
+#define MARIO_RACCOON_MAX_FLY_VY_PHASE_2	0.15f
 
+
+
+
+#define MARIO_MAX_DROP_SPEED	0.4f
 #define MARIO_RACCOON_GRAVITY	0.0005f
 #define MARIO_GRAVITY			0.002f
+#define MARIO_RACCOON_LIFT_GRAVITY	0.0019f
 
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 #define MARIO_RACCOON_ATTACK_TIME 300
@@ -192,6 +200,8 @@
 //Move to back to overworld after completetting level
 #define MARIO_WALK_TIME_BEFORE_DIME	2500
 
+
+
 //Score value to be used when adding
 #define SCORE_MINI	10
 #define SCORE_DEFAULT_ADD	100
@@ -235,7 +245,12 @@ class CMario : public CGameObject
 	//Raccoon attack
 	ULONGLONG raccoonAttack_start;
 	bool isRaccoonAttacking = false;
-	
+	//Flying
+	ULONGLONG lastJumpPressed = 0;
+	bool flyTookOff = false;
+	ULONGLONG flyTookOffStart = 0;
+	float vyFlyMax = MARIO_RACCOON_MAX_FLY_VY_PHASE_1;
+
 	//If mario is standing on top of a travelable tunnel, set this to true
 	bool isOnTravelableTunnel = false;
 	LPGAMEOBJECT travelableTunnel = NULL;
@@ -272,6 +287,10 @@ class CMario : public CGameObject
 	ULONGLONG uncolliableTime = 0;
 	ULONGLONG uncolliableStart = 0;
 	bool hasJustSetUncolliable = false;
+
+
+	
+	
 
 	//To overworld stats
 	ULONGLONG dead_start = 0;
@@ -365,7 +384,7 @@ public:
 	LPGAMEOBJECT GetTravelableTunnel() { return travelableTunnel; }
 	void SetTravelableTunnel(LPGAMEOBJECT t) { travelableTunnel = t; }
 
-	float SpeedXRatio() { return vx / maxVx; }
+	float SpeedXRatio() { return abs(vx) / abs(MARIO_RUNNING_SPEED); }
 
 	///
 	int GetObjectType () { return OBJECT_TYPE_MARIO; }

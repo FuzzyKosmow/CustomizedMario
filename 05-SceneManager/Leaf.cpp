@@ -46,6 +46,11 @@ void CLeaf::OnNoCollision(DWORD dt)
 	y += vy * dt;
 
 }
+void CLeaf::OnCollisionWith (LPCOLLISIONEVENT e)
+{
+	if (e->obj->IsBlocking()) return;
+}
+
 
 void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

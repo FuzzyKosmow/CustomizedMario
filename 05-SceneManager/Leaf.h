@@ -5,8 +5,8 @@
 
 #define LEAF_FLYING_SPEED 0.05f
 #define LEAF_MAX_VX 0.11f
-#define LEAF_MAX_VY 0.009f
-#define LEAF_AX 0.0001f
+#define LEAF_MAX_VY 0.010f
+#define LEAF_AX 0.00015f
 #define LEAF_BBOX_WIDTH 17
 #define LEAF_BBOX_HEIGHT 17
 #define LEAF_BBOX_HEIGHT_DIE 7
@@ -34,9 +34,9 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void OnNoCollision(DWORD dt);
-	virtual int IsCollidable() { return 1; };
-	virtual int IsBlocking() { return 0; }
-	
+	int IsCollidable() { return 0; };
+	int IsBlocking() { return 0; }
+	void OnCollisionWith (LPCOLLISIONEVENT e);
 
 
 
