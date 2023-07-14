@@ -72,6 +72,9 @@ void CTunnel::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			mario->SetColliable();
 			scene->UnlockControl();
 			DebugOut(L"Finished travelling from time start %d\n", travel_start);
+			mario->SetOnTravelableTunnel(false);
+			hasJustSetTravelable = false;
+			mario->SetTravelableTunnel(NULL);
 			
 			canBeUsed = false;
 			travel_start = 0;

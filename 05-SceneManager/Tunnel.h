@@ -100,14 +100,14 @@ public:
 			if (inverted)
 			{
 				marioDetector = new ObjectDetector(x + TUNNEL_TOP_BLOCK_WIDTH / 2, y + TUNNEL_TOP_BLOCK_HEIGHT/ 2  + TUNNEL_TOP_BLOCK_HEIGHT * height, TUNNEL_MARIO_DETECTOR_WIDTH_UNIT, TUNNEL_MARIO_DETECTOR_HEIGHT_UNIT, OBJECT_TYPE_MARIO);
-				marioDetector->MakeVisible();
+				/*marioDetector->MakeVisible();*/
 				this->isInverted = true;
 			}
 			else
 			{
 				
 				marioDetector = new ObjectDetector(x + TUNNEL_TOP_BLOCK_WIDTH / 2, y - TUNNEL_TOP_BLOCK_HEIGHT, TUNNEL_MARIO_DETECTOR_WIDTH_UNIT, TUNNEL_MARIO_DETECTOR_HEIGHT_UNIT, OBJECT_TYPE_MARIO);
-				marioDetector->MakeVisible();
+				/*marioDetector->MakeVisible();*/
 				this->isInverted = false;
 			}
 			
