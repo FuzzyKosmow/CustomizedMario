@@ -60,7 +60,7 @@ class CLootBrick : public CGameObject {
 	void ShowLoot(); //Slowly move it to the top then enable it.
 	void EnableLoot();
 
-
+	int GetLootState () { return lootState; };
 	void SetSpriteType(int spriteType) { this->spriteType = spriteType; };
 	int GetObjectType () { return OBJECT_TYPE_LOOT_BRICK; };
 };

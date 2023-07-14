@@ -28,6 +28,9 @@
 #define EATING_PLANT_BBOX_WIDTH 16
 #define EATING_PLANT_DETECTION_ZONE_SIZE 20
 
+//Score
+#define EATING_PLANT_SCORE	100
+
 class CEatingPlant : public CGameObject {
 protected:
 	//Time trackers

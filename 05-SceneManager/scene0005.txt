@@ -391,7 +391,7 @@ hud.txt
 
 
 # MARIO
-0	950	-250
+0	20	20
 #Ending loot
 52	2804	113
 #Death zones

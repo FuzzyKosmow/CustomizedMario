@@ -661,7 +661,7 @@ void CMario::OnCollisionWithLootBrick(LPCOLLISIONEVENT e)
 
 			lootBrick->ShowLoot();
 	
-			AddScoreWithPopUp(SCORE_MINI);
+			
 		}
 
 	}

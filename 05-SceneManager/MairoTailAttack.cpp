@@ -4,6 +4,9 @@
 #include "FlyingGoomba.h"
 #include "FlyingTurtle.h"
 #include "Turtle.h"
+#include "ShootingPlant.h"
+#include "EatingPlant.h"
+#include "HUD.h"
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -63,39 +66,99 @@ void CMarioTailAttack::OnTriggerEnter(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CSecretBrickWithButton*>(e->obj)) //Secret Brick
 	{
 		CSecretBrickWithButton* brick = dynamic_cast<CSecretBrickWithButton*>(e->obj);
-		brick->Break();
+		if (!brick->IsDeleted())
+		{
+			brick->Break(); //Already have built in score pop up
+			
+			
+		}
+		
 	}
 	else if (dynamic_cast<CBrick*>(e->obj)) //Brick
 	{
 		CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-		brick->Break();
+		if (!brick->IsDeleted())
+		{
+			brick->Break();
+			HUD:: GetInstance()->PopUpScoreAtMario(BRICK_BREAK_SCORE);
+		}
+		
 	}
 	else if (dynamic_cast<CLootBrick*>(e->obj))
 	{
 		CLootBrick* brick = dynamic_cast<CLootBrick*> (e->obj);
+		
 		brick->ShowLoot();
+		
+		
+		
 	}
 	else if (dynamic_cast<CGoomba*>(e->obj))
 	{
 		CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+		if (goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
+		{
+			goomba->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
+			HUD::GetInstance()->PopUpScoreAtMario(SCORE_GOOMBA_KILL);
+		}
 
-		goomba->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
+		
+		
 	}
 	else if (dynamic_cast<CFlyingGoomba*>(e->obj))
 	{
 		CFlyingGoomba* goomba = dynamic_cast<CFlyingGoomba*>(e->obj);
-		goomba->SetState(FLYING_GOOMBA_STATE_DIE_BY_ATTACK);
+	
+		if (goomba->GetState () != FLYING_GOOMBA_STATE_DIE_BY_ATTACK)
+		{
+			goomba->SetState(FLYING_GOOMBA_STATE_DIE_BY_ATTACK);
+			HUD::GetInstance()->PopUpScoreAtMario(SCORE_GOOMBA_KILL);
+		}
 	}
 	else if (dynamic_cast <CTurtle*>(e->obj))
 	{
 		CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
-		turtle->SetState(TURTLE_STATE_DIE_BY_ATTACK);
+		if (turtle->GetState() != TURTLE_STATE_DIE_BY_ATTACK)
+		{
+			turtle->SetState(TURTLE_STATE_DIE_BY_ATTACK);
+			HUD::GetInstance()->PopUpScoreAtMario(SCORE_TURTLE_KILL);
+
+		}
+		
 	}
 	else if (dynamic_cast<CFlyingTurtle*>(e->obj))
 	{
 		CFlyingTurtle* turtle = dynamic_cast<CFlyingTurtle*>(e->obj);
-		turtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
-	};
+		if (turtle->GetState() != FLYING_TURTLE_STATE_DIE_BY_ATTACK)
+		{
+			turtle->SetState(FLYING_TURTLE_STATE_DIE_BY_ATTACK);
+			HUD::GetInstance()->PopUpScoreAtMario(SCORE_TURTLE_KILL);
+		}
+		
+	}
+	else if (dynamic_cast<CShootingPlant*>(e->obj))
+	{
+		CShootingPlant* plant = dynamic_cast<CShootingPlant*>(e->obj);
+		if (!plant->IsDeleted())
+		{
+			plant->Delete();
+			HUD::GetInstance()->PopUpScoreAtMario(SHOOTING_PLANT_SCORE);
+		}
+		
+
+	}
+	//Eating plant
+	else if (dynamic_cast<CEatingPlant*>(e->obj))
+	{
+		CEatingPlant* plant = dynamic_cast<CEatingPlant*>(e->obj);
+		if (!plant->IsDeleted())
+		{
+		
+			plant->Delete();
+			HUD::GetInstance()->PopUpScoreAtMario(EATING_PLANT_SCORE);
+		}
+
+	}
 }
 	
 	

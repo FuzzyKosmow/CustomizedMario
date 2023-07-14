@@ -66,11 +66,12 @@ void CLootBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 
-void CLootBrick::ShowLoot() //Slowly show the loot, from down to top
+void CLootBrick::ShowLoot() //Slowly show the loot, from down to top. Has built in score
 {
 	if (lootState == LOOT_BRICK_STATE_NOT_LOOTED) {
 		lootState = LOOT_BRICK_STATE_LOOTED;
 		timeStartToShowLoot = GetTickCount64();
+		HUD::GetInstance()->PopUpScoreAtMario(BRICK_BREAK_SCORE);
 	}
 	
 }

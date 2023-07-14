@@ -45,6 +45,11 @@
 #define PLANT_PROJECTILE_ROTATION_DEGREE 60
 #define PLANT_PROJECTILE_AX 0.000011f
 #define PLANT_PROJECTILE_AY 0.00001f
+
+
+//Score
+#define SHOOTING_PLANT_SCORE 300
+
 class PlantProjectile : public CGameObject {
 	
 	float speed = PLANT_PROJECTILE_SPEED;

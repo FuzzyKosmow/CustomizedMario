@@ -22,6 +22,7 @@ void CBrick::Break()
 
 	ParticleSystem *ps = ParticleSystem::GetInstance();
 	ps->SpawnStaticParticle(x, y, BRICK_PARTICLE_SPAWN_COUNT, ID_SPRITE_BRICK_BREAK_PARTICLE);
+	
 	this->Delete();
 	
 }
