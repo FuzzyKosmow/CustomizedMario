@@ -25,7 +25,7 @@
 
 void CMarioTailAttack::Render()
 {
-	RenderBoundingBox();
+	/*RenderBoundingBox();*/
 }
 
 

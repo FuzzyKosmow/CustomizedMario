@@ -265,7 +265,7 @@ void PlantProjectile::Render()
 {
 	CSprites* s = CSprites::GetInstance();
 	s->Get(ID_SPRITE_PLANT_BULLET)->Draw(x, y, currentRotation);
-	RenderBoundingBox();
+	/*RenderBoundingBox();*/
 }
 
 

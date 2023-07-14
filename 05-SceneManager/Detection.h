@@ -53,7 +53,7 @@ class ObjectDetector : public CGameObject {
 	int height;
 	int type;
 	bool objectDetected = false;
-	bool visible = true;
+	bool visible = false;
 	float alpha = BBOX_ALPHA;
 public:
 	ObjectDetector(float x, float y, int width, int height, int type) : CGameObject(x, y) {
