@@ -50,8 +50,7 @@ void HUD::Render()
 	//World
 	DrawNumberAt(world, x + HUD_WORLD_OFFSET_X, y + HUD_WORLD_OFFSET_Y, WORLD_MAX_CHAR);
 
-	if (scene->GetSceneID() != SCENE_ID_OVERWORLD)
-	{
+	
 		CMario* mario = (CMario*)scene->GetPlayer();
 
 		//All stats take from CGame data
@@ -59,30 +58,38 @@ void HUD::Render()
 		int score;
 		int live;
 		CGame::GetInstance()->GetMarioStats(live, score, coin);
-		int timeLeft = scene->GetSceneTimeLeftInSecond();
-		float speedXRatio = mario->SpeedXRatio();
-		//Speed . There are six speed node using the ratio get from mario. Last node use a different sprite. When ever a node is full, it will be rendered with a different sprite
-		for (int i =0; i< HUD_SPEED_MAX_NODE; i++)
+		
+		if (scene->GetSceneID() != SCENE_ID_OVERWORLD)
 		{
-			if (i < HUD_SPEED_MAX_NODE - 1)
+			int timeLeft = scene->GetSceneTimeLeftInSecond();
+			float speedXRatio = mario->SpeedXRatio();
+			//Speed . There are six speed node using the ratio get from mario. Last node use a different sprite. When ever a node is full, it will be rendered with a different sprite
+			for (int i = 0; i < HUD_SPEED_MAX_NODE; i++)
 			{
-				if (speedXRatio >= (i + 1) * 1.0f / HUD_SPEED_MAX_NODE)
-					s->Get(ID_SPRITE_HUD_SPEED_NORMAL_FULL)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
+				if (i < HUD_SPEED_MAX_NODE - 1)
+				{
+					if (speedXRatio >= (i + 1) * 1.0f / HUD_SPEED_MAX_NODE)
+						s->Get(ID_SPRITE_HUD_SPEED_NORMAL_FULL)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
+					else
+						s->Get(ID_SPRITE_HUD_SPEED_NORMAL_EMPTY)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
+				}
 				else
-					s->Get(ID_SPRITE_HUD_SPEED_NORMAL_EMPTY)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
-			}
-			else
-			{
-				if (speedXRatio >= (i + 1) * 1.0f / HUD_SPEED_MAX_NODE)
-					s->Get(ID_SPRITE_HUD_SPEED_LAST_FULL)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
-				else
-					s->Get(ID_SPRITE_HUD_SPEED_LAST_EMPTY)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
-			}
+				{
+					if (speedXRatio >= (i + 1) * 1.0f / HUD_SPEED_MAX_NODE)
+						s->Get(ID_SPRITE_HUD_SPEED_LAST_FULL)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
+					else
+						s->Get(ID_SPRITE_HUD_SPEED_LAST_EMPTY)->Draw(x + HUD_SPEED_OFFSET_X + i * HUD_SPEED_NODE_WIDTH, y + HUD_SPEED_OFFSET_Y);
+				}
 
+			}
+			//Time
+			DrawNumberAt(timeLeft, x + HUD_TIME_OFFSET_X, y + HUD_TIME_OFFSET_Y, HUD_TIME_MAX_CHAR);
 		}
-		//Time
-		DrawNumberAt(timeLeft, x + HUD_TIME_OFFSET_X, y + HUD_TIME_OFFSET_Y, HUD_TIME_MAX_CHAR);
+		//Set time as 000 when in overworld
 	
+		if ( scene->GetSceneID() == SCENE_ID_OVERWORLD)
+			DrawNumberAt(0, x + HUD_TIME_OFFSET_X, y + HUD_TIME_OFFSET_Y, HUD_TIME_MAX_CHAR);
+		
 		//Coin
 		int coinDigits = NumberDigits(coin);
 		DrawNumberAt(coin, x + HUD_COIN_OFFSET_X , y + HUD_COIN_OFFSET_Y, coinDigits);
@@ -94,11 +101,8 @@ void HUD::Render()
 		DrawNumberAt (score, x + HUD_SCORE_OFFSET_X, y + HUD_SCORE_OFFSET_Y, SCORE_MAX_CHAR);
 
 		
-	}
-	else
-	{
-		DrawNumberAt(0, x + HUD_TIME_OFFSET_X, y + HUD_TIME_OFFSET_Y, HUD_TIME_MAX_CHAR);
-	}
+	
+	
 	
 }
 
