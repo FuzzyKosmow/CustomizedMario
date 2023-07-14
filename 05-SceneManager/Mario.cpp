@@ -69,8 +69,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	float camX, camY;
 	CGame::GetInstance()->GetCamPos(camX, camY);
-	DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);
-
+	/*DebugOutTitle(L"mario pos %f %f | cam pos   %f %f\n", x, y, camX, camY);*/
+	DebugOutTitle(L"Drop distance %f\n", dropDistance);
 	/*DebugOutTitle(L"Dead started at %d\n", dead_start)*/;
 	//Go back to overworld if dead
 	//DebugOutTitle(L"State %d\n", state);
@@ -322,6 +322,14 @@ void CMario::OnNoCollision(DWORD dt)
 
 	x += vx * dt;
 	y += vy * dt;
+	if (!isOnPlatform && vy > 0)
+	{
+		dropDistance += vy * dt;
+	}
+	else
+	{
+		dropDistance = 0;
+	}
 	/*detector->SetPosition(x, y);*/
 }
 

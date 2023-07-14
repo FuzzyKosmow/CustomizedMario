@@ -38,7 +38,7 @@
 #define OBJECT_TYPE_GROUND_BUTTON 16 //Button that can be pressed by mario to activate something
 #define OBJECT_TYPE_LEAF 17
 #define OBJECT_TYPE_MUSHROOM 18
-
+#define OBJECT_TYPE_PASSABLE_PLATFORM	19
 
 #define OBJECT_TYPE_PORTAL	50
 #define OBJECT_TYPE_DEATH_BLOCK 51
