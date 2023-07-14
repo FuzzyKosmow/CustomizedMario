@@ -570,6 +570,7 @@ void CPlayScene::Update(DWORD dt)
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
+
 	if ((id != SCENE_ID_INTRO && id != SCENE_ID_OVERWORLD))
 	{
 		if (GetTickCount64() - sceneStartTime > MAXIMUM_SCENE_TIME)
@@ -616,7 +617,7 @@ void CPlayScene::Update(DWORD dt)
 					if (cy > cameraLimit.bottom)
 						cy = cameraLimit.bottom;
 				}
-				else if (cy <= cameraLimit.sky)
+				else if (cy <= cameraLimit.sky) 
 				{
 
 
@@ -624,7 +625,7 @@ void CPlayScene::Update(DWORD dt)
 
 				}
 
-				else if (cy < cameraLimit.bottom && cy > cameraLimit.sky)
+				else if (cy < cameraLimit.bottom && cy > cameraLimit.sky) //Not msmooth //May be irrelevant if the different between bottom and sky is very little
 				{
 					float mVy, mvX;
 					mario->GetSpeed(mvX, mVy);

@@ -56,6 +56,8 @@ CMario::CMario (float x, float y) : CGameObject(x, y)
 	coin = 0;
 	raccoonAttack_start = -1;
 
+	//Get stats from Game
+	CGame::GetInstance()->GetMarioStats(lives, score, coin);
 
 	LPPLAYSCENE scene = (LPPLAYSCENE) CGame::GetInstance()->GetCurrentScene();
 	
@@ -76,7 +78,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"State %d\n", state);
 	
 	
-
+	CGame::GetInstance()->UpdateMarioStats(lives, score, coin);
 	//Handler ending after getting the loot
 	if (sceneSwitchActivated)
 		return;
@@ -211,7 +213,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (abs(vx) > abs(maxVx))
 	{
 		vx = maxVx;
-		maxSpeedReached = true;
+		if (maxVx == MARIO_RUNNING_SPEED)
+			maxSpeedReached = true;
 	}
 	else
 	{
@@ -1372,6 +1375,7 @@ void CMario::SetState(int state)
 		scene->LockControl();
 		end_level_walk_start = GetTickCount64();
 		levelFinished= true;
+		
 		break;
 	}
 

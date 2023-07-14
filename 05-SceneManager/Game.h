@@ -17,7 +17,7 @@ using namespace std;
 #define KEYBOARD_BUFFER_SIZE 1024
 #define KEYBOARD_STATE_SIZE 256
 
-
+#define MARIO_START_LIVES 4
 
 /*
 	Our simple game framework
@@ -68,6 +68,12 @@ class CGame
 	ULONGLONG pauseEndTime = 0;
 	ULONGLONG pauseDuration = 0;
 	bool pauseForTriggered = false;
+
+	//Mario stats for loading and updating
+	int marioLives = MARIO_START_LIVES;
+	int marioScore = 0;
+	int marioCoins = 0;
+
 public:
 	//Pause section
 	bool PauseForActivated() { return pauseForTriggered; }
@@ -87,7 +93,16 @@ public:
 		return pauseDuration;
 	}
 	///
-	
+	void UpdateMarioStats(int liveLeft , int score, int coins) {
+		marioLives = liveLeft;
+		marioScore = score;
+		marioCoins = coins;
+	}
+	void GetMarioStats(int& liveLeft, int& score, int& coins) {
+		liveLeft = marioLives;
+		score = marioScore;
+		coins = marioCoins;
+	}
 
 
 	// Init DirectX, Sprite Handler

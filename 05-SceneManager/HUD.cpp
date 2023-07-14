@@ -53,9 +53,12 @@ void HUD::Render()
 	if (scene->GetSceneID() != SCENE_ID_OVERWORLD)
 	{
 		CMario* mario = (CMario*)scene->GetPlayer();
-		int coin = mario->GetCoin();
+
+		//All stats take from CGame data
+		int coin;
 		int score;
 		int live;
+		CGame::GetInstance()->GetMarioStats(live, score, coin);
 		int timeLeft = scene->GetSceneTimeLeftInSecond();
 		float speedXRatio = mario->SpeedXRatio();
 		//Speed . There are six speed node using the ratio get from mario. Last node use a different sprite. When ever a node is full, it will be rendered with a different sprite
@@ -84,11 +87,10 @@ void HUD::Render()
 		int coinDigits = NumberDigits(coin);
 		DrawNumberAt(coin, x + HUD_COIN_OFFSET_X , y + HUD_COIN_OFFSET_Y, coinDigits);
 		//Live
-		live = mario->GetLive();
+		
 		int liveDigits = NumberDigits(live);
 		DrawNumberAt(live , x + HUD_LIVE_OFFSET_X, y + HUD_LIVE_OFFSET_Y, liveDigits);
 		//Always render 6 number for score
-		score = mario->GetScore();
 		DrawNumberAt (score, x + HUD_SCORE_OFFSET_X, y + HUD_SCORE_OFFSET_Y, SCORE_MAX_CHAR);
 
 		
