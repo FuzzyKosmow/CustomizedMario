@@ -198,6 +198,9 @@
     <ClCompile Include="HUD.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="Respawner.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetIDs.h">
@@ -343,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="Greenshroom.h">
       <Filter>Header Files\Loot</Filter>
+    </ClInclude>
+    <ClInclude Include="Respawner.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

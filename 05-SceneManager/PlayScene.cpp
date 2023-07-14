@@ -31,6 +31,7 @@
 #include "EndLevelLoot.h"
 #include "HUD.h"
 #include "Greenshroom.h"
+#include "Respawner.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
@@ -469,13 +470,27 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
 	}
+	if (object_type == OBJECT_TYPE_GOOMBA ||
+		object_type == OBJECT_TYPE_FLYING_GOOMBA ||
+		object_type == OBJECT_TYPE_TURTLE ||
+		object_type == OBJECT_TYPE_FLYING_TURTLE
+		)
+	{
+		//Add to respawner
+		if (object_type != OBJECT_TYPE_HUD) //Because hud follow the camera
+			obj->SetPosition(x, y);
+		Respawner::GetInstance()->AddObjectToRespawn(obj);
+	}
+	else
+	{
+		// General object setup
+		if (object_type != OBJECT_TYPE_HUD) //Because hud follow the camera
+			obj->SetPosition(x, y);
 
-	// General object setup
-	if (object_type != OBJECT_TYPE_HUD) //Because hud follow the camera
-		obj->SetPosition(x, y);
 
-
-	objects.push_back(obj);
+		objects.push_back(obj);
+	}
+	
 }
 
 void CPlayScene::LoadAssets(LPCWSTR assetFile)
@@ -567,12 +582,12 @@ void CPlayScene::Update(DWORD dt)
 	{
 		coObjects.push_back(objects[i]);
 	}
-
+	
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
-
+	
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
@@ -687,7 +702,7 @@ void CPlayScene::Update(DWORD dt)
 
 
 
-
+	Respawner::GetInstance()->Respawn();
 	PurgeDeletedObjects();
 }
 
@@ -743,6 +758,7 @@ void CPlayScene::Unload()
 		else
 			delete objects[i];
 	}
+	Respawner::GetInstance()->Clear();
 	objects.clear();
 	CSprites* sprites = CSprites::GetInstance();
 	sprites->Clear();

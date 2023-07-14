@@ -72,4 +72,5 @@ public:
 	virtual void SetState(int state);
 	void TakeDamage();
 	int GetObjectType() { return OBJECT_TYPE_TURTLE; }
+	void GetLimit(float& l, float& r) { l = litmitLeft; r = litmitRight; }
 };
