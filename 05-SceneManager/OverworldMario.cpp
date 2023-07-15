@@ -28,7 +28,7 @@ void COverworldMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 	/*DebugOutTitle(L"Pos: %f %f", x, y);*/
 	/*DebugOutTitle(L"Is on node: %d", isOnNode);*/
-	DebugOutTitle(L"POS: %f %f\n", x, y);
+	/*DebugOutTitle(L"POS: %f %f\n", x, y);*/
 }
 
 
